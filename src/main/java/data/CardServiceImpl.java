@@ -1,7 +1,6 @@
 package data;
 
 import game.Card;
-import model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -27,5 +26,27 @@ public class CardServiceImpl implements CardService{
                 .filter(x -> (x.getOwner().equals(owner) && x.getUID().equals(id)))
                 .findAny()
                 .orElse(null);
+    }
+
+    @Override
+    public void heal(Card card) {
+        card.heal();
+        cardDAO.update(card);
+    }
+
+    @Override
+    public void boost(Card card) {
+        card.levelUp();
+        cardDAO.update(card);
+    }
+
+    @Override
+    public void delete(Card card) {
+        cardDAO.delete(card);
+    }
+
+    @Override
+    public void save(Card secondCard) {
+        cardDAO.update(secondCard);
     }
 }

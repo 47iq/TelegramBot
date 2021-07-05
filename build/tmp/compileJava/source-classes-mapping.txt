@@ -1,45 +1,45 @@
-data/PSQLUserDAO.java
- data.PSQLUserDAO
-util/CommandDTO.java
- util.CommandDTO
-game/LootBoxType.java
- game.LootBoxType
-game/LootBox.java
- game.LootBox
 game/ImageBaseImpl.java
  game.ImageBaseImpl
-game/LootBoxImpl.java
- game.LootBoxImpl
- game.LootBoxImpl$1
-util/MessageFormatter.java
- util.MessageFormatter
-data/CardServiceImpl.java
- data.CardServiceImpl
-command/step/CommandStep.java
- command.step.CommandStep
-data/UserDAO.java
- data.UserDAO
-connection/Bot.java
- connection.Bot
-game/ImageBase.java
- game.ImageBase
-model/User.java
- model.User
-data/CardDAO.java
- data.CardDAO
-util/ImageIdentifier.java
- util.ImageIdentifier
-game/Card.java
- game.Card
+game/LootBoxType.java
+ game.LootBoxType
+communication/keyboard/KeyboardType.java
+ communication.keyboard.KeyboardType
+command/card_collection/SellCardCommand.java
+ command.card_collection.SellCardCommand
+command/card_collection/CardViewCommand.java
+ command.card_collection.CardViewCommand
 game/CardType.java
  game.CardType
  game.CardType$1
  game.CardType$2
  game.CardType$3
-data/CardService.java
- data.CardService
+command/service_command/HelpCommand.java
+ command.service_command.HelpCommand
+command/battle/StartSearchCommand.java
+ command.battle.StartSearchCommand
+communication/keyboard/KeyboardCreatorImpl.java
+ communication.keyboard.KeyboardCreatorImpl
+ communication.keyboard.KeyboardCreatorImpl$1
+data/CardDAO.java
+ data.CardDAO
+game/Card.java
+ game.Card
+game/PriceCalculator.java
+ game.PriceCalculator
 data/PSQLCardDAO.java
  data.PSQLCardDAO
+command/Command.java
+ command.Command
+communication/notification/NotificationService.java
+ communication.notification.NotificationService
+command/shop/BuyBeerCommand.java
+ command.shop.BuyBeerCommand
+command/main_menu/UseItemCommand.java
+ command.main_menu.UseItemCommand
+communication/util/CommandDTO.java
+ communication.util.CommandDTO
+command/service_command/RegisterCommand.java
+ command.service_command.RegisterCommand
 game/CardName.java
  game.CardName
  game.CardName$1
@@ -47,48 +47,108 @@ game/CardName.java
  game.CardName$3
  game.CardName$4
  game.CardName$5
-util/MessageFormatterImpl.java
- util.MessageFormatterImpl
-keyboard/KeyboardType.java
- keyboard.KeyboardType
-util/AnswerDTO.java
- util.AnswerDTO
-util/MessageBundle.java
- util.MessageBundle
-command/CommandFactory.java
- command.CommandFactory
-command/CardViewCommand.java
- command.CardViewCommand
-command/Command.java
- command.Command
-keyboard/KeyboardCreatorImpl.java
- keyboard.KeyboardCreatorImpl
- keyboard.KeyboardCreatorImpl$1
-command/NavigateToCardCommand.java
- command.NavigateToCardCommand
-connection/TelegramBot.java
- connection.TelegramBot
-connection/AnswerService.java
- connection.AnswerService
-command/MyCardsCommand.java
- command.MyCardsCommand
-keyboard/KeyboardCreator.java
- keyboard.KeyboardCreator
+command/service_command/StartCommand.java
+ command.service_command.StartCommand
+game/LootBox.java
+ game.LootBox
+game/ImageBase.java
+ game.ImageBase
 command/CommandFactoryImpl.java
  command.CommandFactoryImpl
-connection/AnswerServiceImpl.java
- connection.AnswerServiceImpl
-connection/ImageService.java
- connection.ImageService
+communication/util/MessageBundle.java
+ communication.util.MessageBundle
+data/UserService.java
+ data.UserService
+communication/util/AnswerDTO.java
+ communication.util.AnswerDTO
+data/PSQLUserDAO.java
+ data.PSQLUserDAO
+game/LootBoxImpl.java
+ game.LootBoxImpl
+ game.LootBoxImpl$1
+communication/util/ImageIdentifier.java
+ communication.util.ImageIdentifier
+communication/keyboard/KeyboardCreator.java
+ communication.keyboard.KeyboardCreator
+communication/connection/ImageService.java
+ communication.connection.ImageService
+communication/notification/NotificationServiceImpl.java
+ communication.notification.NotificationServiceImpl
+game/PriceCalculatorImpl.java
+ game.PriceCalculatorImpl
+communication/connection/AnswerService.java
+ communication.connection.AnswerService
+data/User.java
+ data.User
+communication/connection/Bot.java
+ communication.connection.Bot
+command/battle/LeaveSearchCommand.java
+ command.battle.LeaveSearchCommand
+communication/connection/TelegramBot.java
+ communication.connection.TelegramBot
+communication/connection/AnswerServiceImpl.java
+ communication.connection.AnswerServiceImpl
+command/battle/BattleMenuCommand.java
+ command.battle.BattleMenuCommand
+data/CardServiceImpl.java
+ data.CardServiceImpl
+command/step/CommandStep.java
+ command.step.CommandStep
+communication/connection/ImageServiceImpl.java
+ communication.connection.ImageServiceImpl
+data/UserDAO.java
+ data.UserDAO
 Main.java
  Main
-connection/ImageServiceImpl.java
- connection.ImageServiceImpl
-command/RegisterCommand.java
- command.RegisterCommand
-command/HelpCommand.java
- command.HelpCommand
-command/OpenBasicBoxCommand.java
- command.OpenBasicBoxCommand
-config/AppConfig.java
- config.AppConfig
+command/admin/AddTokensCommand.java
+ command.admin.AddTokensCommand
+command/CommandFactory.java
+ command.CommandFactory
+data/CardService.java
+ data.CardService
+game/BattleService.java
+ game.BattleService
+data/UserServiceImpl.java
+ data.UserServiceImpl
+command/shop/OpenBoxCommand.java
+ command.shop.OpenBoxCommand
+command/item/BoostCardCommand.java
+ command.item.BoostCardCommand
+command/shop/BuyHealCommand.java
+ command.shop.BuyHealCommand
+command/battle/PrepareBattleCommand.java
+ command.battle.PrepareBattleCommand
+command/item/UseHealCommand.java
+ command.item.UseHealCommand
+command/card_collection/SellCommand.java
+ command.card_collection.SellCommand
+command/shop/OpenProBoxCommand.java
+ command.shop.OpenProBoxCommand
+communication/util/MessageFormatter.java
+ communication.util.MessageFormatter
+command/item/HealCardCommand.java
+ command.item.HealCardCommand
+command/shop/OpenBasicBoxCommand.java
+ command.shop.OpenBasicBoxCommand
+game/BattleServiceImpl.java
+ game.BattleServiceImpl
+command/card_collection/NavigateToCardCommand.java
+ command.card_collection.NavigateToCardCommand
+command/main_menu/MyCardsCommand.java
+ command.main_menu.MyCardsCommand
+command/shop/BuyBoostCommand.java
+ command.shop.BuyBoostCommand
+command/shop/DailyFreeTokensCommand.java
+ command.shop.DailyFreeTokensCommand
+command/shop/OpenAdvancedBoxCommand.java
+ command.shop.OpenAdvancedBoxCommand
+command/main_menu/ShopCommand.java
+ command.main_menu.ShopCommand
+command/item/UseBoostCommand.java
+ command.item.UseBoostCommand
+command/main_menu/StatsCommand.java
+ command.main_menu.StatsCommand
+AppConfig.java
+ AppConfig
+communication/util/MessageFormatterImpl.java
+ communication.util.MessageFormatterImpl

@@ -1,9 +1,7 @@
 package game;
 
-import model.User;
-import org.springframework.beans.factory.annotation.Autowired;
+import data.User;
 import org.springframework.stereotype.Component;
-import util.ImageIdentifier;
 
 import javax.persistence.*;
 import java.io.File;
@@ -19,6 +17,8 @@ public class Card {
     int level;
     @Column(name = "health")
     double health;
+    @Column(name = "max_health")
+    double maxHealth;
     @Column(name = "attack")
     double attack;
     @Column(name = "defence")
@@ -42,17 +42,18 @@ public class Card {
         this.type = type;
         this.owner = user.getUID();
         level = 1;
-        health = (1 + Math.random()*0.5)*type.getMultiplier()*name.gerMultiplier();
+        health = 10*(1 + Math.random()*0.5)*type.getMultiplier()*name.gerMultiplier();
+        maxHealth = health;
         attack = (1 + Math.random()*0.5)*type.getMultiplier()*name.gerMultiplier();
         defence = (1 + Math.random()*0.5)*type.getMultiplier()*name.gerMultiplier();
     }
 
-    public Card levelUp() {
+    public void levelUp() {
         level++;
-        health = (1 + Math.random()*0.25)*type.getMultiplier()*health*name.gerMultiplier();
-        attack = (1 + Math.random()*0.25)*type.getMultiplier()*attack*name.gerMultiplier();
-        defence = (1 + Math.random()*0.25)*type.getMultiplier()*defence*name.gerMultiplier();
-        return this;
+        maxHealth += (1 + Math.random()*0.25)*type.getMultiplier()*name.gerMultiplier();
+        health = maxHealth;
+        attack += (1 + Math.random()*0.25)*type.getMultiplier()*name.gerMultiplier();
+        defence += (1 + Math.random()*0.25)*type.getMultiplier()*name.gerMultiplier();
     }
 
     public CardName getName() {
@@ -122,5 +123,17 @@ public class Card {
 
     public void setOwner(String owner) {
         this.owner = owner;
+    }
+
+    public void heal() {
+        health = maxHealth;
+    }
+
+    public double getMaxHealth() {
+        return maxHealth;
+    }
+
+    public void setMaxHealth(double maxHealth) {
+        this.maxHealth = maxHealth;
     }
 }

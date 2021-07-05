@@ -1,7 +1,6 @@
 package data;
 
 import game.Card;
-import model.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
@@ -14,6 +13,7 @@ import org.hibernate.service.ServiceRegistry;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class PSQLCardDAO implements CardDAO{
 
@@ -73,14 +73,25 @@ public class PSQLCardDAO implements CardDAO{
 
     @Override
     public Card update(Card card) {
-        //todo
-        return null;
+        Transaction transaction = session.beginTransaction();
+        session.update(card);
+        cardCache = cardCache.stream().filter(x -> !x.getUID().equals(card.getUID())).collect(Collectors.toList());
+        cardCache.add(card);
+        transaction.commit();
+        return card;
     }
 
     @Override
-    public boolean delete(long UID) {
-        //todo
-        return false;
+    public boolean delete(Card card) {
+        try {
+            Transaction transaction = session.beginTransaction();
+            session.delete(card);
+            transaction.commit();
+            cardCache = cardCache.stream().filter(x -> !x.getUID().equals(card.getUID())).collect(Collectors.toList());
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     @Override

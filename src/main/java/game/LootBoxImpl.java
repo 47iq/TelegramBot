@@ -1,6 +1,6 @@
 package game;
 
-import model.User;
+import data.User;
 
 public class LootBoxImpl implements LootBox{
 

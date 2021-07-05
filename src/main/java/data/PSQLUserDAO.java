@@ -1,6 +1,5 @@
 package data;
 
-import model.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
@@ -12,6 +11,7 @@ import org.hibernate.cfg.Configuration;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class PSQLUserDAO implements UserDAO{
 
@@ -58,6 +58,7 @@ public class PSQLUserDAO implements UserDAO{
             System.out.println(usersCache);
             return usersCache;
         } catch (Exception e) {
+            e.printStackTrace();
             LOGGER.error("ERROR while getting users: " + Arrays.toString(e.getStackTrace()));
             return null;
         }
@@ -65,19 +66,32 @@ public class PSQLUserDAO implements UserDAO{
 
     @Override
     public User getEntityById(String UID) {
-        return usersCache.stream().filter(x ->  x.getUID().equals(UID)).findAny().orElse(null);
+        System.out.println(usersCache);
+        //todo
+        return usersCache.stream().filter(x -> x.getUID().equals(UID)).findAny().orElse(null);
     }
 
     @Override
     public User update(User user) {
-        //TODO
-        return null;
+        Transaction transaction = session.beginTransaction();
+        session.update(user);
+        transaction.commit();
+        usersCache = usersCache.stream().filter(x -> !x.getUID().equals(user.getUID())).collect(Collectors.toList());
+        usersCache.add(user);
+        return user;
     }
 
     @Override
     public boolean delete(String UID) {
-        //TODO
-        return false;
+        try {
+            Transaction transaction = session.beginTransaction();
+            session.delete(UID);
+            transaction.commit();
+            usersCache = usersCache.stream().filter(x -> !x.getUID().equals(UID)).collect(Collectors.toList());
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     @Override
@@ -85,6 +99,7 @@ public class PSQLUserDAO implements UserDAO{
         try {
             Transaction tx = session.beginTransaction();
             session.save(user);
+            usersCache.add(user);
             tx.commit();
             return true;
         } catch (Exception e) {

@@ -1,10 +1,8 @@
 package game;
 
 import org.springframework.stereotype.Component;
-import util.ImageIdentifier;
 
 import java.io.File;
-import java.util.HashMap;
 import java.util.Map;
 
 @Component("image_base")

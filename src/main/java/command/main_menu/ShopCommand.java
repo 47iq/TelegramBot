@@ -1,0 +1,23 @@
+package command.main_menu;
+
+import command.Command;
+import communication.keyboard.KeyboardType;
+import data.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import communication.util.AnswerDTO;
+import communication.util.CommandDTO;
+import communication.util.MessageFormatter;
+
+@Component
+public class ShopCommand implements Command {
+    @Autowired
+    MessageFormatter messageFormatter;
+
+    @Override
+    public AnswerDTO execute(CommandDTO commandDTO) {
+        User user = commandDTO.getUser();
+
+        return new AnswerDTO(true, messageFormatter.getShopInfo(user), KeyboardType.SHOP, null, null);
+    }
+}
