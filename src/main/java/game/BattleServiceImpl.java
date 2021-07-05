@@ -83,25 +83,28 @@ public class BattleServiceImpl implements BattleService {
         while (firstCard.getHealth() > 0 && secondCard.getHealth() > 0) {
             int random = (int) (Math.random() * 100);
             int multiplier = 1;
-            if ((int) (Math.random() * 100) < 10) {
+            double damageMultiplier = Math.random()*0.5 + 0.75;
+            if ((int) (Math.random() * 100) < 10)
                 multiplier = 2;
-                battleHistory.append(MessageBundle.getMessage("battle_crit")).append("\n");
-            }
             int chance = 10;
             if (turnCounter % 2 == 0) {
-                chance += secondCard.getDefence() / firstCard.getAttack() / 2;
+                chance += secondCard.getDefence() / firstCard.getAttack() *  20;
                 if (chance < random) {
                     secondCard.setHealth(secondCard.getHealth() - firstCard.getAttack() * multiplier);
-                    battleHistory.append(messageFormatter.getBattleMessage(firstCard, secondCard, firstCard.getAttack() * multiplier, secondCard.getHealth()));
+                    if(multiplier == 2)
+                        battleHistory.append(MessageBundle.getMessage("battle_crit")).append("\n");
+                    battleHistory.append(messageFormatter.getBattleMessage(firstCard, secondCard, firstCard.getAttack() * multiplier * damageMultiplier, secondCard.getHealth()));
                 } else {
                     battleHistory.append(MessageBundle.getMessage("battle_miss")).append("\n");
                     battleHistory.append(messageFormatter.getBattleMessage(firstCard, secondCard, 0, secondCard.getHealth()));
                 }
             } else {
-                chance += firstCard.getDefence() / secondCard.getAttack() / 2;
+                chance += firstCard.getDefence() / secondCard.getAttack() *  20;
                 if (chance < random) {
                     firstCard.setHealth(firstCard.getHealth() - secondCard.getAttack() * multiplier);
-                    battleHistory.append(messageFormatter.getBattleMessage(secondCard, firstCard, secondCard.getAttack() * multiplier, firstCard.getHealth()));
+                    if(multiplier == 2)
+                        battleHistory.append(MessageBundle.getMessage("battle_crit")).append("\n");
+                    battleHistory.append(messageFormatter.getBattleMessage(secondCard, firstCard, secondCard.getAttack() * multiplier * damageMultiplier, firstCard.getHealth()));
                 } else {
                     battleHistory.append(MessageBundle.getMessage("battle_miss")).append("\n");
                     battleHistory.append(messageFormatter.getBattleMessage(secondCard, firstCard, 0, firstCard.getHealth()));

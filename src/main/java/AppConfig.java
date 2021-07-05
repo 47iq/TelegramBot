@@ -1,5 +1,7 @@
 import command.*;
 import command.admin.AddTokensCommand;
+import command.admin.AppStatsCommand;
+import command.admin.NotifyAllCommand;
 import command.battle.BattleMenuCommand;
 import command.battle.LeaveSearchCommand;
 import command.battle.PrepareBattleCommand;
@@ -18,7 +20,6 @@ import command.service_command.*;
 import command.main_menu.MyCardsCommand;
 import command.main_menu.ShopCommand;
 import command.shop.*;
-import command.step.CommandStep;
 import communication.connection.*;
 import communication.notification.NotificationService;
 import communication.notification.NotificationServiceImpl;
@@ -87,10 +88,23 @@ public class AppConfig {
         commandMap.put("/sell_card", getSellCardCommand());
         commandMap.put("/leave_search", getLeaveSearchCommand());
         commandMap.put("/battle_menu", getBattleMenuCommand());
-        Map<Command, CommandStep> commandStepMap = new HashMap<>();
         Map<String, Command> adminCommands = new HashMap<>();
         adminCommands.put("/add_tokens", getAddTokensCommand());
-        return new CommandFactoryImpl(commandMap, commandStepMap, adminCommands);
+        adminCommands.put("/notify_all", getNotifyAllCommand());
+        adminCommands.put("/app_stats", getAppStatsCommand());
+        return new CommandFactoryImpl(commandMap, adminCommands);
+    }
+
+    @Bean
+    @Scope("singleton")
+    public Command getAppStatsCommand() {
+        return new AppStatsCommand();
+    }
+
+    @Bean
+    @Scope("singleton")
+    public Command getNotifyAllCommand() {
+        return new NotifyAllCommand();
     }
 
     @Bean

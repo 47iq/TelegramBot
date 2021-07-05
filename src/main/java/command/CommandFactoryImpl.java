@@ -1,6 +1,5 @@
 package command;
 
-import command.step.CommandStep;
 import communication.keyboard.KeyboardType;
 import data.User;
 import communication.util.AnswerDTO;
@@ -14,15 +13,10 @@ public class CommandFactoryImpl implements CommandFactory{
 
     private final Map<String, Command> commandMap;
 
-    private final Map<Command, CommandStep> commandStepMap;
-
     private final Map<String, Command> adminCommands;
 
-    private Map<User, Map<Command, CommandStep>> userCurrentSteps;
-
-    public CommandFactoryImpl(Map<String, Command> commandMap, Map<Command, CommandStep> commandStepMap, Map<String, Command> adminCommands) {
+    public CommandFactoryImpl(Map<String, Command> commandMap, Map<String, Command> adminCommands) {
         this.commandMap = commandMap;
-        this.commandStepMap = commandStepMap;
         this.adminCommands = adminCommands;
     }
 
@@ -35,11 +29,6 @@ public class CommandFactoryImpl implements CommandFactory{
             else
                 return new AnswerDTO(false, MessageBundle.getMessage("err_unk_command"), KeyboardType.CLASSIC, null,  null);
         }
-        if(commandStepMap.get(command) == null)
-            return command.execute(commandDTO);
-        else {
-            //TODO
-            return null;
-        }
+        return command.execute(commandDTO);
     }
 }

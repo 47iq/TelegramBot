@@ -9,6 +9,8 @@ import data.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -115,13 +117,29 @@ public class MessageFormatterImpl implements MessageFormatter{
     @Override
     public String getBattleStartMessage(User firstUser, Card firstCard, User secondUser, Card secondCard) {
         return MessageBundle.getMessage("battle_start") + " " + firstUser.getUID() + " " +
-                MessageBundle.getMessage("battle_card") + " " + getShortMessage(firstCard) + " " +
+                MessageBundle.getMessage("battle_card") + " \n" + getCardMessage(firstCard) + " \n" +
                 MessageBundle.getMessage("battle_and") + " " + secondUser.getUID() + " " +
-                        MessageBundle.getMessage("battle_card") + " " + getShortMessage(secondCard) + "\n";
+                        MessageBundle.getMessage("battle_card") + " \n" + getCardMessage(secondCard) + "\n";
     }
 
     @Override
     public String getWinLossMessage(User secondUser, User firstUser) {
-        return secondUser.getUID() + MessageBundle.getMessage("battle_winner") + " " + firstUser.getUID() + MessageBundle.getMessage("battle_loser");
+        return secondUser.getUID() + " " + MessageBundle.getMessage("battle_winner") + "\n "
+                + firstUser.getUID() + " " + MessageBundle.getMessage("battle_loser");
+    }
+
+    @Override
+    public String getAppStats(List<User> userList, List<Card> cardList) {
+        StringBuilder builder = new StringBuilder();
+        builder.append(MessageBundle.getMessage("stats_usercnt")).append(" ").append(userList.size()).append("\n");
+        builder.append(MessageBundle.getMessage("stats_last24h")).append(" ").append(userList.stream().filter(x -> x.getLastTokensRedeemed()
+                .plusHours(24).compareTo(LocalDateTime.now(ZoneId.systemDefault())) > 0).count()).append("\n");
+        builder.append(MessageBundle.getMessage("info_cards")).append(" ").append(cardList.size()).append("\n");
+        builder.append(MessageBundle.getMessage("info_basiccnt")).append(" ").append(cardList.stream().filter(x -> x.getType().equals(CardType.BASIC)).count()).append("\n");
+        builder.append(MessageBundle.getMessage("info_rarecnt")).append(" ").append(cardList.stream().filter(x -> x.getType().equals(CardType.RARE)).count()).append("\n");
+        builder.append(MessageBundle.getMessage("info_epiccnt")).append(" ").append(cardList.stream().filter(x -> x.getType().equals(CardType.EPIC)).count()).append("\n");
+        builder.append(MessageBundle.getMessage("info_legcnt")).append(" ").append(cardList.stream().filter(x -> x.getType().equals(CardType.LEGENDARY)).count()).append("\n");
+        builder.append(MessageBundle.getMessage("stats_battlescnt")).append(" ").append((userList.stream().map(User::getTotalBattles).reduce(Integer::sum)).get()/2).append("\n");
+        return builder.toString();
     }
 }

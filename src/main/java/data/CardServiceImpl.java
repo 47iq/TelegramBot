@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 @Component
@@ -48,5 +49,10 @@ public class CardServiceImpl implements CardService{
     @Override
     public void save(Card secondCard) {
         cardDAO.update(secondCard);
+    }
+
+    @Override
+    public List<Card> getAllCards() {
+        return cardDAO.getAll();
     }
 }

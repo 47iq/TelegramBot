@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.List;
 import java.util.ResourceBundle;
 
 @Component
@@ -98,5 +99,10 @@ public class UserServiceImpl implements UserService{
     @Override
     public void save(User user) {
         userDAO.update(user);
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        return userDAO.getAll();
     }
 }

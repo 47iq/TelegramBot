@@ -1,5 +1,7 @@
 package data;
 
+import java.util.List;
+
 public interface UserService {
     long getBalance(User user);
     void lowerBalance(User user, long price);
@@ -14,4 +16,5 @@ public interface UserService {
     boolean tryGetDailyBonus(User user);
     User getUserData(User user);
     void save(User user);
+    List<User> getAllUsers();
 }

@@ -15,6 +15,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.objects.InputFile;
 
 import java.util.Arrays;
+import java.util.List;
 
 @Component
 public class NotificationServiceImpl implements NotificationService {
@@ -50,5 +51,12 @@ public class NotificationServiceImpl implements NotificationService {
             LOGGER.error("Error while sending response: " + Arrays.toString(e.getStackTrace()));
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void notifyAll(AnswerDTO answerDTO) {
+        List<User> userList = userService.getAllUsers();
+        for(var user: userList)
+            notify(user, answerDTO);
     }
 }

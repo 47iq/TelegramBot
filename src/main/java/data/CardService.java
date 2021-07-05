@@ -11,4 +11,5 @@ public interface CardService {
     void boost(Card card);
     void delete(Card card);
     void save(Card secondCard);
+    List<Card> getAllCards();
 }
