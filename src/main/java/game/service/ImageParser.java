@@ -1,10 +1,10 @@
-package game;
+package game.service;
 
+import game.entity.ImageIdentifier;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
 
-@Service
-public interface ImageBase {
+public interface ImageParser {
     File getImage(ImageIdentifier imageIdentifier);
 }

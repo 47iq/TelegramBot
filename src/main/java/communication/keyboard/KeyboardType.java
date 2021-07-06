@@ -9,5 +9,9 @@ public enum KeyboardType {
     SHOP,
     LEAF,
     ITEM,
-    BATTLE
+    BATTLE,
+    STATS,
+    DUNGEON,
+    DUNGEON_LEAF,
+    DUNGEON_MENU
 }

@@ -1,6 +1,6 @@
 package data;
 
-import game.Card;
+import game.entity.Card;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;

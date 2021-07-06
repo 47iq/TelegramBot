@@ -1,4 +1,4 @@
-package command.main_menu;
+package command.stats;
 
 import command.Command;
 import communication.keyboard.KeyboardType;
@@ -9,7 +9,7 @@ import communication.util.CommandDTO;
 import communication.util.MessageFormatter;
 
 @Component
-public class StatsCommand implements Command {
+public class MyStatsCommand implements Command {
 
     @Autowired
     MessageFormatter  messageFormatter;

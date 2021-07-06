@@ -1,19 +1,19 @@
-package game;
+package game.entity;
 
 import data.User;
 
-public class LootBoxImpl implements LootBox{
+public class LootBoxImpl implements LootBox {
 
     @Override
     public Card open(LootBoxType type, User user) {
         double rnd = Math.random() * 100;
         switch (type) {
             default -> {
-                if (rnd < 70)
+                if (rnd < 75)
                     return new Card(randName(), CardType.BASIC, user);
-                else if (rnd < 87.5)
+                else if (rnd < 90)
                     return new Card(randName(), CardType.RARE, user);
-                else if (rnd < 97.5)
+                else if (rnd < 99.5)
                     return new Card(randName(), CardType.EPIC, user);
                 else
                     return new Card(randName(), CardType.LEGENDARY, user);
@@ -23,7 +23,7 @@ public class LootBoxImpl implements LootBox{
                     return new Card(randName(), CardType.BASIC, user);
                 else if (rnd < 80)
                     return new Card(randName(), CardType.RARE, user);
-                else if (rnd < 95)
+                else if (rnd < 96)
                     return new Card(randName(), CardType.EPIC, user);
                 else
                     return new Card(randName(), CardType.LEGENDARY, user);

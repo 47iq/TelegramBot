@@ -1,6 +1,6 @@
 package data;
 
-import game.Card;
+import game.entity.Card;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -36,9 +36,13 @@ public class CardServiceImpl implements CardService{
     }
 
     @Override
-    public void boost(Card card) {
-        card.levelUp();
-        cardDAO.update(card);
+    public boolean boost(Card card) {
+        if(card.getLevel() < Long.parseLong(ResourceBundle.getBundle("settings").getString("MAX_LEVEL"))) {
+            card.levelUp();
+            cardDAO.update(card);
+            return true;
+        } else
+            return false;
     }
 
     @Override

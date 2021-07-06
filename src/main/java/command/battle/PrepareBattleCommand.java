@@ -7,7 +7,7 @@ import communication.util.CommandDTO;
 import communication.util.MessageBundle;
 import communication.util.MessageFormatter;
 import data.CardService;
-import game.Card;
+import game.entity.Card;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

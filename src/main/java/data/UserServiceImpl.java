@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService{
     @Override
     public void lowerBalance(User user, long price) {
         User oldUser = userDAO.getEntityById(user.getUID());
-        oldUser.setTokens(oldUser.getTokens() - price);
+        oldUser.setTokens(Math.max(oldUser.getTokens() - price,  0));
         userDAO.update(oldUser);
     }
 
@@ -76,8 +76,10 @@ public class UserServiceImpl implements UserService{
         User oldUser = userDAO.getEntityById(user.getUID());
         LocalDateTime now = LocalDateTime.now(ZoneId.systemDefault());
         LocalDateTime old = oldUser.getLastTokensRedeemed();
-        if(now.plusHours(24).compareTo(old) < 0) {
+        if(old.plusHours(24).compareTo(now) < 0) {
             higherBalance(user, Long.parseLong(ResourceBundle.getBundle("settings").getString("DAILY_BONUS")));
+            oldUser.setLastTokensRedeemed(LocalDateTime.now(ZoneId.systemDefault()));
+            userDAO.update(user);
             return true;
         }
         else

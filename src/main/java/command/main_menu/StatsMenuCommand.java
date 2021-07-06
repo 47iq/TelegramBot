@@ -5,9 +5,10 @@ import communication.keyboard.KeyboardType;
 import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
 
-public class UseItemCommand implements Command {
+public class StatsMenuCommand implements Command {
+
     @Override
     public AnswerDTO execute(CommandDTO commandDTO) {
-        return new AnswerDTO(true, null, KeyboardType.ITEM, null, null);
+        return new AnswerDTO(true, null, KeyboardType.STATS, null, null);
     }
 }

@@ -3,11 +3,11 @@ package command.item;
 import command.Command;
 import data.CardService;
 import data.UserService;
-import game.Card;
-import game.ImageBase;
+import game.entity.Card;
+import game.service.ImageParser;
 import communication.keyboard.KeyboardType;
 import data.User;
-import game.ImageIdentifier;
+import game.entity.ImageIdentifier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import communication.util.*;
@@ -21,7 +21,7 @@ public class BoostCardCommand implements Command {
     @Autowired
     UserService userService;
     @Autowired
-    ImageBase imageBase;
+    ImageParser imageParser;
 
     @Override
     public AnswerDTO execute(CommandDTO commandDTO) {
@@ -33,11 +33,14 @@ public class BoostCardCommand implements Command {
         else {
             if (userService.getBoostCount(user) < 1)
                 return new AnswerDTO(false, MessageBundle.getMessage("err_noboost"), KeyboardType.CLASSIC, null, null);
-            userService.spendBoost(user);
-            cardService.boost(card);
-            return new AnswerDTO(true, MessageBundle.getMessage("info_succboost") + "\n"
-                    + messageFormatter.getCardMessage(card), KeyboardType.LEAF,
-                    imageBase.getImage(new ImageIdentifier(card.getName(), card.getType())), null);
+            if(cardService.boost(card))  {
+                userService.spendBoost(user);
+                return new AnswerDTO(true, MessageBundle.getMessage("info_succboost") + "\n"
+                        + messageFormatter.getCardMessage(card), KeyboardType.LEAF,
+                        imageParser.getImage(new ImageIdentifier(card.getName(), card.getType())), null);
+            } else {
+                return new AnswerDTO(false, MessageBundle.getMessage("err_maxlvl"), KeyboardType.LEAF, null, null);
+            }
         }
     }
 }

@@ -2,7 +2,7 @@ package command.main_menu;
 
 import command.Command;
 import data.CardService;
-import game.Card;
+import game.entity.Card;
 import communication.keyboard.KeyboardType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,7 +14,7 @@ import communication.util.MessageFormatter;
 import java.util.List;
 
 @Component
-public class MyCardsCommand implements Command {
+public class MyCardsMenuCommand implements Command {
     @Autowired
     CardService cardService;
     @Autowired

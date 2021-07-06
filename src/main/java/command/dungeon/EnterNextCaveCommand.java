@@ -1,22 +1,23 @@
-package command.battle;
+package command.dungeon;
 
 import command.Command;
 import communication.keyboard.KeyboardType;
 import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
 import communication.util.MessageBundle;
-import game.service.BattleService;
+import game.dungeon.CaveService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class LeaveSearchCommand implements Command {
+public class EnterNextCaveCommand implements Command {
     @Autowired
-    BattleService battleService;
+    CaveService caveService;
 
     @Override
     public AnswerDTO execute(CommandDTO commandDTO) {
-        battleService.leaveSearch(commandDTO.getUser());
-        return new AnswerDTO(true, MessageBundle.getMessage("info_success"), KeyboardType.LEAF, null, null);
+        if(commandDTO.getUser().getTokens() <= 0)
+            return new AnswerDTO(false, MessageBundle.getMessage("err_nomoney2"), KeyboardType.LEAF, null, null);
+        return caveService.enterNextCave(commandDTO);
     }
 }

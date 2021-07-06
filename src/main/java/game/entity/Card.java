@@ -1,4 +1,4 @@
-package game;
+package game.entity;
 
 import data.User;
 import org.springframework.stereotype.Component;
@@ -42,15 +42,22 @@ public class Card {
         this.type = type;
         this.owner = user.getUID();
         level = 1;
-        health = 10*(1 + Math.random()*0.5)*type.getMultiplier()*name.gerMultiplier();
+        health = 3*(1 + 3*Math.random())*type.getMultiplier()*name.gerMultiplier();
         maxHealth = health;
-        attack = (1 + Math.random()*0.5)*type.getMultiplier()*name.gerMultiplier();
-        defence = (1 + Math.random()*0.5)*type.getMultiplier()*name.gerMultiplier();
+        attack = (1 + 3*Math.random())*type.getMultiplier()*name.gerMultiplier();
+        defence = (1 + 3*Math.random())*type.getMultiplier()*name.gerMultiplier();
+    }
+
+    public Card(CardName name, double health, double attack, double defence) {
+        this.name = name;
+        this.health = health;
+        this.attack = attack;
+        this.defence = defence;
     }
 
     public void levelUp() {
         level++;
-        maxHealth += (1 + Math.random()*0.25)*type.getMultiplier()*name.gerMultiplier();
+        maxHealth += 3*(1 + Math.random()*0.25)*type.getMultiplier()*name.gerMultiplier();
         health = maxHealth;
         attack += (1 + Math.random()*0.25)*type.getMultiplier()*name.gerMultiplier();
         defence += (1 + Math.random()*0.25)*type.getMultiplier()*name.gerMultiplier();

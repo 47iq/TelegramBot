@@ -3,11 +3,11 @@ package command.item;
 import command.Command;
 import data.CardService;
 import data.UserService;
-import game.Card;
-import game.ImageBase;
+import game.entity.Card;
+import game.service.ImageParser;
 import communication.keyboard.KeyboardType;
 import data.User;
-import game.ImageIdentifier;
+import game.entity.ImageIdentifier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import communication.util.*;
@@ -21,7 +21,7 @@ public class HealCardCommand implements Command {
     @Autowired
     UserService userService;
     @Autowired
-    ImageBase imageBase;
+    ImageParser imageParser;
 
     @Override
     public AnswerDTO execute(CommandDTO commandDTO) {
@@ -37,7 +37,7 @@ public class HealCardCommand implements Command {
             cardService.heal(card);
             return new AnswerDTO(true, MessageBundle.getMessage("info_succheal") + "\n"
                     +  messageFormatter.getCardMessage(card), KeyboardType.LEAF,
-                    imageBase.getImage(new ImageIdentifier(card.getName(), card.getType())), null);
+                    imageParser.getImage(new ImageIdentifier(card.getName(), card.getType())), null);
         }
     }
 }

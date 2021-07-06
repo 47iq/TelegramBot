@@ -2,7 +2,7 @@ package command.shop;
 
 import command.Command;
 import data.UserService;
-import game.LootBoxType;
+import game.entity.LootBoxType;
 import communication.keyboard.KeyboardType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

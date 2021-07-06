@@ -1,6 +1,6 @@
 package data;
 
-import game.Card;
+import game.entity.Card;
 
 import java.util.List;
 

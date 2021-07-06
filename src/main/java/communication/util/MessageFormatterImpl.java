@@ -2,17 +2,20 @@ package communication.util;
 
 import data.CardService;
 import data.UserService;
-import game.Card;
-import game.CardType;
-import game.PriceCalculator;
+import game.dungeon.Enemy;
+import game.entity.Card;
+import game.entity.CardType;
+import game.service.PriceCalculator;
 import data.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 @Component
 public class MessageFormatterImpl implements MessageFormatter{
@@ -103,10 +106,18 @@ public class MessageFormatterImpl implements MessageFormatter{
 
     @Override
     public String getBattleMessage(Card attackingCard, Card defendingCard, double damage, double health) {
-        return MessageBundle.getMessage(attackingCard.getName().name() + "_short") + " (id:" + attackingCard.getUID() + ")  " +
-                MessageBundle.getMessage("battle_deals") + " " + String.format("%.1f",damage) + MessageBundle.getMessage("battle_to") + "\n" +
-                MessageBundle.getMessage(defendingCard.getName().name() + "_short") + " (id:" + defendingCard.getUID() + ") " +
-                MessageBundle.getMessage("battle_nowhas") + " " + MessageBundle.getMessage("info_health2") + String.format("%.1f",health) + "\n";
+        String message = "";
+        if(attackingCard.getName() != null)
+            message += MessageBundle.getMessage(attackingCard.getName().name() + "_short") + " (id:" + attackingCard.getUID() + ") ";
+        else
+            message += MessageBundle.getMessage("battle_enemy") + " ";
+        message  +=MessageBundle.getMessage("battle_deals") + " " + String.format("%.1f",damage) + " " + MessageBundle.getMessage("battle_to") + "\n";
+        if(defendingCard.getName() != null)
+            message += MessageBundle.getMessage(defendingCard.getName().name() + "_short") + " (id:" + defendingCard.getUID() + ") ";
+        else
+            message += MessageBundle.getMessage("battle_enemy") + " ";
+        message += MessageBundle.getMessage("battle_nowhas") + " " + MessageBundle.getMessage("info_health2") + String.format("%.1f",health) + "\n";
+        return message;
     }
 
     @Override
@@ -141,5 +152,78 @@ public class MessageFormatterImpl implements MessageFormatter{
         builder.append(MessageBundle.getMessage("info_legcnt")).append(" ").append(cardList.stream().filter(x -> x.getType().equals(CardType.LEGENDARY)).count()).append("\n");
         builder.append(MessageBundle.getMessage("stats_battlescnt")).append(" ").append((userList.stream().map(User::getTotalBattles).reduce(Integer::sum)).get()/2).append("\n");
         return builder.toString();
+    }
+
+    @Override
+    public String getGlobalStatsMessage(List<User> userList) {
+        List<User> top = userList.stream()
+                .filter(x -> x.getTotalBattles() > 9)
+                .sorted(Comparator.comparingDouble(x -> (((double) x.getTotalWins()) / ((double) x.getTotalBattles()))))
+                .limit(10)
+                .collect(Collectors.toList());
+        StringBuilder topStr = new StringBuilder();
+        for(int i = 0; i < Math.min(10, top.size()); i++) {
+            topStr.append(String.valueOf(i + 1)).append(" ").append(top.get(i).getUID()).append(" ")
+                    .append(top.get(i).getTotalWins()).append(" ").append(MessageBundle.getMessage("info_of")).append(" ").append(top.get(i).getTotalBattles()).append("\n");
+        }
+        return topStr.toString();
+    }
+
+    @Override
+    public String getLootCaveMessage(long type, long tokens) {
+        return MessageBundle.getMessage("dungeon_lootcave_" + type) + " " + tokens +  MessageBundle.getMessage("info_price2");
+    }
+
+    @Override
+    public String getRobberyCaveMessage(long type, long tokens) {
+        return MessageBundle.getMessage("dungeon_robberycave_" + type) + " " + tokens +  MessageBundle.getMessage("info_price2");
+    }
+
+    @Override
+    public String getTrapCaveMessage(long type, long lostHealth, Card card) {
+        return MessageBundle.getMessage("dungeon_trapcave_" + type) + " " + MessageBundle.getMessage(card.getName().name()) + " " + MessageBundle.getMessage("info_loses")  + " " + lostHealth +  MessageBundle.getMessage("info_health2");
+    }
+
+    @Override
+    public String getTrapCaveDeadMessage(long type, long lostHealth, Card card) {
+        return MessageBundle.getMessage("dungeon_trapcave_" + type) + " " + MessageBundle.getMessage(card.getName().name())
+                + " " + MessageBundle.getMessage("info_loses")  + " " + lostHealth +  MessageBundle.getMessage("info_health2") +
+                " " + MessageBundle.getMessage("dungeon_trapdead_" + type);
+    }
+
+    @Override
+    public String getHealCaveMessage(long type, long gainedHealth, Card card) {
+        return MessageBundle.getMessage("dungeon_healcave_" + type) + " " + MessageBundle.getMessage(card.getName().name()) +
+                " " + MessageBundle.getMessage("info_heals")  + " " + gainedHealth +  MessageBundle.getMessage("info_health2");
+    }
+
+    @Override
+    public String getEnemyBattleWinMessage(Card card, Enemy enemy) {
+        return MessageBundle.getMessage(card.getName().name()) + " " + MessageBundle.getMessage("dungeon_win") + " " + MessageBundle.getMessage(enemy.getEnemyType().name())
+                + " " + MessageBundle.getMessage("dungeon_getaward") + " " + enemy.getAward() + MessageBundle.getMessage("info_price2") + "\n\n" + MessageBundle.getMessage(enemy.getEnemyType().name() + "_winhook");
+    }
+
+    @Override
+    public String getEnemyBattleLoseMessage(Card card, Enemy enemy) {
+        return  MessageBundle.getMessage( enemy.getEnemyType().name() + "_name") + " " + MessageBundle.getMessage("dungeon_win") + " " + MessageBundle.getMessage(card.getName().name()) + "\n\n" + MessageBundle.getMessage(enemy.getEnemyType().name() + "_losehook")
+                + "\n" + MessageBundle.getMessage("dungeon_gohome");
+    }
+
+    @Override
+    public String getEnemyBattleStartMessage(Enemy enemy, Card card) {
+        return MessageBundle.getMessage("battle_start") + "\n" + getCardMessage2(card) + " \n" +
+                MessageBundle.getMessage("battle_and") + " "  + getEnemyMessage(enemy) + "\n";
+    }
+
+    private String getCardMessage2(Card card) {
+        return MessageBundle.getMessage(card.getName().name()) + ": " + MessageBundle.getMessage("info_health")
+                + String.format("%.2f",card.getHealth()) + MessageBundle.getMessage("info_attack") + String.format("%.2f", card.getAttack()) +
+                MessageBundle.getMessage("info_defence") + String.format("%.2f",card.getDefence());
+    }
+
+    private String getEnemyMessage(Enemy enemy) {
+        return MessageBundle.getMessage(enemy.getEnemyType().name() + "_name") + " " + MessageBundle.getMessage("info_health")
+                + String.format("%.2f",enemy.getEnemyCard().getHealth()) + MessageBundle.getMessage("info_attack") + String.format("%.2f", enemy.getEnemyCard().getAttack()) +
+                MessageBundle.getMessage("info_defence") + String.format("%.2f",enemy.getEnemyCard().getDefence());
     }
 }

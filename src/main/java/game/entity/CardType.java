@@ -1,23 +1,23 @@
-package game;
+package game.entity;
 
 public enum CardType {
     BASIC,
     RARE{
-        double getMultiplier() {
+        public double getMultiplier() {
             return 1.25;
         }
     },
     EPIC{
-        double getMultiplier() {
+        public double getMultiplier() {
             return 1.5;
         }
     },
     LEGENDARY{
-        double getMultiplier() {
+        public double getMultiplier() {
             return 2;
         }
     };
-    double getMultiplier() {
+    public double getMultiplier() {
         return 1;
     }
 }

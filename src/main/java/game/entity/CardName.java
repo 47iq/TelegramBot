@@ -1,37 +1,38 @@
-package game;
+package game.entity;
 
 public enum CardName {
+    //DUNGEON_ENEMY,
     KLIMENKOV {
         @Override
-        double gerMultiplier() {
+        public double gerMultiplier() {
             return 1.25;
         }
     },
     KOROBKOV{
         @Override
-        double gerMultiplier() {
+        public double gerMultiplier() {
             return 0.75;
         }
     },
     BALAKSHIN{
         @Override
-        double gerMultiplier() {
+        public double gerMultiplier() {
             return 1.05;
         }
     },
     GAVRILOV{
         @Override
-        double gerMultiplier() {
+        public double gerMultiplier() {
             return 1.1;
         }
     },
     POLYAKOV{
         @Override
-        double gerMultiplier() {
+        public double gerMultiplier() {
             return 1;
         }
     };
-    static CardName valueOf(int val) {
+    public static CardName valueOf(int val) {
         return switch (val) {
             case 0 -> KLIMENKOV;
             case 1 -> KOROBKOV;
@@ -42,7 +43,7 @@ public enum CardName {
         };
     }
 
-    double gerMultiplier() {
+    public double gerMultiplier() {
         return  1;
     }
 }

@@ -1,16 +1,19 @@
-package game;
+package game.service;
 
+import game.entity.ImageIdentifier;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.util.Map;
 
-@Component("image_base")
-public class ImageBaseImpl implements ImageBase{
+public class ImageParserImpl implements ImageParser {
 
     Map<ImageIdentifier, String> paths;
 
-    public ImageBaseImpl(Map<ImageIdentifier, String> paths) {
+    public ImageParserImpl() {
+    }
+
+    public ImageParserImpl(Map<ImageIdentifier, String> paths) {
         this.paths = paths;
     }
 

@@ -10,14 +10,13 @@ import communication.util.CommandDTO;
 import communication.util.MessageFormatter;
 
 @Component
-public class ShopCommand implements Command {
+public class ShopMenuCommand implements Command {
     @Autowired
     MessageFormatter messageFormatter;
 
     @Override
     public AnswerDTO execute(CommandDTO commandDTO) {
         User user = commandDTO.getUser();
-
         return new AnswerDTO(true, messageFormatter.getShopInfo(user), KeyboardType.SHOP, null, null);
     }
 }

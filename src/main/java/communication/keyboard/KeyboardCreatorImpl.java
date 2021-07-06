@@ -1,5 +1,6 @@
 package communication.keyboard;
 
+import org.jvnet.hk2.component.MultiMap;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import communication.util.MessageBundle;
@@ -31,8 +32,41 @@ public class KeyboardCreatorImpl implements KeyboardCreator{
             case LEAF -> getLeafKeyboard();
             case ITEM -> getItemKeyboard();
             case BATTLE -> getBattleKeyboard();
+            case STATS -> getStatsKeyBoard();
+            case DUNGEON -> getDungeonKeyboard();
+            case DUNGEON_LEAF -> getDungeonLeafKeyboard();
+            case DUNGEON_MENU -> getDungeonMenuKeyboard();
             default -> null;
         };
+    }
+
+    private InlineKeyboardMarkup getDungeonMenuKeyboard() {
+        Map<String, String> menu = new HashMap<>();
+        menu.put("/help", MessageBundle.getMessage("back"));
+        menu.put("/dungeon_enter", MessageBundle.getMessage("dungeon_enter"));
+        return getKeyboard(menu);
+    }
+
+    private InlineKeyboardMarkup getDungeonLeafKeyboard() {
+        Map<String, String> menu = new HashMap<>();
+        menu.put("/dungeon_leave", MessageBundle.getMessage("dungeon_leave"));
+        return getKeyboard(menu);
+    }
+
+    private InlineKeyboardMarkup getDungeonKeyboard() {
+        Map<String, String> menu = new HashMap<>();
+        menu.put("/dungeon_next", MessageBundle.getMessage("dungeon_next"));
+        menu.put("/dungeon_leave", MessageBundle.getMessage("dungeon_leave"));
+        return getKeyboard(menu);
+    }
+
+    private InlineKeyboardMarkup getStatsKeyBoard() {
+        Map<String, String> menu = new HashMap<>();
+        menu.put("/my_stats", MessageBundle.getMessage("info_mystats"));
+        menu.put("/top_stats", MessageBundle.getMessage("info_top"));
+        menu.put("/app_stats", MessageBundle.getMessage("info_app"));
+        menu.put("/help", MessageBundle.getMessage("back"));
+        return getKeyboard(menu);
     }
 
     private InlineKeyboardMarkup getBattleKeyboard() {
@@ -121,6 +155,7 @@ public class KeyboardCreatorImpl implements KeyboardCreator{
         buttonTexts.add("/my_cards");
         buttonTexts.add("/use_item");
         buttonTexts.add("/battle_menu");
+        buttonTexts.add("/dungeon_menu");
         Map<String, String> texts = new HashMap<>();
         for(var text : buttonTexts) {
                 texts.put(text, MessageBundle.getMessage(text));

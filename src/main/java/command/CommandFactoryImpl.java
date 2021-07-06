@@ -26,8 +26,11 @@ public class CommandFactoryImpl implements CommandFactory{
         if(command == null) {
             if(commandDTO.getUser().getUID().equals(ResourceBundle.getBundle("settings").getString("ADMIN_UID")) && adminCommands.containsKey(commandDTO.getMessageText()))
                 return adminCommands.get(commandDTO.getMessageText()).execute(commandDTO);
-            else
-                return new AnswerDTO(false, MessageBundle.getMessage("err_unk_command"), KeyboardType.CLASSIC, null,  null);
+            else {
+                //todo
+                System.err.println(commandDTO.getMessageText() + " " + commandDTO.getArg());
+                return new AnswerDTO(false, MessageBundle.getMessage("err_unk_command"), KeyboardType.CLASSIC, null, null);
+            }
         }
         return command.execute(commandDTO);
     }

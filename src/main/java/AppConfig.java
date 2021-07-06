@@ -1,6 +1,7 @@
 import command.*;
 import command.admin.AddTokensCommand;
 import command.admin.AppStatsCommand;
+import command.admin.GetUserStatsCommand;
 import command.admin.NotifyAllCommand;
 import command.battle.BattleMenuCommand;
 import command.battle.LeaveSearchCommand;
@@ -10,42 +11,46 @@ import command.card_collection.CardViewCommand;
 import command.card_collection.NavigateToCardCommand;
 import command.card_collection.SellCardCommand;
 import command.card_collection.SellCommand;
+import command.dungeon.EnterDungeonCardCommand;
+import command.dungeon.EnterDungeonCommand;
+import command.dungeon.EnterNextCaveCommand;
+import command.dungeon.LeaveDungeonCommand;
 import command.item.BoostCardCommand;
 import command.item.HealCardCommand;
 import command.item.UseBoostCommand;
 import command.item.UseHealCommand;
-import command.main_menu.StatsCommand;
-import command.main_menu.UseItemCommand;
+import command.main_menu.*;
+import command.stats.GlobalStatsCommand;
+import command.stats.MyStatsCommand;
 import command.service_command.*;
-import command.main_menu.MyCardsCommand;
-import command.main_menu.ShopCommand;
 import command.shop.*;
 import communication.connection.*;
 import communication.notification.NotificationService;
 import communication.notification.NotificationServiceImpl;
 import data.*;
-import game.*;
 import communication.keyboard.KeyboardCreator;
 import communication.keyboard.KeyboardCreatorImpl;
+import game.dungeon.*;
+import game.entity.CardName;
+import game.entity.CardType;
+import game.entity.LootBox;
+import game.entity.LootBoxImpl;
+import game.service.*;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
-import org.telegram.telegrambots.bots.TelegramLongPollingBot;
-import game.ImageIdentifier;
+import game.entity.ImageIdentifier;
 import communication.util.MessageFormatter;
 import communication.util.MessageFormatterImpl;
 
 import java.util.*;
 
 @Configuration
+@ComponentScan
 public class AppConfig {
 
     Map<String, Command> commandMap = new HashMap<>();
-
-    @Bean
-    public TelegramLongPollingBot getBot()  {
-        return new TelegramBot();
-    }
 
     @Bean
     @Scope("singleton")
@@ -88,13 +93,69 @@ public class AppConfig {
         commandMap.put("/sell_card", getSellCardCommand());
         commandMap.put("/leave_search", getLeaveSearchCommand());
         commandMap.put("/battle_menu", getBattleMenuCommand());
+        commandMap.put("/app_stats", getAppStatsCommand());
+        commandMap.put("/top_stats", getGlobalStatsCommand());
+        commandMap.put("/my_stats", getMyStatsCommand());
+        commandMap.put("/dungeon_menu", getDungeonMenuCommand());
+        commandMap.put("/dungeon_leave", getDungeonLeaveCommand());
+        commandMap.put("/dungeon_enter", getDungeonEnterCommand());
+        commandMap.put("/dungeon_enter_card", getDungeonEnterCardCommand());
+        commandMap.put("/dungeon_next", getDungeonNextCommand());
         Map<String, Command> adminCommands = new HashMap<>();
         adminCommands.put("/add_tokens", getAddTokensCommand());
         adminCommands.put("/notify_all", getNotifyAllCommand());
-        adminCommands.put("/app_stats", getAppStatsCommand());
+        adminCommands.put("/user_stats", getUserStatsCommand());
         return new CommandFactoryImpl(commandMap, adminCommands);
     }
 
+    @Bean
+    @Scope("singleton")
+    public Command getDungeonEnterCardCommand() {
+        return new EnterDungeonCardCommand();
+    }
+
+    @Bean
+    @Scope("singleton")
+    public Command getDungeonLeaveCommand() {
+        return new LeaveDungeonCommand();
+    }
+
+    @Bean
+    @Scope("singleton")
+    public Command getDungeonMenuCommand() {
+        return new DungeonMenuCommand();
+    }
+
+    @Bean
+    @Scope("singleton")
+    public Command getDungeonNextCommand() {
+        return new EnterNextCaveCommand();
+    }
+
+    @Bean
+    @Scope("singleton")
+    public Command getDungeonEnterCommand() {
+        return new EnterDungeonCommand();
+    }
+
+    @Bean
+    @Scope("singleton")
+    public Command getMyStatsCommand() {
+        return new MyStatsCommand();
+    }
+
+    @Bean
+    @Scope("singleton")
+    public Command getGlobalStatsCommand() {
+        return new GlobalStatsCommand();
+    }
+
+    @Bean
+    @Scope("singleton")
+    public Command getUserStatsCommand() {
+        return new GetUserStatsCommand();
+    }
+    
     @Bean
     @Scope("singleton")
     public Command getAppStatsCommand() {
@@ -164,7 +225,7 @@ public class AppConfig {
     @Bean
     @Scope("singleton")
     public Command getUseItemCommand() {
-        return new UseItemCommand();
+        return new UseItemMenuCommand();
     }
 
     @Bean
@@ -194,7 +255,7 @@ public class AppConfig {
     @Bean
     @Scope("singleton")
     public Command getStatsCommand() {
-        return new StatsCommand();
+        return new StatsMenuCommand();
     }
 
     @Bean
@@ -207,7 +268,7 @@ public class AppConfig {
     @Bean
     @Scope("singleton")
     public Command getShopCommand() {
-        return new ShopCommand();
+        return new ShopMenuCommand();
     }
 
     @Bean
@@ -231,7 +292,7 @@ public class AppConfig {
     @Bean
     @Scope("singleton")
     public Command getMyCardsCommand() {
-        return new MyCardsCommand();
+        return new MyCardsMenuCommand();
     }
 
     @Bean
@@ -265,19 +326,13 @@ public class AppConfig {
 
     @Bean
     @Scope("singleton")
-    public AnswerService getAnswerService() {
-        return new AnswerServiceImpl();
-    }
-
-    @Bean
-    @Scope("singleton")
     public ImageService getImageService() {
         return new ImageServiceImpl();
     }
 
     @Bean
     @Scope("singleton")
-    public ImageBase getImageBase(){
+    public ImageParser getImageBase(){
         Map<ImageIdentifier, String> pathMap = new HashMap<>();
         ResourceBundle settings = ResourceBundle.getBundle("settings");
         pathMap.put(new ImageIdentifier(CardName.KLIMENKOV, CardType.BASIC), settings.getString("KLIMENKOV_BASIC"));
@@ -300,7 +355,7 @@ public class AppConfig {
         pathMap.put(new ImageIdentifier(CardName.POLYAKOV, CardType.RARE), settings.getString("POLYAKOV_RARE"));
         pathMap.put(new ImageIdentifier(CardName.POLYAKOV, CardType.EPIC), settings.getString("POLYAKOV_EPIC"));
         pathMap.put(new ImageIdentifier(CardName.POLYAKOV, CardType.LEGENDARY), settings.getString("POLYAKOV_LEGENDARY"));
-        return new ImageBaseImpl(pathMap);
+        return new ImageParserImpl(pathMap);
     }
 
     @Bean
@@ -335,12 +390,6 @@ public class AppConfig {
 
     @Bean
     @Scope("singleton")
-    public CardService getCardService() {
-        return new CardServiceImpl();
-    }
-
-    @Bean
-    @Scope("singleton")
     public PriceCalculator getPriceCalculator() {
         return new PriceCalculatorImpl();
     }
@@ -355,6 +404,12 @@ public class AppConfig {
     @Scope("singleton")
     public BattleService battleService() {
         return new BattleServiceImpl();
+    }
+
+    @Bean
+    @Scope("singleton")
+    public CaveService caveService() {
+        return new CaveServiceImpl();
     }
 
     @Bean

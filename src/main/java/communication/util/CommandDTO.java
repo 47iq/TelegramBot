@@ -4,7 +4,6 @@ import data.User;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 
-@Component
 public class CommandDTO {
     private final User user;
     private final String messageText;

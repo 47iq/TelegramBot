@@ -1,8 +1,12 @@
 package command.shop;
 
 import data.CardDAO;
-import game.*;
 import communication.keyboard.KeyboardType;
+import game.entity.Card;
+import game.entity.ImageIdentifier;
+import game.entity.LootBox;
+import game.entity.LootBoxType;
+import game.service.ImageParser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +25,7 @@ public class OpenBoxCommand {
     @Autowired
     MessageFormatter messageFormatter;
     @Autowired
-    ImageBase imageBase;
+    ImageParser imageParser;
 
     public AnswerDTO execute(CommandDTO commandDTO, LootBoxType type) {
         try {
@@ -29,7 +33,7 @@ public class OpenBoxCommand {
             if (cardDAO.create(card))
                 return new AnswerDTO(true,
                         MessageBundle.getMessage("info_youget") + "\n" + messageFormatter.getCardMessage(card),
-                        KeyboardType.LEAF, imageBase.getImage(new ImageIdentifier(card.getName(), card.getType())), null);
+                        KeyboardType.LEAF, imageParser.getImage(new ImageIdentifier(card.getName(), card.getType())), null);
             else {
                 LOGGER.error("Error while opening a lootbox");
                 return new AnswerDTO(false, MessageBundle.getMessage("err_unk"), KeyboardType.CLASSIC, null, null);

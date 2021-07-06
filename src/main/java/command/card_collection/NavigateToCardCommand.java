@@ -2,10 +2,10 @@ package command.card_collection;
 
 import command.Command;
 import data.CardService;
-import game.Card;
-import game.ImageBase;
+import game.entity.Card;
+import game.service.ImageParser;
 import communication.keyboard.KeyboardType;
-import game.ImageIdentifier;
+import game.entity.ImageIdentifier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import communication.util.*;
@@ -17,7 +17,7 @@ public class NavigateToCardCommand implements Command {
     @Autowired
     MessageFormatter messageFormatter;
     @Autowired
-    ImageBase imageBase;
+    ImageParser imageParser;
 
     @Override
     public AnswerDTO execute(CommandDTO commandDTO) {
@@ -26,6 +26,6 @@ public class NavigateToCardCommand implements Command {
         if(card == null)
             return new AnswerDTO(false, MessageBundle.getMessage("err_nocard"), KeyboardType.CLASSIC, null, null);
         return new AnswerDTO(true, messageFormatter.getCardMessage(card), KeyboardType.LEAF,
-                imageBase.getImage(new ImageIdentifier(card.getName(), card.getType())), null);
+                imageParser.getImage(new ImageIdentifier(card.getName(), card.getType())), null);
     }
 }
