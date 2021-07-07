@@ -1,4 +1,4 @@
-package command.admin;
+package command.stats;
 
 import command.Command;
 import communication.keyboard.KeyboardType;

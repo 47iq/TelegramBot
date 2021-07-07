@@ -162,8 +162,10 @@ public class MessageFormatterImpl implements MessageFormatter{
                 .limit(10)
                 .collect(Collectors.toList());
         StringBuilder topStr = new StringBuilder();
-        for(int i = 0; i < Math.min(10, top.size()); i++) {
-            topStr.append(String.valueOf(i + 1)).append(" ").append(top.get(i).getUID()).append(" ")
+        int top1 = 0;
+        for(int i = Math.min(10, top.size()) - 1; i >= 0; i--) {
+            top1++;
+            topStr.append(String.valueOf(top1)).append(") @").append(top.get(i).getUID()).append(" ")
                     .append(top.get(i).getTotalWins()).append(" ").append(MessageBundle.getMessage("info_of")).append(" ").append(top.get(i).getTotalBattles()).append("\n");
         }
         return topStr.toString();
@@ -198,6 +200,31 @@ public class MessageFormatterImpl implements MessageFormatter{
     }
 
     @Override
+    public String getWeaponCaveMessage(long type, long attackBoost, Card card) {
+        return MessageBundle.getMessage("dungeon_weaponcave_" + type) + " " + MessageBundle.getMessage(card.getName().name()) +
+                " " + MessageBundle.getMessage("info_attackboost")  + " " + attackBoost +  MessageBundle.getMessage("info_attack2");
+    }
+
+    @Override
+    public String getArmorCaveMessage(long type, long armorBoost, Card card) {
+        return MessageBundle.getMessage("dungeon_armorcave_" + type) + " " + MessageBundle.getMessage(card.getName().name()) +
+                " " + MessageBundle.getMessage("info_armorboost")  + " " + armorBoost +  MessageBundle.getMessage("info_defence2");
+    }
+
+    @Override
+    public String getLevelUpCaveMessage(long l, Card card) {
+        //todo
+        return MessageBundle.getMessage("dungeon_levelupcave_0") +  MessageBundle.getMessage("info_level2");
+
+    }
+
+    @Override
+    public String getLevelUpCaveMaxLevelMessage(long l, Card card) {
+        //todo
+        return MessageBundle.getMessage("dungeon_nolevelupcave_0");
+    }
+
+    @Override
     public String getEnemyBattleWinMessage(Card card, Enemy enemy) {
         return MessageBundle.getMessage(card.getName().name()) + " " + MessageBundle.getMessage("dungeon_win") + " " + MessageBundle.getMessage(enemy.getEnemyType().name())
                 + " " + MessageBundle.getMessage("dungeon_getaward") + " " + enemy.getAward() + MessageBundle.getMessage("info_price2") + "\n\n" + MessageBundle.getMessage(enemy.getEnemyType().name() + "_winhook");
@@ -214,6 +241,7 @@ public class MessageFormatterImpl implements MessageFormatter{
         return MessageBundle.getMessage("battle_start") + "\n" + getCardMessage2(card) + " \n" +
                 MessageBundle.getMessage("battle_and") + " "  + getEnemyMessage(enemy) + "\n";
     }
+
 
     private String getCardMessage2(Card card) {
         return MessageBundle.getMessage(card.getName().name()) + ": " + MessageBundle.getMessage("info_health")

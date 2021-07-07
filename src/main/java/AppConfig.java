@@ -1,6 +1,6 @@
 import command.*;
 import command.admin.AddTokensCommand;
-import command.admin.AppStatsCommand;
+import command.stats.AppStatsCommand;
 import command.admin.GetUserStatsCommand;
 import command.admin.NotifyAllCommand;
 import command.battle.BattleMenuCommand;

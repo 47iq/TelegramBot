@@ -25,7 +25,11 @@ public interface MessageFormatter {
     String getTrapCaveMessage(long type, long lostHealth, Card card);
     String getTrapCaveDeadMessage(long type, long lostHealth, Card card);
     String getHealCaveMessage(long type, long gainedHealth, Card card);
+    String getWeaponCaveMessage(long type, long attackBoost, Card card);
+    String getArmorCaveMessage(long type, long armorBoost, Card card);
     String getEnemyBattleWinMessage(Card card, Enemy enemy);
     String getEnemyBattleLoseMessage(Card card, Enemy enemy);
     String getEnemyBattleStartMessage(Enemy enemy, Card card);
+    String getLevelUpCaveMessage(long l, Card card);
+    String getLevelUpCaveMaxLevelMessage(long l, Card card);
 }

@@ -56,7 +56,7 @@ public enum EnemyType {
     DUNGEON_MASTER {
         @Override
         public Card getStats() {
-            return new Card(null, 17, 12, 1);
+            return new Card(null, 10, 6, 1);
         }
 
         @Override
@@ -85,6 +85,54 @@ public enum EnemyType {
             return 150;
         }
     },
+    PROGRAMMING_LAB {
+        @Override
+        public Card getStats() {
+            return new Card(null, 5, 2, 2);
+        }
+
+        @Override
+        public String getBattleMessage() {
+            return MessageBundle.getMessage("enemy_proglab");
+        }
+
+        @Override
+        public long getAward() {
+            return 50;
+        }
+    },
+    DEV {
+        @Override
+        public Card getStats() {
+            return new Card(null, -232452, 234873855, 14841548);
+        }
+
+        @Override
+        public String getBattleMessage() {
+            return MessageBundle.getMessage("enemy_dev");
+        }
+
+        @Override
+        public long getAward() {
+            return 100;
+        }
+    },
+    WOLF {
+        @Override
+        public Card getStats() {
+            return new Card(null, 5, 2, 3);
+        }
+
+        @Override
+        public String getBattleMessage() {
+            return MessageBundle.getMessage("enemy_wolf");
+        }
+
+        @Override
+        public long getAward() {
+            return 150;
+        }
+    },
     STUDENT_OFFICE {
         @Override
         public Card getStats() {
@@ -98,7 +146,7 @@ public enum EnemyType {
 
         @Override
         public long getAward() {
-            return 200;
+            return 250;
         }
     };
 
@@ -116,16 +164,24 @@ public enum EnemyType {
 
     public static EnemyType getRandom() {
         int rnd = (int) (Math.random() * 100);
+        //todo
+        System.out.println(rnd);
         if (rnd < 20)
             return ANGRY_STUDENTS;
-        else if (rnd < 40)
-            return RAD_COCKROACH;
+        else if(rnd < 35)
+            return PROGRAMMING_LAB;
+        else if(rnd < 50)
+            return WOLF;
         else if (rnd < 60)
-            return STUDENT_OFFICE;
-        else if (rnd < 75)
-            return EXPELLED_STUDENT;
-        else if (rnd < 95)
+            return RAD_COCKROACH;
+        else if (rnd < 70)
             return DUNGEON_MASTER;
+        else if (rnd < 85)
+            return STUDENT_OFFICE;
+        else if (rnd < 90)
+            return EXPELLED_STUDENT;
+        else if(rnd < 98)
+            return DEV;
         else
             return RECTOR;
     }

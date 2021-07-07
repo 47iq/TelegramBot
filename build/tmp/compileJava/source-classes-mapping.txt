@@ -97,8 +97,8 @@ communication/notification/NotificationServiceImpl.java
  communication.notification.NotificationServiceImpl
 game/service/PriceCalculatorImpl.java
  game.service.PriceCalculatorImpl
-game/dungeon/CaveServiceImpl.java
- game.dungeon.CaveServiceImpl
+data/CardServiceImpl.java
+ data.CardServiceImpl
 communication/connection/AnswerService.java
  communication.connection.AnswerService
 data/User.java
@@ -118,8 +118,8 @@ communication/connection/AnswerServiceImpl.java
  communication.connection.AnswerServiceImpl
 Main.java
  Main
-data/CardServiceImpl.java
- data.CardServiceImpl
+game/dungeon/CaveServiceImpl.java
+ game.dungeon.CaveServiceImpl
 command/item/BoostCardCommand.java
  command.item.BoostCardCommand
 command/shop/BuyHealCommand.java
@@ -140,10 +140,14 @@ command/shop/OpenBasicBoxCommand.java
  command.shop.OpenBasicBoxCommand
 communication/util/MessageFormatterImpl.java
  communication.util.MessageFormatterImpl
+game/dungeon/ArmorCave.java
+ game.dungeon.ArmorCave
 game/dungeon/Cave.java
  game.dungeon.Cave
 command/battle/StartSearchCommand.java
  command.battle.StartSearchCommand
+game/dungeon/WeaponCave.java
+ game.dungeon.WeaponCave
 AppConfig.java
  AppConfig
 command/item/UseBoostCommand.java
@@ -158,6 +162,11 @@ game/dungeon/EnemyType.java
  game.dungeon.EnemyType$4
  game.dungeon.EnemyType$5
  game.dungeon.EnemyType$6
+ game.dungeon.EnemyType$7
+ game.dungeon.EnemyType$8
+ game.dungeon.EnemyType$9
+command/stats/AppStatsCommand.java
+ command.stats.AppStatsCommand
 game/dungeon/BattleCave.java
  game.dungeon.BattleCave
 command/shop/OpenProBoxCommand.java
@@ -170,6 +179,8 @@ game/dungeon/HealCave.java
  game.dungeon.HealCave
 command/stats/MyStatsCommand.java
  command.stats.MyStatsCommand
+game/dungeon/LevelUpCave.java
+ game.dungeon.LevelUpCave
 game/service/BattleServiceImpl.java
  game.service.BattleServiceImpl
 command/item/UseHealCommand.java
@@ -184,8 +195,6 @@ command/card_collection/NavigateToCardCommand.java
  command.card_collection.NavigateToCardCommand
 command/shop/BuyBoostCommand.java
  command.shop.BuyBoostCommand
-command/admin/AppStatsCommand.java
- command.admin.AppStatsCommand
 game/dungeon/RobberyCave.java
  game.dungeon.RobberyCave
 command/shop/DailyFreeTokensCommand.java

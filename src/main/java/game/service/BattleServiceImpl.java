@@ -151,14 +151,16 @@ public class BattleServiceImpl implements BattleService {
         StringBuilder battleHistory = new StringBuilder();
         battleHistory.append(enemy.getEnemyType().getBattleMessage()).append("\n").append("\n");
         battleHistory.append(messageFormatter.getEnemyBattleStartMessage(enemy, card)).append("\n");
-        int random = (int) (Math.random() * 2);
-        if(card.getHealth() < enemy.getEnemyCard().getHealth() || card.getAttack() < enemy.getEnemyCard().getAttack())
-            random = 0;
-        if(random == 0)
-            completeBattle(battleHistory, card, enemy.getEnemyCard());
-        else
-            completeBattle(battleHistory, enemy.getEnemyCard(), card);
-        cardService.save(card);
+        if(enemy.getEnemyCard().getHealth() > 0) {
+            int random = (int) (Math.random() * 2);
+            if (card.getHealth() < enemy.getEnemyCard().getHealth() || card.getAttack() < enemy.getEnemyCard().getAttack())
+                random = 0;
+            if (random == 0)
+                completeBattle(battleHistory, card, enemy.getEnemyCard());
+            else
+                completeBattle(battleHistory, enemy.getEnemyCard(), card);
+            cardService.save(card);
+        }
         User user = commandDTO.getUser();
         if(card.getHealth() > 0) {
             userService.higherBalance(user, enemy.getAward());

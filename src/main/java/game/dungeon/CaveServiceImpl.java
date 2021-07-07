@@ -53,16 +53,22 @@ public class CaveServiceImpl implements CaveService{
     }
 
     private Cave getCave() {
-        int rnd = (int) (Math.random() * 100);
+        double rnd = (Math.random() * 100);
         if(rnd < 20)
             return new RobberyCave();
-        else if(rnd  < 40)
+        else if(rnd  < 30)
             return new TrapCave();
-        else if(rnd  < 50)
+        else if(rnd  < 40)
             return new LootCave();
-        else if(rnd  < 60)
+        else if(rnd  < 50)
             return new HealCave();
-        else
+        else if(rnd  < 97)
             return new BattleCave();
+        else if(rnd < 98.25)
+            return new WeaponCave();
+        else if(rnd  < 99.5)
+            return new ArmorCave();
+        else
+            return new LevelUpCave();
     }
 }
