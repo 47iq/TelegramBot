@@ -26,9 +26,7 @@ public class PrepareBattleCommand implements Command {
     public AnswerDTO execute(CommandDTO commandDTO) {
         List<Card> cardList = cardService.getAllCardsOf(commandDTO.getUser());
         Map<String, String> cardReferences = new HashMap<>();
-        cardList.forEach(x -> cardReferences.put("/battle_card." + x.getUID(),
-                "id: " + x.getUID() + " " + MessageBundle.getMessage(x.getName().name() + "_short") + " " + messageFormatter.getShortMessage(x)));
-        cardReferences.put("/help", MessageBundle.getMessage("back"));
+        cardList.stream().filter(x  -> x.getHealth() > 0).forEach(x -> cardReferences.put("/battle_card." + x.getUID(), messageFormatter.getCardViewMessage(x)));cardReferences.put("/help", MessageBundle.getMessage("back"));
         return new AnswerDTO(true, MessageBundle.getMessage("ask_whatcard"), KeyboardType.CUSTOM, null, cardReferences);
     }
 }

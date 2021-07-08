@@ -13,5 +13,8 @@ public enum KeyboardType {
     STATS,
     DUNGEON,
     DUNGEON_LEAF,
-    DUNGEON_MENU
+    DUNGEON_MENU,
+    START_SHOP,
+    START_USE_ITEM,
+    START_GOTO_MENU
 }

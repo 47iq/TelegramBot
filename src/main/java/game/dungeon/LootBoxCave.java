@@ -1,5 +1,6 @@
 package game.dungeon;
 
+import command.shop.OpenBoxCommand;
 import command.shop.OpenSuperRareBoxCommand;
 import communication.keyboard.KeyboardType;
 import communication.util.AnswerDTO;
@@ -9,19 +10,17 @@ import data.CardService;
 import data.UserService;
 import game.entity.Card;
 import game.service.BattleService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-import java.util.ResourceBundle;
+@Component
+public class LootBoxCave implements Cave {
 
-public class LevelUpCave implements Cave{
     @Override
     public AnswerDTO enterThisCave(CommandDTO commandDTO, Card card, BattleService battleService,
                                    MessageFormatter messageFormatter, CardService cardService, UserService userService, OpenSuperRareBoxCommand command) {
-        if(card.getLevel() < Long.parseLong(ResourceBundle.getBundle("settings").getString("MAX_LEVEL"))) {
-            card.levelUp();
-            cardService.save(card);
-            return new AnswerDTO(true, messageFormatter.getLevelUpCaveMessage((long) (Math.random()*4), card), KeyboardType.DUNGEON, null, null);
-        }  else {
-            return new AnswerDTO(true, messageFormatter.getLevelUpCaveMaxLevelMessage((long) (Math.random()*4), card), KeyboardType.DUNGEON, null, null);
-        }
+        AnswerDTO answerDTO = command.execute(commandDTO);
+        answerDTO.setKeyboardType(KeyboardType.DUNGEON);
+        return answerDTO.appendToBeginning(messageFormatter.getLootBoxCaveMessage(answerDTO.getCardName()));
     }
 }

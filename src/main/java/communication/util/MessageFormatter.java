@@ -3,6 +3,7 @@ package communication.util;
 import game.dungeon.Enemy;
 import game.entity.Card;
 import data.User;
+import game.entity.CardName;
 
 import java.util.List;
 
@@ -32,4 +33,14 @@ public interface MessageFormatter {
     String getEnemyBattleStartMessage(Enemy enemy, Card card);
     String getLevelUpCaveMessage(long l, Card card);
     String getLevelUpCaveMaxLevelMessage(long l, Card card);
+    String getCardViewMessage(Card x);
+    String getCardViewMessage2(Card x);
+    String getBattleXpMessage(Card winner, long gainedXp);
+    String getLevelUpMessage(Card winner);
+    String getStartShopInfo(User user);
+    String getMainMenuInfo();
+    String getItemInfo();
+    String getDungeonInfo();
+    String getShopInfo();
+    String getLootBoxCaveMessage(CardName cardName);
 }

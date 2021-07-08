@@ -36,14 +36,22 @@ public class KeyboardCreatorImpl implements KeyboardCreator{
             case DUNGEON -> getDungeonKeyboard();
             case DUNGEON_LEAF -> getDungeonLeafKeyboard();
             case DUNGEON_MENU -> getDungeonMenuKeyboard();
+            case START_SHOP -> getStartShopKeyboard();
             default -> null;
         };
+    }
+
+    private InlineKeyboardMarkup getStartShopKeyboard() {
+        Map<String, String> menu = new HashMap<>();
+        menu.put("/open_basic", MessageBundle.getMessage("info_openbasic"));
+        return getKeyboard(menu);
     }
 
     private InlineKeyboardMarkup getDungeonMenuKeyboard() {
         Map<String, String> menu = new HashMap<>();
         menu.put("/help", MessageBundle.getMessage("back"));
         menu.put("/dungeon_enter", MessageBundle.getMessage("dungeon_enter"));
+        menu.put("/dungeon_info", MessageBundle.getMessage("/info"));
         return getKeyboard(menu);
     }
 
@@ -72,6 +80,7 @@ public class KeyboardCreatorImpl implements KeyboardCreator{
     private InlineKeyboardMarkup getBattleKeyboard() {
         Map<String, String> menu = new HashMap<>();
         menu.put("/battle", MessageBundle.getMessage("info_battle"));
+        menu.put("/battle_info", MessageBundle.getMessage("/info"));
         menu.put("/leave_search", MessageBundle.getMessage("info_leavesearch"));
         menu.put("/help", MessageBundle.getMessage("back"));
         return getKeyboard(menu);
@@ -81,6 +90,7 @@ public class KeyboardCreatorImpl implements KeyboardCreator{
         Map<String, String> menu = new HashMap<>();
         menu.put("/use_heal", MessageBundle.getMessage("info_useheal"));
         menu.put("/use_boost", MessageBundle.getMessage("info_useboost"));
+        menu.put("/item_info", MessageBundle.getMessage("/info"));
         menu.put("/help", MessageBundle.getMessage("back"));
         return getKeyboard(menu);
     }
@@ -101,12 +111,13 @@ public class KeyboardCreatorImpl implements KeyboardCreator{
         menu.put("/free_tokens", MessageBundle.getMessage("info_freetokens"));
         menu.put("/help", MessageBundle.getMessage("back"));
         menu.put("/buy_beer", MessageBundle.getMessage("info_buybeer"));
+        menu.put("/shop_info", MessageBundle.getMessage("/info"));
         return getKeyboard(menu);
     }
 
     private InlineKeyboardMarkup getWelcomeKeyboard() {
         Map<String, String> menu = new HashMap<>();
-        menu.put("/help", MessageBundle.getMessage("info_gotomenu"));
+        menu.put("/start_shop", MessageBundle.getMessage("info_gotomenu"));
         return getKeyboard(menu);
     }
 
@@ -156,6 +167,7 @@ public class KeyboardCreatorImpl implements KeyboardCreator{
         buttonTexts.add("/use_item");
         buttonTexts.add("/battle_menu");
         buttonTexts.add("/dungeon_menu");
+        buttonTexts.add("/info");
         Map<String, String> texts = new HashMap<>();
         for(var text : buttonTexts) {
                 texts.put(text, MessageBundle.getMessage(text));

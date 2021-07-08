@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.io.File;
+import java.util.ResourceBundle;
 
 @Component
 @Entity(name = "cards")
@@ -25,6 +26,8 @@ public class Card {
     double defence;
     @Column(name = "type")
     CardType type;
+    @Column(name = "xp")
+    long xp;
     @Id
     @Basic(optional = false)
     @Column(name = "uid", unique = true)
@@ -50,6 +53,8 @@ public class Card {
 
     public Card(CardName name, double health, double attack, double defence) {
         this.name = name;
+        this.owner = null;
+        this.maxHealth = health;
         this.health = health;
         this.attack = attack;
         this.defence = defence;
@@ -142,5 +147,32 @@ public class Card {
 
     public void setMaxHealth(double maxHealth) {
         this.maxHealth = maxHealth;
+    }
+
+
+    public long getXp() {
+        return xp;
+    }
+
+    public void setXp(long xp) {
+        this.xp = xp;
+    }
+
+    public Long getNextLevelXp() {
+        long  basic  = Long.parseLong(ResourceBundle.getBundle("settings").getString("LEVEL_XP"));
+        if(level <= 5)
+            return basic * this.level - xp;
+        else if(level <=10)
+            return basic * 2 * this.level - xp;
+        else if(level <=15)
+            return basic * 4 * this.level - xp;
+        else if(level <=17)
+            return basic * 8 * this.level - xp;
+        else if(level <=18)
+            return basic * 16 * this.level - xp;
+        else if(level <=19)
+            return basic * 32 * this.level - xp;
+        else
+            return null;
     }
 }

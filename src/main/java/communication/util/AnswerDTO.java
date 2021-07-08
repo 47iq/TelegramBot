@@ -1,6 +1,7 @@
 package communication.util;
 
 import communication.keyboard.KeyboardType;
+import game.entity.CardName;
 import org.jvnet.hk2.annotations.Optional;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 
@@ -14,6 +15,7 @@ public class AnswerDTO {
     File image;
     Map<String, String> buttons;
     TelegramLongPollingBot  bot;
+    CardName cardName;
 
 
     public AnswerDTO(boolean isSuccessful, String message, KeyboardType keyboardType, @Optional File image, @Optional Map<String, String> buttons) {
@@ -22,6 +24,14 @@ public class AnswerDTO {
         this.keyboardType = keyboardType;
         this.image = image;
         this.buttons = buttons;
+    }
+
+    public CardName getCardName() {
+        return cardName;
+    }
+
+    public void setCardName(CardName cardName) {
+        this.cardName = cardName;
     }
 
     public TelegramLongPollingBot getBot() {
@@ -50,5 +60,19 @@ public class AnswerDTO {
 
     public Map<String, String> getButtons() {
         return buttons;
+    }
+
+    public AnswerDTO append(String s) {
+        this.message += "\n\n" + s;
+        return this;
+    }
+
+    public void setKeyboardType(KeyboardType keyboardType) {
+        this.keyboardType = keyboardType;
+    }
+
+    public AnswerDTO appendToBeginning(String s) {
+        this.message = s  + "\n\n" + message;
+        return this;
     }
 }

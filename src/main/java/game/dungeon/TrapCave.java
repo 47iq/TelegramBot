@@ -1,5 +1,6 @@
 package game.dungeon;
 
+import command.shop.OpenSuperRareBoxCommand;
 import communication.keyboard.KeyboardType;
 import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
@@ -21,8 +22,8 @@ public class TrapCave implements Cave {
 
     @Override
     public AnswerDTO enterThisCave(CommandDTO commandDTO, Card card, BattleService battleService,
-                                   MessageFormatter messageFormatter, CardService cardService, UserService userService) {
-        card.setHealth(card.getHealth() - lostHealth);
+                                   MessageFormatter messageFormatter, CardService cardService, UserService userService, OpenSuperRareBoxCommand command) {
+        card.setHealth(Math.max(card.getHealth() - lostHealth, 0));
         cardService.save(card);
         if(card.getHealth()  >  0)
             return new AnswerDTO(true, messageFormatter.getTrapCaveMessage((long) (Math.random()*4), lostHealth, card), KeyboardType.DUNGEON, null, null);

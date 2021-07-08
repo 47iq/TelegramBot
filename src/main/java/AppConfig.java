@@ -1,29 +1,22 @@
 import command.*;
 import command.admin.AddTokensCommand;
+import command.battle.*;
+import command.dungeon.*;
+import command.item.*;
 import command.stats.AppStatsCommand;
 import command.admin.GetUserStatsCommand;
 import command.admin.NotifyAllCommand;
-import command.battle.BattleMenuCommand;
-import command.battle.LeaveSearchCommand;
-import command.battle.PrepareBattleCommand;
-import command.battle.StartSearchCommand;
 import command.card_collection.CardViewCommand;
 import command.card_collection.NavigateToCardCommand;
 import command.card_collection.SellCardCommand;
 import command.card_collection.SellCommand;
-import command.dungeon.EnterDungeonCardCommand;
-import command.dungeon.EnterDungeonCommand;
-import command.dungeon.EnterNextCaveCommand;
-import command.dungeon.LeaveDungeonCommand;
-import command.item.BoostCardCommand;
-import command.item.HealCardCommand;
-import command.item.UseBoostCommand;
-import command.item.UseHealCommand;
 import command.main_menu.*;
 import command.stats.GlobalStatsCommand;
 import command.stats.MyStatsCommand;
 import command.service_command.*;
 import command.shop.*;
+import command.tutorial.StartCommand;
+import command.tutorial.StartShopCommand;
 import communication.connection.*;
 import communication.notification.NotificationService;
 import communication.notification.NotificationServiceImpl;
@@ -101,11 +94,54 @@ public class AppConfig {
         commandMap.put("/dungeon_enter", getDungeonEnterCommand());
         commandMap.put("/dungeon_enter_card", getDungeonEnterCardCommand());
         commandMap.put("/dungeon_next", getDungeonNextCommand());
+        commandMap.put("/info", getInfoCommand());
+        commandMap.put("/item_info", getItemInfoCommand());
+        commandMap.put("/dungeon_info", getDungeonInfoCommand());
+        commandMap.put("/shop_info", getShopInfoCommand());
+        commandMap.put("/battle_info", getBattleInfoCommand());
+        commandMap.put("/start_shop", getStartShopCommand());
         Map<String, Command> adminCommands = new HashMap<>();
         adminCommands.put("/add_tokens", getAddTokensCommand());
         adminCommands.put("/notify_all", getNotifyAllCommand());
         adminCommands.put("/user_stats", getUserStatsCommand());
         return new CommandFactoryImpl(commandMap, adminCommands);
+    }
+
+    @Bean
+    @Scope("singleton")
+    public Command getBattleInfoCommand() {
+        return new BattleInfoCommand();
+    }
+
+    @Bean
+    @Scope("singleton")
+    public Command getStartShopCommand() {
+        return new StartShopCommand();
+    }
+
+    @Bean
+    @Scope("singleton")
+    public Command getShopInfoCommand() {
+        return new ShopInfoCommand();
+    }
+
+    @Bean
+    @Scope("singleton")
+    public Command getDungeonInfoCommand() {
+        return new DungeonInfoCommand();
+    }
+
+
+    @Bean
+    @Scope("singleton")
+    public Command getItemInfoCommand() {
+        return new ItemInfoCommand();
+    }
+
+    @Bean
+    @Scope("singleton")
+    public Command getInfoCommand() {
+        return new InfoCommand();
     }
 
     @Bean
@@ -355,6 +391,16 @@ public class AppConfig {
         pathMap.put(new ImageIdentifier(CardName.POLYAKOV, CardType.RARE), settings.getString("POLYAKOV_RARE"));
         pathMap.put(new ImageIdentifier(CardName.POLYAKOV, CardType.EPIC), settings.getString("POLYAKOV_EPIC"));
         pathMap.put(new ImageIdentifier(CardName.POLYAKOV, CardType.LEGENDARY), settings.getString("POLYAKOV_LEGENDARY"));
+        pathMap.put(new ImageIdentifier(CardName.VOZIANOVA, CardType.BASIC), settings.getString("VOZIANOVA"));
+        pathMap.put(new ImageIdentifier(CardName.VOZIANOVA, CardType.RARE), settings.getString("VOZIANOVA"));
+        pathMap.put(new ImageIdentifier(CardName.VOZIANOVA, CardType.EPIC), settings.getString("VOZIANOVA"));
+        pathMap.put(new ImageIdentifier(CardName.VOZIANOVA, CardType.LEGENDARY), settings.getString("VOZIANOVA"));
+        pathMap.put(new ImageIdentifier(CardName.PERTSEV, CardType.BASIC), settings.getString("PERTSEV_BASIC"));
+        pathMap.put(new ImageIdentifier(CardName.PERTSEV, CardType.RARE), settings.getString("PERTSEV_RARE"));
+        pathMap.put(new ImageIdentifier(CardName.PERTSEV, CardType.EPIC), settings.getString("PERTSEV_EPIC"));
+        pathMap.put(new ImageIdentifier(CardName.PERTSEV, CardType.LEGENDARY), settings.getString("PERTSEV_LEGENDARY"));
+        pathMap.put(new ImageIdentifier(CardName.BILLIE_HARRINGTON, CardType.LEGENDARY), settings.getString("BILLIE_HARRINGTON_LEGENDARY"));
+        pathMap.put(new ImageIdentifier(CardName.SVYATOSLAV, CardType.LEGENDARY), settings.getString("SVYATOSLAV_LEGENDARY"));
         return new ImageParserImpl(pathMap);
     }
 
@@ -415,5 +461,10 @@ public class AppConfig {
     @Bean
     public RegisterCommand getRegisterCommand(){
         return new RegisterCommand();
+    }
+
+    @Bean
+    public OpenBoxCommand  openSuperRareBoxCommand()  {
+        return new OpenBoxCommand();
     }
 }

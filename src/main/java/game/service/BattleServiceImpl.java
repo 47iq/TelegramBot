@@ -28,6 +28,8 @@ public class BattleServiceImpl implements BattleService {
     NotificationService notificationService;
     @Autowired
     UserService userService;
+    @Autowired
+    BattleXpCalculator battleXpCalculator;
 
     TelegramLongPollingBot bot;
 
@@ -73,18 +75,14 @@ public class BattleServiceImpl implements BattleService {
         battleHistory.append(messageFormatter.getBattleStartMessage(firstUser, firstCard, secondUser, secondCard));
         firstUser.addBattle();
         secondUser.addBattle();
-        battleHistory.append(completeBattle(battleHistory, firstCard, secondCard));
+        completeBattle(battleHistory, firstCard, secondCard);
         if (firstCard.getHealth() > 0) {
             battleHistory.append(messageFormatter.getWinLossMessage(firstUser, secondUser));
             AnswerDTO answerDTO = new AnswerDTO(true, battleHistory.toString(), KeyboardType.LEAF, null, null);
             answerDTO.setBot(bot);
-            if(secondCard.getLevel() >= firstCard.getLevel()) {
-                battleHistory.append(messageFormatter.getBattleWinMessage(firstCard));
-                cardService.boost(firstCard);
-            }
             cardService.save(secondCard);
-            notificationService.notify(firstUser, answerDTO);
             notificationService.notify(secondUser, answerDTO);
+            notificationService.notify(firstUser, answerDTO.append(calcLevelUp(firstCard, secondCard)));
             firstUser.addWin();
             userService.higherBalance(firstUser, Long.parseLong(ResourceBundle.getBundle("settings").getString("WIN_BONUS")));
             userService.higherBalance(secondUser, Long.parseLong(ResourceBundle.getBundle("settings").getString("LOSS_BONUS")));
@@ -94,13 +92,9 @@ public class BattleServiceImpl implements BattleService {
             battleHistory.append(messageFormatter.getWinLossMessage(secondUser, firstUser));
             AnswerDTO answerDTO = new AnswerDTO(true, battleHistory.toString(), KeyboardType.LEAF, null, null);
             answerDTO.setBot(bot);
-            if(secondCard.getLevel() <= firstCard.getLevel()) {
-                battleHistory.append(messageFormatter.getBattleWinMessage(secondCard));
-                cardService.boost(secondCard);
-            }
             cardService.save(firstCard);
             notificationService.notify(firstUser, answerDTO);
-            notificationService.notify(secondUser, answerDTO);
+            notificationService.notify(secondUser, answerDTO.append(calcLevelUp(secondCard, firstCard)));
             secondUser.addWin();
             userService.higherBalance(secondUser, Long.parseLong(ResourceBundle.getBundle("settings").getString("WIN_BONUS")));
             userService.higherBalance(firstUser, Long.parseLong(ResourceBundle.getBundle("settings").getString("LOSS_BONUS")));
@@ -121,7 +115,7 @@ public class BattleServiceImpl implements BattleService {
             if (turnCounter % 2 == 0) {
                 chance += 40/(Math.pow(secondCard.getDefence(),  0.5) + 1);
                 if (chance > random) {
-                    secondCard.setHealth(secondCard.getHealth() - firstCard.getAttack() * multiplier * damageMultiplier);
+                    secondCard.setHealth(Math.max(secondCard.getHealth() - firstCard.getAttack() * multiplier * damageMultiplier, 0));
                     if(multiplier == 2)
                         battleHistory.append(MessageBundle.getMessage("battle_crit")).append("\n");
                     battleHistory.append(messageFormatter.getBattleMessage(firstCard, secondCard, firstCard.getAttack() * multiplier * damageMultiplier, secondCard.getHealth()));
@@ -132,7 +126,7 @@ public class BattleServiceImpl implements BattleService {
             } else {
                 chance += 40/(Math.pow(firstCard.getDefence(),  0.5) + 1);
                 if (chance > random) {
-                    firstCard.setHealth(firstCard.getHealth() - secondCard.getAttack() * multiplier * damageMultiplier);
+                    firstCard.setHealth(Math.max(firstCard.getHealth() - secondCard.getAttack() * multiplier * damageMultiplier, 0));
                     if(multiplier == 2)
                         battleHistory.append(MessageBundle.getMessage("battle_crit")).append("\n");
                     battleHistory.append(messageFormatter.getBattleMessage(secondCard, firstCard, secondCard.getAttack() * multiplier * damageMultiplier, firstCard.getHealth()));
@@ -165,7 +159,9 @@ public class BattleServiceImpl implements BattleService {
         if(card.getHealth() > 0) {
             userService.higherBalance(user, enemy.getAward());
             return new AnswerDTO(true, battleHistory.toString() + "\n" +
-                    messageFormatter.getEnemyBattleWinMessage(card, enemy), KeyboardType.DUNGEON, null, null);
+                    messageFormatter.getEnemyBattleWinMessage(card, enemy),
+                    KeyboardType.DUNGEON, null, null)
+                    .append(calcLevelUp(card, enemy.getEnemyCard()));
         } else
             return new AnswerDTO(true,  battleHistory.toString() + "\n" +
                     messageFormatter.getEnemyBattleLoseMessage(card, enemy), KeyboardType.DUNGEON_LEAF, null,null);
@@ -192,5 +188,15 @@ public class BattleServiceImpl implements BattleService {
         synchronized (battleQueue) {
             battleQueue.remove(user);
         }
+    }
+
+    private String calcLevelUp(Card winner, Card loser) {
+        long gainedXp = battleXpCalculator.calcXp(winner, loser);
+        String message = "";
+        if(cardService.addXpLeveledUp(winner, gainedXp))
+            message += messageFormatter.getLevelUpMessage(winner);
+        else
+            message += messageFormatter.getBattleXpMessage(winner, gainedXp);
+        return message;
     }
 }

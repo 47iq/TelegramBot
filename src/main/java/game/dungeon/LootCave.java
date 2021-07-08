@@ -1,5 +1,6 @@
 package game.dungeon;
 
+import command.shop.OpenSuperRareBoxCommand;
 import communication.keyboard.KeyboardType;
 import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
@@ -21,7 +22,7 @@ public class LootCave implements Cave {
 
     @Override
     public AnswerDTO enterThisCave(CommandDTO commandDTO, Card card, BattleService battleService,
-                                   MessageFormatter messageFormatter, CardService cardService, UserService userService) {
+                                   MessageFormatter messageFormatter, CardService cardService, UserService userService, OpenSuperRareBoxCommand command) {
         userService.higherBalance(commandDTO.getUser(), tokens);
         return new AnswerDTO(true, messageFormatter.getLootCaveMessage((long) (Math.random()*4), tokens), KeyboardType.DUNGEON, null, null);
     }

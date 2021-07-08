@@ -26,8 +26,8 @@ public class UseHealCommand implements Command {
     public AnswerDTO execute(CommandDTO commandDTO) {
         List<Card> cardList = cardService.getAllCardsOf(commandDTO.getUser());
         Map<String, String> cardReferences = new HashMap<>();
-        cardList.forEach(x -> cardReferences.put("/heal_card." + x.getUID(),
-                MessageBundle.getMessage(x.getName().name() + "_short") + " id: " + x.getUID() + " " + messageFormatter.getHealthMessage(x)));
+        cardList.stream().filter(x -> x.getHealth() < x.getMaxHealth()).forEach(x -> cardReferences.put("/heal_card." + x.getUID(),
+                messageFormatter.getCardViewMessage(x) + " " + messageFormatter.getHealthMessage(x)));
         cardReferences.put("/help", MessageBundle.getMessage("back"));
         return new AnswerDTO(true, MessageBundle.getMessage("ask_whatcard"), KeyboardType.CUSTOM, null, cardReferences);
     }

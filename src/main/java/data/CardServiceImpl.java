@@ -59,4 +59,19 @@ public class CardServiceImpl implements CardService{
     public List<Card> getAllCards() {
         return cardDAO.getAll();
     }
+
+    @Override
+    public boolean addXpLeveledUp(Card card, long xp) {
+        long needXpToLevelUp = Long.parseLong(ResourceBundle.getBundle("settings").getString("LEVEL_XP")) * card.getLevel();
+        if(card.getXp() + xp >= needXpToLevelUp && card.getLevel() < Long.parseLong(ResourceBundle.getBundle("settings").getString("MAX_LEVEL"))) {
+            card.levelUp();
+            card.setXp(card.getXp() - needXpToLevelUp + xp);
+            cardDAO.update(card);
+            return true;
+        } else {
+            card.setXp(card.getXp() + xp);
+            cardDAO.update(card);
+            return false;
+        }
+    }
 }

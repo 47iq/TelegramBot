@@ -1,6 +1,7 @@
-package command.service_command;
+package command.tutorial;
 
 import command.Command;
+import command.service_command.RegisterCommand;
 import data.UserDAO;
 import communication.keyboard.KeyboardType;
 import org.springframework.beans.factory.annotation.Autowired;

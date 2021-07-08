@@ -12,4 +12,5 @@ public interface CardService {
     void delete(Card card);
     void save(Card secondCard);
     List<Card> getAllCards();
+    boolean addXpLeveledUp(Card card, long xp);
 }

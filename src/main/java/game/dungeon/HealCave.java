@@ -1,5 +1,6 @@
 package game.dungeon;
 
+import command.shop.OpenSuperRareBoxCommand;
 import communication.keyboard.KeyboardType;
 import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
@@ -21,7 +22,7 @@ public class HealCave implements Cave{
 
     @Override
     public AnswerDTO enterThisCave(CommandDTO commandDTO, Card card, BattleService battleService,
-                                   MessageFormatter messageFormatter, CardService cardService, UserService userService) {
+                                   MessageFormatter messageFormatter, CardService cardService, UserService userService, OpenSuperRareBoxCommand command) {
         card.setHealth(Math.min(card.getHealth() + gainedHealth, card.getMaxHealth()));
         cardService.save(card);
         return new AnswerDTO(true, messageFormatter.getHealCaveMessage((long) (Math.random()*4),gainedHealth, card), KeyboardType.DUNGEON, null, null);

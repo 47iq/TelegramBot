@@ -1,5 +1,6 @@
 package game.dungeon;
 
+import command.shop.OpenSuperRareBoxCommand;
 import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
 import communication.util.MessageFormatter;
@@ -10,5 +11,5 @@ import game.service.BattleService;
 
 public interface Cave {
     AnswerDTO enterThisCave(CommandDTO commandDTO, Card card, BattleService battleService,
-                            MessageFormatter messageFormatter, CardService cardService, UserService userService);
+                            MessageFormatter messageFormatter, CardService cardService, UserService userService,  OpenSuperRareBoxCommand command);
 }

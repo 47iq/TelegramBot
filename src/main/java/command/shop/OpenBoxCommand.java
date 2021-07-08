@@ -30,11 +30,13 @@ public class OpenBoxCommand {
     public AnswerDTO execute(CommandDTO commandDTO, LootBoxType type) {
         try {
             Card card = lootBox.open(type, commandDTO.getUser());
-            if (cardDAO.create(card))
-                return new AnswerDTO(true,
+            if (cardDAO.create(card)) {
+                AnswerDTO answerDTO = new AnswerDTO(true,
                         MessageBundle.getMessage("info_youget") + "\n" + messageFormatter.getCardMessage(card),
                         KeyboardType.LEAF, imageParser.getImage(new ImageIdentifier(card.getName(), card.getType())), null);
-            else {
+                answerDTO.setCardName(card.getName());
+                return answerDTO;
+            } else {
                 LOGGER.error("Error while opening a lootbox");
                 return new AnswerDTO(false, MessageBundle.getMessage("err_unk"), KeyboardType.CLASSIC, null, null);
             }

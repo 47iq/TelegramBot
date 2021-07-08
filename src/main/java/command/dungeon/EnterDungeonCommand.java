@@ -5,6 +5,7 @@ import communication.keyboard.KeyboardType;
 import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
 import communication.util.MessageBundle;
+import communication.util.MessageFormatter;
 import data.CardService;
 import game.entity.Card;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +19,14 @@ import java.util.Map;
 public class EnterDungeonCommand implements Command {
     @Autowired
     CardService cardService;
+    @Autowired
+    MessageFormatter messageFormatter;
 
     @Override
     public AnswerDTO execute(CommandDTO commandDTO) {
         List<Card> cardList = cardService.getAllCardsOf(commandDTO.getUser());
         Map<String, String> cardReferences = new HashMap<>();
-        cardList.forEach(x -> cardReferences.put("/dungeon_enter_card." + x.getUID(), MessageBundle.getMessage(x.getName().name()) + " id: " + x.getUID()));
+        cardList.stream().filter(x  -> x.getHealth() > 0).forEach(x -> cardReferences.put("/dungeon_enter_card." + x.getUID(), messageFormatter.getCardViewMessage(x)));
         return new AnswerDTO(true, MessageBundle.getMessage("ask_whatcard"), KeyboardType.CUSTOM, null, cardReferences);
     }
 }

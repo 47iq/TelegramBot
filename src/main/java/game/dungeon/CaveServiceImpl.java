@@ -1,5 +1,6 @@
 package game.dungeon;
 
+import command.shop.OpenSuperRareBoxCommand;
 import communication.keyboard.KeyboardType;
 import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
@@ -26,6 +27,8 @@ public class CaveServiceImpl implements CaveService{
     private UserService userService;
     @Autowired
     private BattleService battleService;
+    @Autowired
+    private OpenSuperRareBoxCommand command;
 
     static Map<User, Card> cardMap = new HashMap<>();
 
@@ -46,29 +49,31 @@ public class CaveServiceImpl implements CaveService{
     @Override
     public AnswerDTO enterNextCave(CommandDTO commandDTO) {
         if(!cardMap.containsKey(commandDTO.getUser()))
-            return new AnswerDTO(true, MessageBundle.getMessage("err_notincaves"),  KeyboardType.LEAF, null,  null);;
+            return new AnswerDTO(true, MessageBundle.getMessage("err_notincaves"),  KeyboardType.LEAF, null,  null);
         if(cardMap.get(commandDTO.getUser()).getHealth() <= 0)
             return new AnswerDTO(false, MessageBundle.getMessage("err_nohealth"), KeyboardType.LEAF, null, null);
-        return getCave().enterThisCave(commandDTO,  cardMap.get(commandDTO.getUser()), battleService, messageFormatter, cardService, userService);
+        return getCave().enterThisCave(commandDTO,  cardMap.get(commandDTO.getUser()), battleService, messageFormatter, cardService, userService, command);
     }
 
     private Cave getCave() {
         double rnd = (Math.random() * 100);
-        if(rnd < 20)
+        if(rnd <  10)
             return new RobberyCave();
-        else if(rnd  < 30)
+        else if(rnd  < 20)
             return new TrapCave();
-        else if(rnd  < 40)
+        else if(rnd  < 30)
             return new LootCave();
-        else if(rnd  < 50)
+        else if(rnd  < 40)
             return new HealCave();
-        else if(rnd  < 97)
+        else if(rnd  < 96)
             return new BattleCave();
-        else if(rnd < 98.25)
+        else if(rnd < 97)
             return new WeaponCave();
-        else if(rnd  < 99.5)
+        else if(rnd  < 98)
             return new ArmorCave();
-        else
+        else if(rnd < 99.5)
             return new LevelUpCave();
+        else
+            return new LootBoxCave();
     }
 }

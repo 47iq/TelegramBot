@@ -1,5 +1,6 @@
 package game.dungeon;
 
+import command.shop.OpenSuperRareBoxCommand;
 import communication.keyboard.KeyboardType;
 import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
@@ -18,7 +19,8 @@ public class WeaponCave implements Cave{
     }
 
     @Override
-    public AnswerDTO enterThisCave(CommandDTO commandDTO, Card card, BattleService battleService, MessageFormatter messageFormatter, CardService cardService, UserService userService) {
+    public AnswerDTO enterThisCave(CommandDTO commandDTO, Card card, BattleService battleService,
+                                   MessageFormatter messageFormatter, CardService cardService, UserService userService, OpenSuperRareBoxCommand command) {
         card.setAttack(card.getAttack() + attackBoost);
         cardService.save(card);
         return new AnswerDTO(true, messageFormatter.getWeaponCaveMessage((long) (Math.random()*4),attackBoost, card), KeyboardType.DUNGEON, null, null);

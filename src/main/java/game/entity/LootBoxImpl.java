@@ -38,11 +38,19 @@ public class LootBoxImpl implements LootBox {
                 else
                     return new Card(randName(), CardType.LEGENDARY, user);
             }
+            case SUPER_RARE -> {
+                return new Card(superBoxRandName(), CardType.LEGENDARY, user);
+            }
         }
     }
 
-    CardName randName() {
-        int rand = (int) (Math.random() * 5);
+    private CardName superBoxRandName() {
+        int rand = (int) (Math.random() * 7);
+        return CardName.specialValueOf(rand);
+    }
+
+    private CardName randName() {
+        int rand = (int) (Math.random() * 7);
         return CardName.valueOf(rand);
     }
 }
