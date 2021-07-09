@@ -84,8 +84,8 @@ public class BattleServiceImpl implements BattleService {
             notificationService.notify(secondUser, answerDTO);
             notificationService.notify(firstUser, answerDTO.append(calcLevelUp(firstCard, secondCard)));
             firstUser.addWin();
-            userService.higherBalance(firstUser, Long.parseLong(ResourceBundle.getBundle("settings").getString("WIN_BONUS")));
-            userService.higherBalance(secondUser, Long.parseLong(ResourceBundle.getBundle("settings").getString("LOSS_BONUS")));
+            userService.higherBalance(firstUser, Long.parseLong(MessageBundle.getSetting("WIN_BONUS")));
+            userService.higherBalance(secondUser, Long.parseLong(MessageBundle.getSetting("LOSS_BONUS")));
             userService.save(firstUser);
             userService.save(secondUser);
         } else {
@@ -96,8 +96,8 @@ public class BattleServiceImpl implements BattleService {
             notificationService.notify(firstUser, answerDTO);
             notificationService.notify(secondUser, answerDTO.append(calcLevelUp(secondCard, firstCard)));
             secondUser.addWin();
-            userService.higherBalance(secondUser, Long.parseLong(ResourceBundle.getBundle("settings").getString("WIN_BONUS")));
-            userService.higherBalance(firstUser, Long.parseLong(ResourceBundle.getBundle("settings").getString("LOSS_BONUS")));
+            userService.higherBalance(secondUser, Long.parseLong(MessageBundle.getSetting("WIN_BONUS")));
+            userService.higherBalance(firstUser, Long.parseLong(MessageBundle.getSetting("LOSS_BONUS")));
             userService.save(firstUser);
             userService.save(secondUser);
         }

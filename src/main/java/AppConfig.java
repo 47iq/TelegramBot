@@ -20,6 +20,7 @@ import command.tutorial.StartShopCommand;
 import communication.connection.*;
 import communication.notification.NotificationService;
 import communication.notification.NotificationServiceImpl;
+import communication.util.MessageBundle;
 import data.*;
 import communication.keyboard.KeyboardCreator;
 import communication.keyboard.KeyboardCreatorImpl;
@@ -36,11 +37,12 @@ import org.springframework.context.annotation.Scope;
 import game.entity.ImageIdentifier;
 import communication.util.MessageFormatter;
 import communication.util.MessageFormatterImpl;
+import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 
 import java.util.*;
 
 @Configuration
-@ComponentScan
+//@ComponentScan
 public class AppConfig {
 
     Map<String, Command> commandMap = new HashMap<>();
@@ -370,37 +372,36 @@ public class AppConfig {
     @Scope("singleton")
     public ImageParser getImageBase(){
         Map<ImageIdentifier, String> pathMap = new HashMap<>();
-        ResourceBundle settings = ResourceBundle.getBundle("settings");
-        pathMap.put(new ImageIdentifier(CardName.KLIMENKOV, CardType.BASIC), settings.getString("KLIMENKOV_BASIC"));
-        pathMap.put(new ImageIdentifier(CardName.KLIMENKOV, CardType.RARE), settings.getString("KLIMENKOV_RARE"));
-        pathMap.put(new ImageIdentifier(CardName.KLIMENKOV, CardType.EPIC), settings.getString("KLIMENKOV_EPIC"));
-        pathMap.put(new ImageIdentifier(CardName.KLIMENKOV, CardType.LEGENDARY), settings.getString("KLIMENKOV_LEGENDARY"));
-        pathMap.put(new ImageIdentifier(CardName.KOROBKOV, CardType.BASIC), settings.getString("KOROBKOV_BASIC"));
-        pathMap.put(new ImageIdentifier(CardName.KOROBKOV, CardType.RARE), settings.getString("KOROBKOV_RARE"));
-        pathMap.put(new ImageIdentifier(CardName.KOROBKOV, CardType.EPIC), settings.getString("KOROBKOV_EPIC"));
-        pathMap.put(new ImageIdentifier(CardName.KOROBKOV, CardType.LEGENDARY), settings.getString("KOROBKOV_LEGENDARY"));
-        pathMap.put(new ImageIdentifier(CardName.GAVRILOV, CardType.BASIC), settings.getString("GAVRILOV_BASIC"));
-        pathMap.put(new ImageIdentifier(CardName.GAVRILOV, CardType.RARE), settings.getString("GAVRILOV_RARE"));
-        pathMap.put(new ImageIdentifier(CardName.GAVRILOV, CardType.EPIC), settings.getString("GAVRILOV_EPIC"));
-        pathMap.put(new ImageIdentifier(CardName.GAVRILOV, CardType.LEGENDARY), settings.getString("GAVRILOV_LEGENDARY"));
-        pathMap.put(new ImageIdentifier(CardName.BALAKSHIN, CardType.BASIC), settings.getString("BALAKSHIN_BASIC"));
-        pathMap.put(new ImageIdentifier(CardName.BALAKSHIN, CardType.RARE), settings.getString("BALAKSHIN_RARE"));
-        pathMap.put(new ImageIdentifier(CardName.BALAKSHIN, CardType.EPIC), settings.getString("BALAKSHIN_EPIC"));
-        pathMap.put(new ImageIdentifier(CardName.BALAKSHIN, CardType.LEGENDARY), settings.getString("BALAKSHIN_LEGENDARY"));
-        pathMap.put(new ImageIdentifier(CardName.POLYAKOV, CardType.BASIC), settings.getString("POLYAKOV_BASIC"));
-        pathMap.put(new ImageIdentifier(CardName.POLYAKOV, CardType.RARE), settings.getString("POLYAKOV_RARE"));
-        pathMap.put(new ImageIdentifier(CardName.POLYAKOV, CardType.EPIC), settings.getString("POLYAKOV_EPIC"));
-        pathMap.put(new ImageIdentifier(CardName.POLYAKOV, CardType.LEGENDARY), settings.getString("POLYAKOV_LEGENDARY"));
-        pathMap.put(new ImageIdentifier(CardName.VOZIANOVA, CardType.BASIC), settings.getString("VOZIANOVA"));
-        pathMap.put(new ImageIdentifier(CardName.VOZIANOVA, CardType.RARE), settings.getString("VOZIANOVA"));
-        pathMap.put(new ImageIdentifier(CardName.VOZIANOVA, CardType.EPIC), settings.getString("VOZIANOVA"));
-        pathMap.put(new ImageIdentifier(CardName.VOZIANOVA, CardType.LEGENDARY), settings.getString("VOZIANOVA"));
-        pathMap.put(new ImageIdentifier(CardName.PERTSEV, CardType.BASIC), settings.getString("PERTSEV_BASIC"));
-        pathMap.put(new ImageIdentifier(CardName.PERTSEV, CardType.RARE), settings.getString("PERTSEV_RARE"));
-        pathMap.put(new ImageIdentifier(CardName.PERTSEV, CardType.EPIC), settings.getString("PERTSEV_EPIC"));
-        pathMap.put(new ImageIdentifier(CardName.PERTSEV, CardType.LEGENDARY), settings.getString("PERTSEV_LEGENDARY"));
-        pathMap.put(new ImageIdentifier(CardName.BILLIE_HARRINGTON, CardType.LEGENDARY), settings.getString("BILLIE_HARRINGTON_LEGENDARY"));
-        pathMap.put(new ImageIdentifier(CardName.SVYATOSLAV, CardType.LEGENDARY), settings.getString("SVYATOSLAV_LEGENDARY"));
+        pathMap.put(new ImageIdentifier(CardName.KLIMENKOV, CardType.BASIC), MessageBundle.getSetting("KLIMENKOV_BASIC"));
+        pathMap.put(new ImageIdentifier(CardName.KLIMENKOV, CardType.RARE), MessageBundle.getSetting("KLIMENKOV_RARE"));
+        pathMap.put(new ImageIdentifier(CardName.KLIMENKOV, CardType.EPIC), MessageBundle.getSetting("KLIMENKOV_EPIC"));
+        pathMap.put(new ImageIdentifier(CardName.KLIMENKOV, CardType.LEGENDARY), MessageBundle.getSetting("KLIMENKOV_LEGENDARY"));
+        pathMap.put(new ImageIdentifier(CardName.KOROBKOV, CardType.BASIC), MessageBundle.getSetting("KOROBKOV_BASIC"));
+        pathMap.put(new ImageIdentifier(CardName.KOROBKOV, CardType.RARE), MessageBundle.getSetting("KOROBKOV_RARE"));
+        pathMap.put(new ImageIdentifier(CardName.KOROBKOV, CardType.EPIC), MessageBundle.getSetting("KOROBKOV_EPIC"));
+        pathMap.put(new ImageIdentifier(CardName.KOROBKOV, CardType.LEGENDARY), MessageBundle.getSetting("KOROBKOV_LEGENDARY"));
+        pathMap.put(new ImageIdentifier(CardName.GAVRILOV, CardType.BASIC), MessageBundle.getSetting("GAVRILOV_BASIC"));
+        pathMap.put(new ImageIdentifier(CardName.GAVRILOV, CardType.RARE), MessageBundle.getSetting("GAVRILOV_RARE"));
+        pathMap.put(new ImageIdentifier(CardName.GAVRILOV, CardType.EPIC), MessageBundle.getSetting("GAVRILOV_EPIC"));
+        pathMap.put(new ImageIdentifier(CardName.GAVRILOV, CardType.LEGENDARY), MessageBundle.getSetting("GAVRILOV_LEGENDARY"));
+        pathMap.put(new ImageIdentifier(CardName.BALAKSHIN, CardType.BASIC), MessageBundle.getSetting("BALAKSHIN_BASIC"));
+        pathMap.put(new ImageIdentifier(CardName.BALAKSHIN, CardType.RARE), MessageBundle.getSetting("BALAKSHIN_RARE"));
+        pathMap.put(new ImageIdentifier(CardName.BALAKSHIN, CardType.EPIC), MessageBundle.getSetting("BALAKSHIN_EPIC"));
+        pathMap.put(new ImageIdentifier(CardName.BALAKSHIN, CardType.LEGENDARY), MessageBundle.getSetting("BALAKSHIN_LEGENDARY"));
+        pathMap.put(new ImageIdentifier(CardName.POLYAKOV, CardType.BASIC), MessageBundle.getSetting("POLYAKOV_BASIC"));
+        pathMap.put(new ImageIdentifier(CardName.POLYAKOV, CardType.RARE), MessageBundle.getSetting("POLYAKOV_RARE"));
+        pathMap.put(new ImageIdentifier(CardName.POLYAKOV, CardType.EPIC), MessageBundle.getSetting("POLYAKOV_EPIC"));
+        pathMap.put(new ImageIdentifier(CardName.POLYAKOV, CardType.LEGENDARY), MessageBundle.getSetting("POLYAKOV_LEGENDARY"));
+        pathMap.put(new ImageIdentifier(CardName.VOZIANOVA, CardType.BASIC), MessageBundle.getSetting("VOZIANOVA"));
+        pathMap.put(new ImageIdentifier(CardName.VOZIANOVA, CardType.RARE), MessageBundle.getSetting("VOZIANOVA"));
+        pathMap.put(new ImageIdentifier(CardName.VOZIANOVA, CardType.EPIC), MessageBundle.getSetting("VOZIANOVA"));
+        pathMap.put(new ImageIdentifier(CardName.VOZIANOVA, CardType.LEGENDARY), MessageBundle.getSetting("VOZIANOVA"));
+        pathMap.put(new ImageIdentifier(CardName.PERTSEV, CardType.BASIC), MessageBundle.getSetting("PERTSEV_BASIC"));
+        pathMap.put(new ImageIdentifier(CardName.PERTSEV, CardType.RARE), MessageBundle.getSetting("PERTSEV_RARE"));
+        pathMap.put(new ImageIdentifier(CardName.PERTSEV, CardType.EPIC), MessageBundle.getSetting("PERTSEV_EPIC"));
+        pathMap.put(new ImageIdentifier(CardName.PERTSEV, CardType.LEGENDARY), MessageBundle.getSetting("PERTSEV_LEGENDARY"));
+        pathMap.put(new ImageIdentifier(CardName.BILLIE_HARRINGTON, CardType.LEGENDARY), MessageBundle.getSetting("BILLIE_HARRINGTON_LEGENDARY"));
+        pathMap.put(new ImageIdentifier(CardName.SVYATOSLAV, CardType.LEGENDARY), MessageBundle.getSetting("SVYATOSLAV_LEGENDARY"));
         return new ImageParserImpl(pathMap);
     }
 
@@ -412,7 +413,43 @@ public class AppConfig {
 
     @Bean
     @Scope("singleton")
-    public MessageFormatter messageFormatter(){
+    public CaveService getCaveService() {
+        return new CaveServiceImpl();
+    }
+
+    @Bean
+    @Scope("singleton")
+    public OpenSuperRareBoxCommand getBox() {
+        return new OpenSuperRareBoxCommand();
+    }
+
+    @Bean
+    @Scope("singleton")
+    public TelegramLongPollingBot getBot() {
+        return new TelegramBot();
+    }
+
+    @Bean
+    @Scope("singleton")
+    public AnswerService getAnswerService() {
+        return new AnswerServiceImpl();
+    }
+
+    @Bean
+    @Scope("singleton")
+    public CardService getCardService() {
+        return new CardServiceImpl();
+    }
+
+    @Bean
+    @Scope("singleton")
+    public BattleXpCalculator getXpCalc() {
+        return new BattleXpCalculatorImpl();
+    }
+
+    @Bean
+    @Scope("singleton")
+    public MessageFormatter getMessageFormatter(){
         return new MessageFormatterImpl();
     }
 

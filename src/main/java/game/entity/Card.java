@@ -1,5 +1,6 @@
 package game.entity;
 
+import communication.util.MessageBundle;
 import data.User;
 import org.springframework.stereotype.Component;
 
@@ -159,19 +160,26 @@ public class Card {
     }
 
     public Long getNextLevelXp() {
-        long  basic  = Long.parseLong(ResourceBundle.getBundle("settings").getString("LEVEL_XP"));
+        if(level <=  19)
+            return calcNextLevelXp() - xp;
+        else
+            return null;
+    }
+
+    public Long calcNextLevelXp()  {
+        long  basic  = Long.parseLong(MessageBundle.getSetting("LEVEL_XP"));
         if(level <= 5)
-            return basic * this.level - xp;
+            return basic * this.level;
         else if(level <=10)
-            return basic * 2 * this.level - xp;
+            return basic * 2 * this.level;
         else if(level <=15)
-            return basic * 4 * this.level - xp;
+            return basic * 4 * this.level;
         else if(level <=17)
-            return basic * 8 * this.level - xp;
+            return basic * 8 * this.level;
         else if(level <=18)
-            return basic * 16 * this.level - xp;
+            return basic * 16 * this.level;
         else if(level <=19)
-            return basic * 32 * this.level - xp;
+            return basic * 32 * this.level;
         else
             return null;
     }

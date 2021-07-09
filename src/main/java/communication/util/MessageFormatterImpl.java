@@ -42,7 +42,6 @@ public class MessageFormatterImpl implements MessageFormatter {
 
     @Override
     public String getShopInfo(User user) {
-        ResourceBundle settings = ResourceBundle.getBundle("settings");
         long tokens = userService.getBalance(user);
         long heal = user.getHealCount();
         long boost = user.getBoostCount();
@@ -50,19 +49,18 @@ public class MessageFormatterImpl implements MessageFormatter {
                 MessageBundle.getMessage("info_heal") + " " + heal + ", " +
                 MessageBundle.getMessage("info_boost") + " " + boost + "\n" +
                 MessageBundle.getMessage("info_prices") + "\n";
-        message += MessageBundle.getMessage("info_heal1") + " " + settings.getString("HEAL_COST") + MessageBundle.getMessage("info_price2") + "\n";
-        message += MessageBundle.getMessage("info_boost1") + " " + settings.getString("BOOST_COST") + MessageBundle.getMessage("info_price2") + "\n";
+        message += MessageBundle.getMessage("info_heal1") + " " + MessageBundle.getSetting("HEAL_COST") + MessageBundle.getMessage("info_price2") + "\n";
+        message += MessageBundle.getMessage("info_boost1") + " " + MessageBundle.getSetting("BOOST_COST") + MessageBundle.getMessage("info_price2") + "\n";
         message += MessageBundle.getMessage("info_boxes") + '\n';
-        message += MessageBundle.getMessage("info_basic") + " " + settings.getString("BASIC_COST") + MessageBundle.getMessage("info_price2") + "\n";
-        message += MessageBundle.getMessage("info_advanced") + " " + settings.getString("ADVANCED_COST") + MessageBundle.getMessage("info_price2") + "\n";
-        message += MessageBundle.getMessage("info_pro") + " " + settings.getString("PRO_COST") + MessageBundle.getMessage("info_price2") + "\n";
+        message += MessageBundle.getMessage("info_basic") + " " + MessageBundle.getSetting("BASIC_COST") + MessageBundle.getMessage("info_price2") + "\n";
+        message += MessageBundle.getMessage("info_advanced") + " " + MessageBundle.getSetting("ADVANCED_COST") + MessageBundle.getMessage("info_price2") + "\n";
+        message += MessageBundle.getMessage("info_pro") + " " + MessageBundle.getSetting("PRO_COST") + MessageBundle.getMessage("info_price2") + "\n";
         message += MessageBundle.getMessage("info_beer1") + "\n";
         return message;
     }
 
     @Override
     public String getStartShopInfo(User user) {
-        ResourceBundle settings = ResourceBundle.getBundle("settings");
         long tokens = userService.getBalance(user);
         long heal = user.getHealCount();
         long boost = user.getBoostCount();
@@ -70,7 +68,7 @@ public class MessageFormatterImpl implements MessageFormatter {
                 MessageBundle.getMessage("info_heal") + " " + heal + ", " +
                 MessageBundle.getMessage("info_boost") + " " + boost + "\n\n" +
                 MessageBundle.getMessage("info_startshop") + "\n\n" +
-                MessageBundle.getMessage("info_basic") + " " + settings.getString("BASIC_COST") + MessageBundle.getMessage("info_price2") + "\n";
+                MessageBundle.getMessage("info_basic") + " " + MessageBundle.getSetting("BASIC_COST") + MessageBundle.getMessage("info_price2") + "\n";
     }
 
     @Override
@@ -310,7 +308,7 @@ public class MessageFormatterImpl implements MessageFormatter {
 
     @Override
     public String getBattleXpMessage(Card winner, long gainedXp) {
-        if (winner.getLevel() < Long.parseLong(ResourceBundle.getBundle("settings").getString("MAX_LEVEL")))
+        if (winner.getLevel() < Long.parseLong(MessageBundle.getSetting("MAX_LEVEL")))
             return getCardMessage2(winner) + " " + MessageBundle.getMessage("info_gainsxp")
                     + " " + gainedXp + MessageBundle.getMessage("info_xp2") + "\n" +
                     MessageBundle.getMessage("info_nextxp") + " " + winner.getNextLevelXp() + MessageBundle.getMessage("info_xp2");

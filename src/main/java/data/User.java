@@ -1,5 +1,6 @@
 package data;
 
+import communication.util.MessageBundle;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.Column;
@@ -39,7 +40,7 @@ public class User {
     public User(String username, long chatId) {
         this.UID = username;
         this.chatID = chatId;
-        tokens = Long.parseLong(ResourceBundle.getBundle("settings").getString("INITIAL_TOKENS"));
+        tokens = Long.parseLong(MessageBundle.getSetting("INITIAL_TOKENS"));
         healCount = 1;
         boostCount = 1;
         lastTokensRedeemed = LocalDateTime.now(ZoneId.systemDefault());

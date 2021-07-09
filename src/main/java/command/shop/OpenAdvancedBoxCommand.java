@@ -22,7 +22,7 @@ public class OpenAdvancedBoxCommand implements Command {
 
     @Override
     public AnswerDTO execute(CommandDTO commandDTO) {
-        long price = Long.parseLong(ResourceBundle.getBundle("settings").getString("ADVANCED_COST"));
+        long price = Long.parseLong(MessageBundle.getSetting("ADVANCED_COST"));
         if(userService.getBalance(commandDTO.getUser()) < price)
             return new AnswerDTO(true, MessageBundle.getMessage("err_nomoney"), KeyboardType.SHOP, null, null);
         else {

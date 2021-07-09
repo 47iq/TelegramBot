@@ -57,6 +57,8 @@ public class CaveServiceImpl implements CaveService{
 
     private Cave getCave() {
         double rnd = (Math.random() * 100);
+        //todo
+        System.out.println("Cave: "  +  rnd);
         if(rnd <  10)
             return new RobberyCave();
         else if(rnd  < 20)

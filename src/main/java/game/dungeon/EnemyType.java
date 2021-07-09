@@ -227,9 +227,9 @@ public enum EnemyType {
     }
 
     public static EnemyType getRandom() {
-        int rnd = (int) (Math.random() * 100);
+        double rnd = (Math.random() * 100);
         //todo
-        System.out.println(rnd);
+        System.out.println("Enemy: " + rnd);
         if (rnd < 8)
             return ANGRY_STUDENTS;
         else if(rnd < 16)

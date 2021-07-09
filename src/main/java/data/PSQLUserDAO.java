@@ -54,8 +54,6 @@ public class PSQLUserDAO implements UserDAO{
             List<User> users = session.createQuery("select p from "+ User.class.getSimpleName() + " p").list();
             transaction.commit();
             usersCache = users;
-            //todo
-            System.out.println(usersCache);
             return usersCache;
         } catch (Exception e) {
             e.printStackTrace();
@@ -66,8 +64,6 @@ public class PSQLUserDAO implements UserDAO{
 
     @Override
     public User getEntityById(String UID) {
-        System.out.println(usersCache);
-        //todo
         return usersCache.stream().filter(x -> x.getUID().equals(UID)).findAny().orElse(null);
     }
 

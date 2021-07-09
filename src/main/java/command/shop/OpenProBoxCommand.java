@@ -22,7 +22,7 @@ public class OpenProBoxCommand implements Command {
 
     @Override
     public AnswerDTO execute(CommandDTO commandDTO) {
-        long price = Long.parseLong(ResourceBundle.getBundle("settings").getString("PRO_COST"));
+        long price = Long.parseLong(MessageBundle.getSetting("PRO_COST"));
         if(userService.getBalance(commandDTO.getUser()) < price)
             return new AnswerDTO(true, MessageBundle.getMessage("err_nomoney"), KeyboardType.SHOP, null, null);
         else {

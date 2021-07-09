@@ -1,15 +1,26 @@
 package command;
 
+import command.tutorial.StartCommand;
 import communication.keyboard.KeyboardType;
 import data.User;
 import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
 import communication.util.MessageBundle;
+import data.UserDAO;
+import data.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.Map;
 import java.util.ResourceBundle;
 
+@Component
 public class CommandFactoryImpl implements CommandFactory{
+
+    @Autowired
+    StartCommand command;
+    @Autowired
+    UserDAO  userDAO;
 
     private final Map<String, Command> commandMap;
 
@@ -23,8 +34,10 @@ public class CommandFactoryImpl implements CommandFactory{
     @Override
     public AnswerDTO execute(CommandDTO commandDTO) {
         Command command = commandMap.get(commandDTO.getMessageText());
-        if(command == null) {
-            if(commandDTO.getUser().getUID().equals(ResourceBundle.getBundle("settings").getString("ADMIN_UID")) && adminCommands.containsKey(commandDTO.getMessageText()))
+        if(userDAO.getEntityById(commandDTO.getUser().getUID()) ==  null)
+            return command.execute(commandDTO);
+        else if(command == null) {
+            if(commandDTO.getUser().getUID().equals(MessageBundle.getSetting("ADMIN_UID")) && adminCommands.containsKey(commandDTO.getMessageText()))
                 return adminCommands.get(commandDTO.getMessageText()).execute(commandDTO);
             else {
                 //todo

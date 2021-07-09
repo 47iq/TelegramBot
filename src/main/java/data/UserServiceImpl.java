@@ -1,5 +1,6 @@
 package data;
 
+import communication.util.MessageBundle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -77,7 +78,7 @@ public class UserServiceImpl implements UserService{
         LocalDateTime now = LocalDateTime.now(ZoneId.systemDefault());
         LocalDateTime old = oldUser.getLastTokensRedeemed();
         if(old.plusHours(24).compareTo(now) < 0) {
-            higherBalance(user, Long.parseLong(ResourceBundle.getBundle("settings").getString("DAILY_BONUS")));
+            higherBalance(user, Long.parseLong(MessageBundle.getSetting("DAILY_BONUS")));
             oldUser.setLastTokensRedeemed(LocalDateTime.now(ZoneId.systemDefault()));
             userDAO.update(user);
             return true;

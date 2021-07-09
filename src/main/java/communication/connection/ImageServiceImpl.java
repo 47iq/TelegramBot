@@ -2,11 +2,13 @@ package communication.connection;
 
 import communication.keyboard.KeyboardCreator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.objects.InputFile;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import communication.util.AnswerDTO;
 
+@Component
 public class ImageServiceImpl implements ImageService{
 
     @Autowired

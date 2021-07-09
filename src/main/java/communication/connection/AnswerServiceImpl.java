@@ -13,7 +13,6 @@ import communication.util.MessageBundle;
 @Component
 public class AnswerServiceImpl implements AnswerService{
 
-    private static final Logger logger = LogManager.getLogger(AnswerServiceImpl.class);
     @Autowired
     KeyboardCreator creator;
 
@@ -25,10 +24,8 @@ public class AnswerServiceImpl implements AnswerService{
                 sendMessage.setText(answerDTO.getMessage());
             else
                 sendMessage.setText(MessageBundle.getMessage("info_main"));
-            logger.info("Prepared response, text: " + sendMessage.getText());
         } else {
             sendMessage.setText(answerDTO.getMessage());
-            logger.warn("Prepared error response, text:  " + sendMessage.getText());
         }
         InlineKeyboardMarkup markup = creator.getKeyboard(answerDTO.getKeyboard(), answerDTO.getButtons());
         sendMessage.setReplyMarkup(markup);

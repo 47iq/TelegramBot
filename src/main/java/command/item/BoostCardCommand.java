@@ -33,6 +33,8 @@ public class BoostCardCommand implements Command {
         else {
             if (userService.getBoostCount(user) < 1)
                 return new AnswerDTO(false, MessageBundle.getMessage("err_noboost"), KeyboardType.CLASSIC, null, null);
+            if (card.getLevel() >= Long.parseLong(MessageBundle.getSetting("MAX_BOOST_LEVEL")))
+                return new AnswerDTO(false, MessageBundle.getMessage("err_maxboost"), KeyboardType.CLASSIC, null, null);
             if(cardService.boost(card))  {
                 userService.spendBoost(user);
                 return new AnswerDTO(true, MessageBundle.getMessage("info_succboost") + "\n"

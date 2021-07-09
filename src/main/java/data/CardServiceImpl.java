@@ -1,5 +1,6 @@
 package data;
 
+import communication.util.MessageBundle;
 import game.entity.Card;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -37,7 +38,7 @@ public class CardServiceImpl implements CardService{
 
     @Override
     public boolean boost(Card card) {
-        if(card.getLevel() < Long.parseLong(ResourceBundle.getBundle("settings").getString("MAX_LEVEL"))) {
+        if(card.getLevel() < Long.parseLong(MessageBundle.getSetting("MAX_LEVEL"))) {
             card.levelUp();
             cardDAO.update(card);
             return true;
@@ -62,8 +63,9 @@ public class CardServiceImpl implements CardService{
 
     @Override
     public boolean addXpLeveledUp(Card card, long xp) {
-        long needXpToLevelUp = Long.parseLong(ResourceBundle.getBundle("settings").getString("LEVEL_XP")) * card.getLevel();
-        if(card.getXp() + xp >= needXpToLevelUp && card.getLevel() < Long.parseLong(ResourceBundle.getBundle("settings").getString("MAX_LEVEL"))) {
+        long needXpToLevelUp = card.calcNextLevelXp();
+        System.out.println(needXpToLevelUp  +  "  "  +  xp  +  "  "  +  card.getXp());
+        if(card.getXp() + xp >= needXpToLevelUp && card.getLevel() < Long.parseLong(MessageBundle.getSetting("MAX_LEVEL"))) {
             card.levelUp();
             card.setXp(card.getXp() - needXpToLevelUp + xp);
             cardDAO.update(card);

@@ -5,7 +5,7 @@ public enum CardName {
     KLIMENKOV {
         @Override
         public double gerMultiplier() {
-            return 1.15;
+            return 1.25;
         }
     },
     KOROBKOV{
@@ -41,7 +41,7 @@ public enum CardName {
     SVYATOSLAV {
         @Override
         public double gerMultiplier() {
-            return 1.30;
+            return 1.32;
         }
     },
     VOZIANOVA{
@@ -53,7 +53,7 @@ public enum CardName {
     PERTSEV {
         @Override
         public double gerMultiplier() {
-            return 1.05;
+            return 1.10;
         }
     };
     public static CardName valueOf(int val) {
