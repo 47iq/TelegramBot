@@ -8,6 +8,11 @@ import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
 import communication.util.MessageFormatter;
 
+/**
+ * Command, which displays user stats.
+ * Syntax: /my_stats
+ */
+
 @Component
 public class MyStatsCommand implements Command {
 

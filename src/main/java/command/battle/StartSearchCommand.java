@@ -12,6 +12,13 @@ import game.entity.Card;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * Command, which puts user and card info battle queue.
+ * Note: Card UID must be sent as an argument in CommandDTO.
+ * @see LeaveSearchCommand
+ * Syntax: /battle_card.1
+ */
+
 @Component
 public class StartSearchCommand implements Command {
     @Autowired

@@ -9,6 +9,12 @@ import game.service.BattleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * Command, which removes user from battle queue(if user is present there).
+ * @see StartSearchCommand
+ * Syntax: /leave_search
+ */
+
 @Component
 public class LeaveSearchCommand implements Command {
     @Autowired

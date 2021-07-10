@@ -4,9 +4,14 @@ import communication.util.MessageBundle;
 import data.User;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Nullable;
 import javax.persistence.*;
 import java.io.File;
 import java.util.ResourceBundle;
+
+/**
+ * Card class
+ */
 
 @Component
 @Entity(name = "cards")
@@ -41,18 +46,36 @@ public class Card {
 
     }
 
+    /**
+     * Constructor for loot box cards
+     *
+     * @param name name of card
+     * @param type rarity of card
+     * @param user owner
+     */
+
     public Card(CardName name, CardType type, User user) {
         this.name = name;
         this.type = type;
         this.owner = user.getUID();
         level = 1;
-        health = 3*(1 + 3*Math.random())*type.getMultiplier()*name.gerMultiplier();
+        health = 3 * (1 + 3 * Math.random()) * type.getMultiplier() * name.gerMultiplier();
         maxHealth = health;
-        attack = (1 + 3*Math.random())*type.getMultiplier()*name.gerMultiplier();
-        defence = (1 + 3*Math.random())*type.getMultiplier()*name.gerMultiplier();
+        attack = (1 + 3 * Math.random()) * type.getMultiplier() * name.gerMultiplier();
+        defence = (1 + 3 * Math.random()) * type.getMultiplier() * name.gerMultiplier();
     }
 
-    public Card(CardName name, double health, double attack, double defence) {
+    /**
+     * Constructor for enemy cards for PVE
+     *
+     * @param name    name of card
+     * @param health  health
+     * @param attack  attack
+     * @param defence defence
+     * @see game.dungeon.Enemy
+     */
+
+    public Card(@Nullable CardName name, double health, double attack, double defence) {
         this.name = name;
         this.owner = null;
         this.maxHealth = health;
@@ -61,12 +84,16 @@ public class Card {
         this.defence = defence;
     }
 
+    /**
+     * Increases cards level and boosts its stats randomly
+     */
+
     public void levelUp() {
         level++;
-        maxHealth += 3*(1 + Math.random()*0.25)*type.getMultiplier()*name.gerMultiplier();
+        maxHealth += 3 * (1 + Math.random() * 0.25) * type.getMultiplier() * name.gerMultiplier();
         health = maxHealth;
-        attack += (1 + Math.random()*0.25)*type.getMultiplier()*name.gerMultiplier();
-        defence += (1 + Math.random()*0.25)*type.getMultiplier()*name.gerMultiplier();
+        attack += (1 + Math.random() * 0.25) * type.getMultiplier() * name.gerMultiplier();
+        defence += (1 + Math.random() * 0.25) * type.getMultiplier() * name.gerMultiplier();
     }
 
     public CardName getName() {
@@ -159,26 +186,36 @@ public class Card {
         this.xp = xp;
     }
 
+    /**
+     * Method that returns xp needed to level up
+     * @return xp needed to level up
+     */
+
     public Long getNextLevelXp() {
-        if(level <=  19)
+        if (level <= 19)
             return calcNextLevelXp() - xp;
         else
             return null;
     }
 
-    public Long calcNextLevelXp()  {
-        long  basic  = Long.parseLong(MessageBundle.getSetting("LEVEL_XP"));
-        if(level <= 5)
+    /**
+     * Method that returns an absolute value of xp needed to reach next level
+     * @return xp needed to reach next level
+     */
+
+    public Long calcNextLevelXp() {
+        long basic = Long.parseLong(MessageBundle.getSetting("LEVEL_XP"));
+        if (level <= 5)
             return basic * this.level;
-        else if(level <=10)
+        else if (level <= 10)
             return basic * 2 * this.level;
-        else if(level <=15)
+        else if (level <= 15)
             return basic * 4 * this.level;
-        else if(level <=17)
+        else if (level <= 17)
             return basic * 8 * this.level;
-        else if(level <=18)
+        else if (level <= 18)
             return basic * 16 * this.level;
-        else if(level <=19)
+        else if (level <= 19)
             return basic * 32 * this.level;
         else
             return null;

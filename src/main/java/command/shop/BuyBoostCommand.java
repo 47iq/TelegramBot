@@ -1,6 +1,7 @@
 package command.shop;
 
 import command.Command;
+import command.service_command.OpenBoxCommand;
 import data.UserService;
 import communication.keyboard.KeyboardType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,10 @@ import communication.util.CommandDTO;
 import communication.util.MessageBundle;
 import communication.util.MessageFormatter;
 
-import java.util.ResourceBundle;
+/**
+ * Command, which makes user buy a boost item.
+ * Syntax: /buy_boost
+ */
 
 @Component
 public class BuyBoostCommand implements Command {

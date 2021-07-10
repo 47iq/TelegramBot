@@ -1,6 +1,6 @@
 package game.dungeon;
 
-import command.shop.OpenSuperRareBoxCommand;
+import command.service_command.OpenSuperRareBoxCommand;
 import communication.keyboard.KeyboardType;
 import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
@@ -9,8 +9,10 @@ import data.CardService;
 import data.UserService;
 import game.entity.Card;
 import game.service.BattleService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+
+/**
+ * Loot cave class: adds random amount of tokens to user's balance
+ */
 
 public class LootCave implements Cave {
 

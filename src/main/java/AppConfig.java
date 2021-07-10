@@ -11,7 +11,7 @@ import command.card_collection.NavigateToCardCommand;
 import command.card_collection.SellCardCommand;
 import command.card_collection.SellCommand;
 import command.main_menu.*;
-import command.stats.GlobalStatsCommand;
+import command.stats.TopStatsCommand;
 import command.stats.MyStatsCommand;
 import command.service_command.*;
 import command.shop.*;
@@ -31,7 +31,6 @@ import game.entity.LootBox;
 import game.entity.LootBoxImpl;
 import game.service.*;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 import game.entity.ImageIdentifier;
@@ -41,8 +40,13 @@ import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 
 import java.util.*;
 
+/**
+ * Config class for Spring framework
+ */
+
 @Configuration
 //@ComponentScan
+
 public class AppConfig {
 
     Map<String, Command> commandMap = new HashMap<>();
@@ -185,7 +189,7 @@ public class AppConfig {
     @Bean
     @Scope("singleton")
     public Command getGlobalStatsCommand() {
-        return new GlobalStatsCommand();
+        return new TopStatsCommand();
     }
 
     @Bean
@@ -364,8 +368,8 @@ public class AppConfig {
 
     @Bean
     @Scope("singleton")
-    public ImageService getImageService() {
-        return new ImageServiceImpl();
+    public ImageSenderService getImageService() {
+        return new ImageSenderServiceImpl();
     }
 
     @Bean
@@ -431,8 +435,8 @@ public class AppConfig {
 
     @Bean
     @Scope("singleton")
-    public AnswerService getAnswerService() {
-        return new AnswerServiceImpl();
+    public TextSenderService getAnswerService() {
+        return new TextSenderServiceImpl();
     }
 
     @Bean

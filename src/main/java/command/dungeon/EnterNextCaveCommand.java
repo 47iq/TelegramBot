@@ -9,6 +9,12 @@ import game.dungeon.CaveService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * Command, which forces user to enter randomly generated cave
+ * Note: Card UID must be sent as an argument in CommandDTO.
+ * Syntax: /dungeon_next
+ */
+
 @Component
 public class EnterNextCaveCommand implements Command {
     @Autowired

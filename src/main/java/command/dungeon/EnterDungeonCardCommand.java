@@ -12,6 +12,13 @@ import game.entity.Card;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * Command, which puts user and card info dungeon list and executes EnterNextCaveCommand
+ * @see EnterNextCaveCommand
+ * Note: Card UID must be sent as an argument in CommandDTO.
+ * Syntax: /dungeon_enter_card.1
+ */
+
 @Component
 public class EnterDungeonCardCommand implements Command {
     @Autowired

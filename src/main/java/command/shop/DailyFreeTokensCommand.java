@@ -10,6 +10,11 @@ import communication.util.CommandDTO;
 import communication.util.MessageBundle;
 import communication.util.MessageFormatter;
 
+/**
+ * Command, which makes user redeem daily free tokens(if possible).
+ * Syntax: /free_tokens
+ */
+
 @Component
 public class DailyFreeTokensCommand implements Command {
     @Autowired

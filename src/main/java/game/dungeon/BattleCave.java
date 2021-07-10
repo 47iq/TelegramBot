@@ -1,6 +1,6 @@
 package game.dungeon;
 
-import command.shop.OpenSuperRareBoxCommand;
+import command.service_command.OpenSuperRareBoxCommand;
 import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
 import communication.util.MessageFormatter;
@@ -8,8 +8,10 @@ import data.CardService;
 import data.UserService;
 import game.entity.Card;
 import game.service.BattleService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+
+/**
+ * A Battle  cave class: performs a battle with a randomly generated enemy
+ */
 
 public class BattleCave implements Cave {
 

@@ -1,7 +1,6 @@
 package game.dungeon;
 
-import command.shop.OpenBoxCommand;
-import command.shop.OpenSuperRareBoxCommand;
+import command.service_command.OpenSuperRareBoxCommand;
 import communication.keyboard.KeyboardType;
 import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
@@ -10,8 +9,11 @@ import data.CardService;
 import data.UserService;
 import game.entity.Card;
 import game.service.BattleService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+/**
+ * Loot box cave class: opens a special loot box on entrance
+ */
 
 @Component
 public class LootBoxCave implements Cave {

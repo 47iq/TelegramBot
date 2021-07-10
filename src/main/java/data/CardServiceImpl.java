@@ -63,7 +63,9 @@ public class CardServiceImpl implements CardService{
 
     @Override
     public boolean addXpLeveledUp(Card card, long xp) {
-        long needXpToLevelUp = card.calcNextLevelXp();
+        Long needXpToLevelUp = card.calcNextLevelXp();
+        if(needXpToLevelUp  ==  null)
+            return false;
         System.out.println(needXpToLevelUp  +  "  "  +  xp  +  "  "  +  card.getXp());
         if(card.getXp() + xp >= needXpToLevelUp && card.getLevel() < Long.parseLong(MessageBundle.getSetting("MAX_LEVEL"))) {
             card.levelUp();

@@ -10,6 +10,11 @@ import data.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * Command, which displays user info by his username.
+ * Available for admin only.
+ * Syntax sample: /user_stats.true_47iq
+ */
 @Component
 public class GetUserStatsCommand implements Command {
     @Autowired

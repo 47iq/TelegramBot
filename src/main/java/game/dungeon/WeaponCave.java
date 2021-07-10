@@ -1,6 +1,6 @@
 package game.dungeon;
 
-import command.shop.OpenSuperRareBoxCommand;
+import command.service_command.OpenSuperRareBoxCommand;
 import communication.keyboard.KeyboardType;
 import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
@@ -9,6 +9,10 @@ import data.CardService;
 import data.UserService;
 import game.entity.Card;
 import game.service.BattleService;
+
+/**
+ * Weapon cave class: permanently adds random value to card's attack
+ */
 
 public class WeaponCave implements Cave{
 

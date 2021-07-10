@@ -9,6 +9,11 @@ import communication.util.MessageBundle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * Command, which sends selected message to every user existing.
+ * Available for admin only.
+ * Syntax sample: /notify_all.Hello everyone, how are you doing?
+ */
 @Component
 public class NotifyAllCommand implements Command {
     @Autowired

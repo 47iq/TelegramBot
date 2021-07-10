@@ -10,6 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import communication.util.*;
 
+/**
+ * Command, which displays card info
+ * Note: Card UID must be sent as an argument in CommandDTO.
+ * Syntax: /view_card.1
+ */
+
 @Component
 public class NavigateToCardCommand implements Command {
     @Autowired

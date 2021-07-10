@@ -1,6 +1,6 @@
 package game.dungeon;
 
-import command.shop.OpenSuperRareBoxCommand;
+import command.service_command.OpenSuperRareBoxCommand;
 import communication.keyboard.KeyboardType;
 import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
@@ -10,12 +10,16 @@ import data.UserService;
 import game.entity.Card;
 import game.service.BattleService;
 
+/**
+ * An Armor cave class: boosts card's defence
+ */
+
 public class ArmorCave implements Cave{
 
     private final long armorBoost;
 
     public ArmorCave() {
-        armorBoost = (long) (Math.random() * 1 + 1);
+        armorBoost = (long) (Math.random() * 1 + 3);
     }
 
     @Override

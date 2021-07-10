@@ -15,6 +15,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Command, which displays all of the cards which are able to enter the dungeon.
+ * @see EnterDungeonCardCommand
+ * Syntax: /enter_dungeon
+ */
+
 @Component
 public class EnterDungeonCommand implements Command {
     @Autowired

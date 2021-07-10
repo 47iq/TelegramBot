@@ -8,6 +8,11 @@ import org.springframework.stereotype.Component;
 import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
 
+/**
+ * Command, which registers new user.
+ * Service command, used in other commands and code only.
+ */
+
 @Component
 public class RegisterCommand implements Command {
     @Autowired

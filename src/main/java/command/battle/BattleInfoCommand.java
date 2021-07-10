@@ -10,6 +10,12 @@ import data.UserDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * Command, which displays help for battle commands.
+ * Note: Battle info must have key "info_battle2"
+ * Syntax: /battle_info
+ */
+
 @Component
 public class BattleInfoCommand implements Command {
     @Autowired

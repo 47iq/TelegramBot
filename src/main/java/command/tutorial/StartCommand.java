@@ -10,6 +10,12 @@ import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
 import communication.util.MessageBundle;
 
+/**
+ * Command, which displays start info and navigates user to start shop.
+ * @see StartShopCommand
+ * Syntax: /start
+ */
+
 @Component
 public class StartCommand implements Command {
     @Autowired

@@ -39,6 +39,10 @@ public class BattleServiceImpl implements BattleService {
         monitorQueue();
     }
 
+    /**
+     * Thread that monitors queue changes and pairs users into battles
+     */
+
     private void monitorQueue() {
         new Thread(() -> {
             while (true) {
@@ -55,13 +59,17 @@ public class BattleServiceImpl implements BattleService {
         }).start();
     }
 
+    /**
+     * Thread factory that prepares and starts a battle
+     */
+
     private synchronized void prepareBattle() {
         new Thread(() -> {
             Set<User> users = battleQueue.keySet();
-            User firstUser = users.stream().max((x, y) -> (int) (Math.random()* 10 - 5)).orElse(null);
+            User firstUser = users.stream().max((x, y) -> (int) (Math.random() * 10 - 5)).orElse(null);
             Card firstCard = battleQueue.get(firstUser);
             users.remove(firstUser);
-            User secondUser = users.stream().max((x, y) -> (int) (Math.random()* 10 - 5)).orElse(null);
+            User secondUser = users.stream().max((x, y) -> (int) (Math.random() * 10 - 5)).orElse(null);
             Card secondCard = battleQueue.get(secondUser);
             battleQueue.remove(firstUser);
             battleQueue.remove(secondUser);
@@ -69,8 +77,16 @@ public class BattleServiceImpl implements BattleService {
         }).start();
     }
 
-    private void startBattle(User firstUser, Card firstCard, User secondUser, Card secondCard) {
+    /**
+     * Method that executes a battle between two users
+     *
+     * @param firstUser  first user
+     * @param firstCard  first card
+     * @param secondUser second user
+     * @param secondCard second card
+     */
 
+    private void startBattle(User firstUser, Card firstCard, User secondUser, Card secondCard) {
         StringBuilder battleHistory = new StringBuilder();
         battleHistory.append(messageFormatter.getBattleStartMessage(firstUser, firstCard, secondUser, secondCard));
         firstUser.addBattle();
@@ -103,20 +119,29 @@ public class BattleServiceImpl implements BattleService {
         }
     }
 
+    /**
+     * Method that completes a battle between two cards
+     *
+     * @param battleHistory battle history message
+     * @param firstCard     first card
+     * @param secondCard    second card
+     * @return battle history message
+     */
+
     private StringBuilder completeBattle(StringBuilder battleHistory, Card firstCard, Card secondCard) {
-        int turnCounter = 0;
+        int turnCounter = 1;
         while (firstCard.getHealth() > 0 && secondCard.getHealth() > 0) {
             int random = (int) (Math.random() * 100);
             int multiplier = 1;
-            double damageMultiplier = Math.random()*0.5 + 0.75;
+            double damageMultiplier = Math.random() * 0.5 + 0.75;
             if ((int) (Math.random() * 100) < 10)
                 multiplier = 2;
             int chance = 50;
             if (turnCounter % 2 == 0) {
-                chance += 40/(Math.pow(secondCard.getDefence(),  0.5) + 1);
+                chance += 40 / (Math.pow(secondCard.getDefence(), 0.5) + 1);
                 if (chance > random) {
                     secondCard.setHealth(Math.max(secondCard.getHealth() - firstCard.getAttack() * multiplier * damageMultiplier, 0));
-                    if(multiplier == 2)
+                    if (multiplier == 2)
                         battleHistory.append(MessageBundle.getMessage("battle_crit")).append("\n");
                     battleHistory.append(messageFormatter.getBattleMessage(firstCard, secondCard, firstCard.getAttack() * multiplier * damageMultiplier, secondCard.getHealth()));
                 } else {
@@ -124,10 +149,10 @@ public class BattleServiceImpl implements BattleService {
                     battleHistory.append(messageFormatter.getBattleMessage(firstCard, secondCard, 0, secondCard.getHealth()));
                 }
             } else {
-                chance += 40/(Math.pow(firstCard.getDefence(),  0.5) + 1);
+                chance += 40 / (Math.pow(firstCard.getDefence(), 0.5) + 1);
                 if (chance > random) {
                     firstCard.setHealth(Math.max(firstCard.getHealth() - secondCard.getAttack() * multiplier * damageMultiplier, 0));
-                    if(multiplier == 2)
+                    if (multiplier == 2)
                         battleHistory.append(MessageBundle.getMessage("battle_crit")).append("\n");
                     battleHistory.append(messageFormatter.getBattleMessage(secondCard, firstCard, secondCard.getAttack() * multiplier * damageMultiplier, firstCard.getHealth()));
                 } else {
@@ -145,7 +170,7 @@ public class BattleServiceImpl implements BattleService {
         StringBuilder battleHistory = new StringBuilder();
         battleHistory.append(enemy.getEnemyType().getBattleMessage()).append("\n").append("\n");
         battleHistory.append(messageFormatter.getEnemyBattleStartMessage(enemy, card)).append("\n");
-        if(enemy.getEnemyCard().getHealth() > 0) {
+        if (enemy.getEnemyCard().getHealth() > 0) {
             int random = (int) (Math.random() * 2);
             if (card.getHealth() < enemy.getEnemyCard().getHealth() || card.getAttack() < enemy.getEnemyCard().getAttack())
                 random = 0;
@@ -156,15 +181,15 @@ public class BattleServiceImpl implements BattleService {
             cardService.save(card);
         }
         User user = commandDTO.getUser();
-        if(card.getHealth() > 0) {
+        if (card.getHealth() > 0) {
             userService.higherBalance(user, enemy.getAward());
             return new AnswerDTO(true, battleHistory.toString() + "\n" +
                     messageFormatter.getEnemyBattleWinMessage(card, enemy),
                     KeyboardType.DUNGEON, null, null)
                     .append(calcLevelUp(card, enemy.getEnemyCard()));
         } else
-            return new AnswerDTO(true,  battleHistory.toString() + "\n" +
-                    messageFormatter.getEnemyBattleLoseMessage(card, enemy), KeyboardType.DUNGEON_LEAF, null,null);
+            return new AnswerDTO(true, battleHistory.toString() + "\n" +
+                    messageFormatter.getEnemyBattleLoseMessage(card, enemy), KeyboardType.DUNGEON_LEAF, null, null);
     }
 
     @Override
@@ -190,10 +215,18 @@ public class BattleServiceImpl implements BattleService {
         }
     }
 
+    /**
+     * Method that returns message containing level up or xp increasing message
+     *
+     * @param winner winner card
+     * @param loser  loser card
+     * @return message
+     */
+
     private String calcLevelUp(Card winner, Card loser) {
         long gainedXp = battleXpCalculator.calcXp(winner, loser);
         String message = "";
-        if(cardService.addXpLeveledUp(winner, gainedXp))
+        if (cardService.addXpLeveledUp(winner, gainedXp))
             message += messageFormatter.getLevelUpMessage(winner);
         else
             message += messageFormatter.getBattleXpMessage(winner, gainedXp);

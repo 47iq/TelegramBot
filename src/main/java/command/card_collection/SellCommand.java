@@ -15,6 +15,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Command, which displays all of the user's cards with its prices.
+ * @see SellCardCommand
+ * Syntax: /sell
+ */
+
 @Component
 public class SellCommand implements Command {
 

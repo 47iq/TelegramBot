@@ -9,7 +9,7 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMa
 import communication.util.AnswerDTO;
 
 @Component
-public class ImageServiceImpl implements ImageService{
+public class ImageSenderServiceImpl implements ImageSenderService {
 
     @Autowired
     KeyboardCreator creator;

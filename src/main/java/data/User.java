@@ -10,6 +10,10 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ResourceBundle;
 
+/**
+ * User object
+ */
+
 @Entity(name = "users")
 public class User {
     @Id
@@ -36,6 +40,12 @@ public class User {
 
     @Column(name = "wins")
     private int totalWins;
+
+    /**
+     * Constructor for user
+     * @param username username
+     * @param chatId chat id for Telegram messenger
+     */
 
     public User(String username, long chatId) {
         this.UID = username;

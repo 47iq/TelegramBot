@@ -15,6 +15,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Command, which displays list of cards suitable for a heal item.
+ * @see HealCardCommand
+ * Syntax: /use_heal
+ */
+
+
 @Component
 public class UseHealCommand implements Command {
     @Autowired

@@ -7,6 +7,11 @@ import org.springframework.stereotype.Component;
 import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
 
+/**
+ * Command, which adds 10000 tokens to the user by his username.
+ * Available for admin only.
+ * Syntax sample: /add_tokens.true_47iq
+ */
 @Component
 public class AddTokensCommand implements Command {
 
@@ -15,7 +20,7 @@ public class AddTokensCommand implements Command {
 
     @Override
     public AnswerDTO execute(CommandDTO commandDTO) {
-        userService.higherBalance(commandDTO.getArg(), 1000);
+        userService.higherBalance(commandDTO.getArg(), 10000);
         return null;
     }
 }

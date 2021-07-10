@@ -1,6 +1,7 @@
 package command.main_menu;
 
 import command.Command;
+import command.item.BoostCardCommand;
 import data.CardService;
 import game.entity.Card;
 import communication.keyboard.KeyboardType;
@@ -12,6 +13,12 @@ import communication.util.MessageBundle;
 import communication.util.MessageFormatter;
 
 import java.util.List;
+
+/**
+ * Command, which displays a my collection menu.
+ * Syntax: /my_cards
+ */
+
 
 @Component
 public class MyCardsMenuCommand implements Command {

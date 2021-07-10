@@ -14,24 +14,24 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
 
-import java.util.Arrays;
-import java.util.ResourceBundle;
+/**
+ * Class that manages requests from Telegram messenger.
+ */
 
 @Component
-public class TelegramBot extends TelegramLongPollingBot implements Bot {
+public class TelegramBot extends TelegramLongPollingBot {
 
     private static final Logger LOGGER = LogManager.getLogger(PSQLUserDAO.class);
 
     @Autowired
     private CommandFactory commandFactory;
     @Autowired
-    private AnswerService answerService;
+    private TextSenderService textSenderService;
     @Autowired
-    private ImageService imageService;
+    private ImageSenderService imageSenderService;
     @Autowired
     private UserService userService;
 
@@ -45,6 +45,12 @@ public class TelegramBot extends TelegramLongPollingBot implements Bot {
         return MessageBundle.getSetting("API_KEY");
     }
 
+    /**
+     * Update-handling method
+     *
+     * @param update update(message or replyMarkup click)
+     */
+
     @Override
     public void onUpdateReceived(Update update) {
         try {
@@ -55,7 +61,7 @@ public class TelegramBot extends TelegramLongPollingBot implements Bot {
             if ((update.hasMessage() && update.getMessage().hasText())) {
                 Message message = update.getMessage();
                 String[] strings = message.getText().split("\\.");
-                if(strings.length == 2) {
+                if (strings.length == 2) {
                     messageText = strings[0];
                     arg = strings[1];
                 } else
@@ -65,7 +71,7 @@ public class TelegramBot extends TelegramLongPollingBot implements Bot {
             } else if ((update.hasMessage() && update.getMessage().hasText()) || update.hasCallbackQuery()) {
                 String message = update.getCallbackQuery().getData();
                 String[] strings = message.split("\\.");
-                if(strings.length == 2) {
+                if (strings.length == 2) {
                     messageText = strings[0];
                     arg = strings[1];
                 } else
@@ -75,37 +81,63 @@ public class TelegramBot extends TelegramLongPollingBot implements Bot {
             } else
                 return;
             LOGGER.info("Message from " + username + " has been received. Text: \"" + messageText + "\". Arg: " + arg);
-            User user = new User(username, chatId);
-            User cachedUser = userService.getUserData(user);
-            if(cachedUser != null)
-                user = cachedUser;
-            CommandDTO commandDTO = new CommandDTO(user, messageText, arg, this);
-            AnswerDTO answerDTO = commandFactory.execute(commandDTO);
-            LOGGER.info("Answer to " + username + " has been prepared."+
-                    "\". Keyboard: " +  answerDTO.getKeyboard() +  ".");
-            if(answerDTO.getImage() == null) {
-                SendMessage sendMessage = answerService.getMessage(answerDTO);
-                sendMessage.setChatId(String.valueOf(chatId));
-                try {
-                    this.execute(sendMessage);
-                } catch (Exception e) {
-                    LOGGER.error("Error while sending response to "  +  username + ": " + e.getClass());
-                    e.printStackTrace();
-                }
-            }
-            else {
-                SendPhoto sendPhoto = imageService.getPhoto(answerDTO);
-                sendPhoto.setChatId(String.valueOf(chatId));
-                try {
-                    this.execute(sendPhoto);
-                } catch (Exception e) {
-                    LOGGER.error("Error while sending response to "  +  username + ": " + e.getClass());
-                    e.printStackTrace();
-                }
-            }
+            AnswerDTO answerDTO = handleRequest(messageText, username, arg, chatId);
+            sendResponse(answerDTO, chatId, username);
         } catch (Exception e) {
             LOGGER.error("Error during handling request: " + e.getClass());
             e.printStackTrace();
+        }
+    }
+
+    /**
+     * Method that handles request.
+     *
+     * @param messageText command
+     * @param username    telegram username of user
+     * @param arg         command argument
+     * @param chatId      chat id of user
+     * @return answer on a request
+     */
+
+    private AnswerDTO handleRequest(String messageText, String username, String arg, long chatId) {
+        User user = new User(username, chatId);
+        User cachedUser = userService.getUserData(user);
+        if (cachedUser != null)
+            user = cachedUser;
+        CommandDTO commandDTO = new CommandDTO(user, messageText, arg, this);
+        AnswerDTO answerDTO = commandFactory.execute(commandDTO);
+        LOGGER.info("Answer to " + username + " has been prepared." +
+                "\". Keyboard: " + answerDTO.getKeyboard() + ".");
+        return answerDTO;
+    }
+
+    /**
+     * Method that sends a response.
+     *
+     * @param answerDTO answer on a request
+     * @param chatId    chat id of user
+     * @param username  telegram username of user
+     */
+
+    private void sendResponse(AnswerDTO answerDTO, long chatId, String username) {
+        if (answerDTO.getImage() == null) {
+            SendMessage sendMessage = textSenderService.getMessage(answerDTO);
+            sendMessage.setChatId(String.valueOf(chatId));
+            try {
+                this.execute(sendMessage);
+            } catch (Exception e) {
+                LOGGER.error("Error while sending response to " + username + ": " + e.getClass());
+                e.printStackTrace();
+            }
+        } else {
+            SendPhoto sendPhoto = imageSenderService.getPhoto(answerDTO);
+            sendPhoto.setChatId(String.valueOf(chatId));
+            try {
+                this.execute(sendPhoto);
+            } catch (Exception e) {
+                LOGGER.error("Error while sending response to " + username + ": " + e.getClass());
+                e.printStackTrace();
+            }
         }
     }
 }

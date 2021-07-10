@@ -1,6 +1,7 @@
 package command.shop;
 
 import command.Command;
+import command.service_command.OpenBoxCommand;
 import data.UserService;
 import game.entity.LootBoxType;
 import communication.keyboard.KeyboardType;
@@ -8,7 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import communication.util.*;
 
-import java.util.ResourceBundle;
+/**
+ * Command, which makes user open a basic lootbox.
+ * @see OpenBoxCommand
+ * Syntax: /open_basic
+ */
 
 @Component
 public class OpenBasicBoxCommand implements Command {

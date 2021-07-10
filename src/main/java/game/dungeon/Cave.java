@@ -1,6 +1,6 @@
 package game.dungeon;
 
-import command.shop.OpenSuperRareBoxCommand;
+import command.service_command.OpenSuperRareBoxCommand;
 import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
 import communication.util.MessageFormatter;
@@ -9,7 +9,24 @@ import data.UserService;
 import game.entity.Card;
 import game.service.BattleService;
 
+/**
+ * An interface of a cave in dungeon: performs some  action on entrance
+ */
+
 public interface Cave {
+
+    /**
+     * Method that performs an action depending on a cave type
+     * @param commandDTO command DTO
+     * @param card card
+     * @param battleService battle service
+     * @param messageFormatter message formatter
+     * @param cardService card service
+     * @param userService user service
+     * @param command super rare box command
+     * @return answer on a request
+     */
+
     AnswerDTO enterThisCave(CommandDTO commandDTO, Card card, BattleService battleService,
-                            MessageFormatter messageFormatter, CardService cardService, UserService userService,  OpenSuperRareBoxCommand command);
+                            MessageFormatter messageFormatter, CardService cardService, UserService userService, OpenSuperRareBoxCommand command);
 }

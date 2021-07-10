@@ -1,5 +1,9 @@
 package game.entity;
 
+/**
+ * Class that represents rarity of a card
+ */
+
 public enum CardType {
     BASIC,
     RARE{

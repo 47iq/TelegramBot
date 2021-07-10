@@ -12,6 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import communication.util.*;
 
+/**
+ * Command, which uses boost item on card(if possible) and displays the card
+ * Note: Card UID must be sent as an argument in CommandDTO.
+ * Syntax: /boost_card.1
+ */
+
 @Component
 public class BoostCardCommand implements Command {
     @Autowired

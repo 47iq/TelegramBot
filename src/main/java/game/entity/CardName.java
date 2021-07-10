@@ -1,5 +1,9 @@
 package game.entity;
 
+/**
+ * Class that represents card name
+ */
+
 public enum CardName {
     //DUNGEON_ENEMY,
     KLIMENKOV {
@@ -8,25 +12,25 @@ public enum CardName {
             return 1.25;
         }
     },
-    KOROBKOV{
+    KOROBKOV {
         @Override
         public double gerMultiplier() {
             return 0.90;
         }
     },
-    BALAKSHIN{
+    BALAKSHIN {
         @Override
         public double gerMultiplier() {
             return 1.05;
         }
     },
-    GAVRILOV{
+    GAVRILOV {
         @Override
         public double gerMultiplier() {
             return 1.1;
         }
     },
-    POLYAKOV{
+    POLYAKOV {
         @Override
         public double gerMultiplier() {
             return 1;
@@ -44,7 +48,7 @@ public enum CardName {
             return 1.32;
         }
     },
-    VOZIANOVA{
+    VOZIANOVA {
         @Override
         public double gerMultiplier() {
             return 1;
@@ -56,6 +60,14 @@ public enum CardName {
             return 1.10;
         }
     };
+
+    /**
+     * Method that gets card name for a basic, advanced and pro loot boxes from a number
+     *
+     * @param val type of card
+     * @return card name
+     */
+
     public static CardName valueOf(int val) {
         return switch (val) {
             case 0 -> KLIMENKOV;
@@ -69,15 +81,23 @@ public enum CardName {
         };
     }
 
+    /**
+     * Method that gets card name for a special loot box from a number
+     *
+     * @param rand type of card
+     * @return card name
+     * @see command.service_command.OpenSuperRareBoxCommand
+     */
+
     public static CardName specialValueOf(int rand) {
         return switch (rand) {
-            case 0,1,2 -> BILLIE_HARRINGTON;
-            case 3,4,5,6 -> SVYATOSLAV;
+            case 0, 1, 2 -> BILLIE_HARRINGTON;
+            case 3, 4, 5, 6 -> SVYATOSLAV;
             default -> throw new IllegalStateException("Unexpected value: " + rand);
         };
     }
 
     public double gerMultiplier() {
-        return  1;
+        return 1;
     }
 }

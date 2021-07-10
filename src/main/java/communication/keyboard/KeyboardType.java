@@ -14,7 +14,5 @@ public enum KeyboardType {
     DUNGEON,
     DUNGEON_LEAF,
     DUNGEON_MENU,
-    START_SHOP,
-    START_USE_ITEM,
-    START_GOTO_MENU
+    START_SHOP
 }

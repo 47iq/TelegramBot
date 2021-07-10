@@ -1,16 +1,18 @@
-package command.shop;
+package command.service_command;
 
 import command.Command;
-import communication.keyboard.KeyboardType;
 import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
-import communication.util.MessageBundle;
 import data.UserService;
 import game.entity.LootBoxType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ResourceBundle;
+/**
+ * Command, which makes user open a special lootbox.
+ * Service command, used in other commands and code only.
+ * @see OpenBoxCommand
+ */
 
 @Component
 public class OpenSuperRareBoxCommand implements Command {

@@ -1,6 +1,7 @@
 package command.shop;
 
 import command.Command;
+import command.service_command.OpenBoxCommand;
 import data.UserService;
 import game.entity.LootBoxType;
 import communication.keyboard.KeyboardType;
@@ -10,7 +11,11 @@ import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
 import communication.util.MessageBundle;
 
-import java.util.ResourceBundle;
+/**
+ * Command, which makes user open a pro lootbox.
+ * @see OpenBoxCommand
+ * Syntax: /open_pro
+ */
 
 @Component
 public class OpenProBoxCommand implements Command {

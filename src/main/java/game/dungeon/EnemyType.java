@@ -3,6 +3,10 @@ package game.dungeon;
 import communication.util.MessageBundle;
 import game.entity.Card;
 
+/**
+ * Enemy type class
+ */
+
 public enum EnemyType {
 
     ANGRY_STUDENTS {
@@ -212,6 +216,22 @@ public enum EnemyType {
         public long getAward() {
             return 230;
         }
+    },
+    PLASTIC_WORLD {
+        @Override
+        public Card getStats() {
+            return new Card(null, 14, 4, 12);
+        }
+
+        @Override
+        public String getBattleMessage() {
+            return MessageBundle.getMessage("enemy_plastic");
+        }
+
+        @Override
+        public long getAward() {
+            return 330;
+        }
     };
 
     public Card getStats() {
@@ -226,33 +246,40 @@ public enum EnemyType {
         return 200;
     }
 
+    /**
+     * Random Enemy type generator
+     * @return random enemy type
+     */
+
     public static EnemyType getRandom() {
         double rnd = (Math.random() * 100);
         //todo
         System.out.println("Enemy: " + rnd);
-        if (rnd < 8)
+        if (rnd < 7)
             return ANGRY_STUDENTS;
-        else if(rnd < 16)
+        else if(rnd < 15)
             return ROBOT;
-        else if(rnd <  24)
+        else if(rnd <  22)
             return LARY;
-        else if(rnd < 32)
+        else if(rnd < 30)
             return PROGRAMMING_LAB;
-        else if(rnd < 40)
+        else if(rnd < 37)
             return ANDREW;
-        else if(rnd < 48)
+        else if(rnd < 45)
             return WOLF;
-        else if (rnd < 56)
+        else if (rnd < 52)
             return RAD_COCKROACH;
-        else if(rnd < 64)
+        else if(rnd < 60)
             return VIETNAM_GUY;
-        else if (rnd < 72)
+        else if (rnd < 67)
             return DUNGEON_MASTER;
-        else if (rnd < 80)
+        else if (rnd < 75)
             return STUDENT_OFFICE;
-        else if (rnd < 88)
+        else if (rnd < 82)
             return EXPELLED_STUDENT;
-        else if(rnd < 98)
+        else if (rnd < 90)
+            return PLASTIC_WORLD;
+        else if(rnd < 99)
             return DEV;
         else
             return RECTOR;

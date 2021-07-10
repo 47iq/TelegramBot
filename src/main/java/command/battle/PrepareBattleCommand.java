@@ -15,6 +15,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Command, which displays list of cards available for battle.
+ * @see StartSearchCommand
+ * Syntax: /battle
+ */
+
 @Component
 public class PrepareBattleCommand implements Command {
     @Autowired

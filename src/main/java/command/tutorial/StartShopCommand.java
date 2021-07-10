@@ -9,6 +9,12 @@ import communication.util.MessageFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * Command, which displays start shop info and makes him open a basic lootbox.
+ * @see command.shop.OpenBasicBoxCommand
+ * Syntax: /start_shop
+ */
+
 @Component
 public class StartShopCommand implements Command {
     @Autowired

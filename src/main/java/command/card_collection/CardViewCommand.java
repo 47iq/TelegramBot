@@ -15,6 +15,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Command, which displays all of the cards of user's collection.
+ * @see NavigateToCardCommand
+ * Syntax: /view
+ */
+
 @Component
 public class CardViewCommand implements Command {
     @Autowired

@@ -14,6 +14,11 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+/**
+ * Command, which displays app stats.
+ * Syntax: /app_stats
+ */
+
 @Component
 public class AppStatsCommand implements Command {
     @Autowired

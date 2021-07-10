@@ -8,6 +8,11 @@ import communication.util.MessageFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * Command, which displays help for shop.
+ * Syntax: /shop_info
+ */
+
 @Component
 public class ShopInfoCommand implements Command {
     @Autowired

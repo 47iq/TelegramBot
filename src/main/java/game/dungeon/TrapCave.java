@@ -1,6 +1,6 @@
 package game.dungeon;
 
-import command.shop.OpenSuperRareBoxCommand;
+import command.service_command.OpenSuperRareBoxCommand;
 import communication.keyboard.KeyboardType;
 import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
@@ -9,8 +9,10 @@ import data.CardService;
 import data.UserService;
 import game.entity.Card;
 import game.service.BattleService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+
+/**
+ * Trap cave class: lowers card's hp by a random value
+ */
 
 public class TrapCave implements Cave {
 

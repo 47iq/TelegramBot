@@ -10,6 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import communication.util.*;
 
+/**
+ * Command, which sells card.
+ * Note: Card UID must be sent as an argument in CommandDTO.
+ * Syntax: /sell_card.1
+ */
+
 @Component
 public class SellCardCommand implements Command {
     @Autowired

@@ -9,6 +9,11 @@ import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
 import communication.util.MessageFormatter;
 
+/**
+ * Command, which displays a shop menu.
+ * Syntax: /shop
+ */
+
 @Component
 public class ShopMenuCommand implements Command {
     @Autowired

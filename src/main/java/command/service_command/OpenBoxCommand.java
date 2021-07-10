@@ -1,4 +1,4 @@
-package command.shop;
+package command.service_command;
 
 import data.CardDAO;
 import communication.keyboard.KeyboardType;
@@ -12,6 +12,11 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import communication.util.*;
+
+/**
+ * Command, which makes user open a lootbox of a certain type.
+ * Service command, used in other commands and code only.
+ */
 
 @Component
 public class OpenBoxCommand {
@@ -31,6 +36,8 @@ public class OpenBoxCommand {
         try {
             Card card = lootBox.open(type, commandDTO.getUser());
             if (cardDAO.create(card)) {
+                LOGGER.info(commandDTO.getUser().getUID() + " gets: " + card.getType() + " "+card.getName() + ": "
+                        + card.getMaxHealth() + ", " + card.getAttack() + ", " + card.getDefence());
                 AnswerDTO answerDTO = new AnswerDTO(true,
                         MessageBundle.getMessage("info_youget") + "\n" + messageFormatter.getCardMessage(card),
                         KeyboardType.LEAF, imageParser.getImage(new ImageIdentifier(card.getName(), card.getType())), null);

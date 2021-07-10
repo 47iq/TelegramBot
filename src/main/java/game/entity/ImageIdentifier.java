@@ -2,9 +2,13 @@ package game.entity;
 
 import java.util.Objects;
 
+/**
+ * Class that is a data structure, containing card name and type
+ */
+
 public class ImageIdentifier {
-    private CardName name;
-    private CardType type;
+    private final CardName name;
+    private final CardType type;
 
     public ImageIdentifier(CardName name, CardType type) {
         this.name = name;

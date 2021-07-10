@@ -5,6 +5,11 @@ import communication.keyboard.KeyboardType;
 import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
 
+/**
+ * Command, which displays a stats menu.
+ * Syntax: /stats
+ */
+
 public class StatsMenuCommand implements Command {
 
     @Override

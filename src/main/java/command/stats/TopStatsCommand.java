@@ -12,8 +12,13 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+/**
+ * Command, which displays users top.
+ * Syntax: /top_stats
+ */
+
 @Component
-public class GlobalStatsCommand implements Command {
+public class TopStatsCommand implements Command {
     @Autowired
     UserService userService;
     @Autowired
