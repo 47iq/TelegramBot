@@ -406,6 +406,7 @@ public class AppConfig {
         pathMap.put(new ImageIdentifier(CardName.PERTSEV, CardType.LEGENDARY), MessageBundle.getSetting("PERTSEV_LEGENDARY"));
         pathMap.put(new ImageIdentifier(CardName.BILLIE_HARRINGTON, CardType.LEGENDARY), MessageBundle.getSetting("BILLIE_HARRINGTON_LEGENDARY"));
         pathMap.put(new ImageIdentifier(CardName.SVYATOSLAV, CardType.LEGENDARY), MessageBundle.getSetting("SVYATOSLAV_LEGENDARY"));
+        pathMap.put(new ImageIdentifier(CardName.STANKEVICH, CardType.LEGENDARY), MessageBundle.getSetting("STANKEVICH_LEGENDARY"));
         return new ImageParserImpl(pathMap);
     }
 
@@ -493,11 +494,6 @@ public class AppConfig {
         return new BattleServiceImpl();
     }
 
-    @Bean
-    @Scope("singleton")
-    public CaveService caveService() {
-        return new CaveServiceImpl();
-    }
 
     @Bean
     public RegisterCommand getRegisterCommand(){

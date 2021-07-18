@@ -102,4 +102,13 @@ public class AnswerDTO {
         this.message = s + "\n\n" + message;
         return this;
     }
+
+    @Override
+    public String toString() {
+        return "AnswerDTO{" +
+                "keyboardType=" + keyboardType +
+                ", image=" + image +
+                ", cardName=" + cardName +
+                '}';
+    }
 }

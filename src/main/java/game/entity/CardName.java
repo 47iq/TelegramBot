@@ -48,6 +48,12 @@ public enum CardName {
             return 1.32;
         }
     },
+    STANKEVICH {
+        @Override
+        public double gerMultiplier() {
+            return 1.34;
+        }
+    },
     VOZIANOVA {
         @Override
         public double gerMultiplier() {
@@ -92,7 +98,8 @@ public enum CardName {
     public static CardName specialValueOf(int rand) {
         return switch (rand) {
             case 0, 1, 2 -> BILLIE_HARRINGTON;
-            case 3, 4, 5, 6 -> SVYATOSLAV;
+            case 3, 4 -> SVYATOSLAV;
+            case 5, 6 -> STANKEVICH;
             default -> throw new IllegalStateException("Unexpected value: " + rand);
         };
     }

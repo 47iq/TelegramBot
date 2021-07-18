@@ -38,4 +38,12 @@ public interface CaveService {
      */
 
     AnswerDTO enterNextCave(CommandDTO commandDTO);
+
+    /**
+     * Random cave generator
+     *
+     * @return random cave
+     */
+
+    Cave getCave();
 }

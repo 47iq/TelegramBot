@@ -220,4 +220,15 @@ public class Card {
         else
             return null;
     }
+
+    @Override
+    public String toString() {
+        return "Card{" +
+                "name=" + name +
+                ", health=" + health +
+                ", maxHealth=" + maxHealth +
+                ", attack=" + attack +
+                ", defence=" + defence +
+                '}';
+    }
 }

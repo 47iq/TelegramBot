@@ -67,7 +67,7 @@ public class CaveServiceImpl implements CaveService {
      * @return random cave
      */
 
-    private Cave getCave() {
+    public Cave getCave() {
         double rnd = (Math.random() * 100);
         //todo
         System.out.println("Cave: " + rnd);

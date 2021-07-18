@@ -46,4 +46,14 @@ public interface BattleService {
      */
 
     AnswerDTO battleEnemy(CommandDTO commandDTO, Enemy enemy, Card card);
+
+    /**
+     * Method that completes a battle between two cards
+     *
+     * @param battleHistory battle history message
+     * @param firstCard     first card
+     * @param secondCard    second card
+     * @return battle history message
+     */
+    StringBuilder completeBattle(StringBuilder battleHistory, Card firstCard, Card secondCard);
 }

@@ -119,16 +119,8 @@ public class BattleServiceImpl implements BattleService {
         }
     }
 
-    /**
-     * Method that completes a battle between two cards
-     *
-     * @param battleHistory battle history message
-     * @param firstCard     first card
-     * @param secondCard    second card
-     * @return battle history message
-     */
 
-    private StringBuilder completeBattle(StringBuilder battleHistory, Card firstCard, Card secondCard) {
+    public StringBuilder completeBattle(StringBuilder battleHistory, Card firstCard, Card secondCard) {
         int turnCounter = 1;
         while (firstCard.getHealth() > 0 && secondCard.getHealth() > 0) {
             int random = (int) (Math.random() * 100);
