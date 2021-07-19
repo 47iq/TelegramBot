@@ -2,6 +2,7 @@ package game.dungeon;
 
 import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
+import data.User;
 import game.entity.Card;
 
 /**
@@ -46,4 +47,13 @@ public interface CaveService {
      */
 
     Cave getCave();
+
+    /**
+     * Method that returns current dungeon card for user
+     *
+     * @param user user
+     * @return card
+     */
+
+    Card getCard(User user);
 }

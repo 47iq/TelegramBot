@@ -1,5 +1,6 @@
 import command.*;
 import command.admin.AddTokensCommand;
+import command.admin.AllUsersCommand;
 import command.battle.*;
 import command.dungeon.*;
 import command.item.*;
@@ -106,11 +107,19 @@ public class AppConfig {
         commandMap.put("/shop_info", getShopInfoCommand());
         commandMap.put("/battle_info", getBattleInfoCommand());
         commandMap.put("/start_shop", getStartShopCommand());
+        commandMap.put("/instant_heal", getInstantHealCommand());
         Map<String, Command> adminCommands = new HashMap<>();
         adminCommands.put("/add_tokens", getAddTokensCommand());
         adminCommands.put("/notify_all", getNotifyAllCommand());
         adminCommands.put("/user_stats", getUserStatsCommand());
+        adminCommands.put("/all_users", getUsersStatsCommand());
         return new CommandFactoryImpl(commandMap, adminCommands);
+    }
+
+    @Bean
+    @Scope("singleton")
+    public Command getInstantHealCommand() {
+        return new InstantHealCommand();
     }
 
     @Bean
@@ -196,6 +205,12 @@ public class AppConfig {
     @Scope("singleton")
     public Command getUserStatsCommand() {
         return new GetUserStatsCommand();
+    }
+
+    @Bean
+    @Scope("singleton")
+    public Command getUsersStatsCommand() {
+        return new AllUsersCommand();
     }
     
     @Bean

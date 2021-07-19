@@ -4,6 +4,7 @@ import command.Command;
 import communication.keyboard.KeyboardType;
 import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
+import data.User;
 
 /**
  * Command, which displays a stats menu.
@@ -14,6 +15,7 @@ public class StatsMenuCommand implements Command {
 
     @Override
     public AnswerDTO execute(CommandDTO commandDTO) {
-        return new AnswerDTO(true, null, KeyboardType.STATS, null, null);
+        User user = commandDTO.getUser();
+        return new AnswerDTO(true, null, KeyboardType.STATS, null, null, user);
     }
 }

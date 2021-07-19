@@ -27,6 +27,6 @@ public class StartCommand implements Command {
     public AnswerDTO execute(CommandDTO commandDTO) {
         if(userDAO.getEntityById(commandDTO.getUser().getUID()) == null)
             registerCommand.execute(commandDTO);
-        return new AnswerDTO(true, MessageBundle.getMessage("info_start"), KeyboardType.WELCOME, null, null);
+        return new AnswerDTO(true, MessageBundle.getMessage("info_start"), KeyboardType.WELCOME, null, null, commandDTO.getUser());
     }
 }

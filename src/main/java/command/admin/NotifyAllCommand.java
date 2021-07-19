@@ -21,9 +21,9 @@ public class NotifyAllCommand implements Command {
 
     @Override
     public AnswerDTO execute(CommandDTO commandDTO) {
-        AnswerDTO answerDTO = new AnswerDTO(true, commandDTO.getArg(), KeyboardType.LEAF, null, null);
+        AnswerDTO answerDTO = new AnswerDTO(true, commandDTO.getArg(), KeyboardType.LEAF, null, null, commandDTO.getUser());
         answerDTO.setBot(commandDTO.getBot());
         notificationService.notifyAll(answerDTO);
-        return new AnswerDTO(true, MessageBundle.getMessage("info_success"), KeyboardType.LEAF, null, null);
+        return new AnswerDTO(true, MessageBundle.getMessage("info_success"), KeyboardType.LEAF, null, null, commandDTO.getUser());
     }
 }

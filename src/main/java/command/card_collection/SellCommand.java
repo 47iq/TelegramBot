@@ -35,6 +35,6 @@ public class SellCommand implements Command {
         Map<String, String> cardReferences = new HashMap<>();
         cardList.forEach(x -> cardReferences.put("/sell_card." + x.getUID(), messageFormatter.getCardViewMessage2(x) + " " + messageFormatter.getPriceMessage(x)));
         cardReferences.put("/help", MessageBundle.getMessage("back"));
-        return new AnswerDTO(true, MessageBundle.getMessage("ask_whatcard"), KeyboardType.CUSTOM, null, cardReferences);
+        return new AnswerDTO(true, MessageBundle.getMessage("ask_whatcard"), KeyboardType.CUSTOM, null, cardReferences, commandDTO.getUser());
     }
 }

@@ -22,6 +22,6 @@ public class ShopMenuCommand implements Command {
     @Override
     public AnswerDTO execute(CommandDTO commandDTO) {
         User user = commandDTO.getUser();
-        return new AnswerDTO(true, messageFormatter.getShopInfo(user), KeyboardType.SHOP, null, null);
+        return new AnswerDTO(true, messageFormatter.getShopInfo(user), KeyboardType.SHOP, null, null, user);
     }
 }

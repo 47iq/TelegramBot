@@ -36,7 +36,7 @@ public class NotificationServiceImpl implements NotificationService {
                 if (answerDTO.getMessage() != null)
                     sendPhoto.setCaption(answerDTO.getMessage());
                 if (answerDTO.getKeyboard() != null)
-                    sendPhoto.setReplyMarkup(keyboardCreator.getKeyboard(answerDTO.getKeyboard(), answerDTO.getButtons()));
+                    sendPhoto.setReplyMarkup(keyboardCreator.getKeyboard(answerDTO.getKeyboard(), answerDTO.getButtons(), answerDTO.getUser()));
                 answerDTO.getBot().execute(sendPhoto);
             } else{
                 SendMessage sendMessage  = new SendMessage();
@@ -44,7 +44,7 @@ public class NotificationServiceImpl implements NotificationService {
                 if (answerDTO.getMessage() != null)
                     sendMessage.setText(answerDTO.getMessage());
                 if (answerDTO.getKeyboard() != null)
-                    sendMessage.setReplyMarkup(keyboardCreator.getKeyboard(answerDTO.getKeyboard(), answerDTO.getButtons()));
+                    sendMessage.setReplyMarkup(keyboardCreator.getKeyboard(answerDTO.getKeyboard(), answerDTO.getButtons(), answerDTO.getUser()));
                 answerDTO.getBot().execute(sendMessage );
             }
         } catch (Exception e) {

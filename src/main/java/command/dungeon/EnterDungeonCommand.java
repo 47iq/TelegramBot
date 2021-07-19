@@ -33,6 +33,6 @@ public class EnterDungeonCommand implements Command {
         List<Card> cardList = cardService.getAllCardsOf(commandDTO.getUser());
         Map<String, String> cardReferences = new HashMap<>();
         cardList.stream().filter(x  -> x.getHealth() > 0).forEach(x -> cardReferences.put("/dungeon_enter_card." + x.getUID(), messageFormatter.getCardViewMessage(x)));
-        return new AnswerDTO(true, MessageBundle.getMessage("ask_whatcard"), KeyboardType.CUSTOM, null, cardReferences);
+        return new AnswerDTO(true, MessageBundle.getMessage("ask_whatcard"), KeyboardType.CUSTOM, null, cardReferences, commandDTO.getUser());
     }
 }

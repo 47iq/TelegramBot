@@ -6,6 +6,7 @@ import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
 import communication.util.MessageFormatter;
 import data.CardService;
+import data.User;
 import data.UserService;
 import game.entity.Card;
 import game.service.BattleService;
@@ -25,7 +26,8 @@ public class RobberyCave implements Cave{
     @Override
     public AnswerDTO enterThisCave(CommandDTO commandDTO, Card card, BattleService battleService,
                                    MessageFormatter messageFormatter, CardService cardService, UserService userService, OpenSuperRareBoxCommand command) {
+        User user = commandDTO.getUser();
         userService.lowerBalance(commandDTO.getUser(), tokens);
-        return new AnswerDTO(true, messageFormatter.getRobberyCaveMessage((long) (Math.random() * 4), tokens), KeyboardType.DUNGEON, null, null);
+        return new AnswerDTO(true, messageFormatter.getRobberyCaveMessage((long) (Math.random() * 4), tokens), KeyboardType.DUNGEON, null, null, user);
     }
 }

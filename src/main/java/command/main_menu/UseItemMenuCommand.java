@@ -4,15 +4,25 @@ import command.Command;
 import communication.keyboard.KeyboardType;
 import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
+import communication.util.MessageFormatter;
+import data.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * Command, which displays an item usage menu.
  * Syntax: /use_item
  */
 
+@Component
 public class UseItemMenuCommand implements Command {
+
+    @Autowired
+    MessageFormatter messageFormatter;
+
     @Override
     public AnswerDTO execute(CommandDTO commandDTO) {
-        return new AnswerDTO(true, null, KeyboardType.ITEM, null, null);
+        User user = commandDTO.getUser();
+        return new AnswerDTO(true, messageFormatter.getItemMessage(commandDTO.getUser()), KeyboardType.ITEM, null, null, user);
     }
 }

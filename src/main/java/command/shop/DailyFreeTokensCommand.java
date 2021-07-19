@@ -1,6 +1,7 @@
 package command.shop;
 
 import command.Command;
+import data.User;
 import data.UserService;
 import communication.keyboard.KeyboardType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +25,10 @@ public class DailyFreeTokensCommand implements Command {
 
     @Override
     public AnswerDTO execute(CommandDTO commandDTO) {
+        User user = commandDTO.getUser();
         if(userService.tryGetDailyBonus(commandDTO.getUser()))
-            return new AnswerDTO(true, MessageBundle.getMessage("info_success") + "\n" + messageFormatter.getShopInfo(commandDTO.getUser()), KeyboardType.SHOP, null, null);
+            return new AnswerDTO(true, MessageBundle.getMessage("info_success") + "\n" + messageFormatter.getShopInfo(commandDTO.getUser()), KeyboardType.SHOP, null, null, user);
         else
-            return new AnswerDTO(true, MessageBundle.getMessage("err_notyet")+ "\n" + messageFormatter.getShopInfo(commandDTO.getUser()), KeyboardType.SHOP, null, null);
+            return new AnswerDTO(true, MessageBundle.getMessage("err_notyet")+ "\n" + messageFormatter.getShopInfo(commandDTO.getUser()), KeyboardType.SHOP, null, null, user);
     }
 }

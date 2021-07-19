@@ -94,7 +94,7 @@ public class BattleServiceImpl implements BattleService {
         completeBattle(battleHistory, firstCard, secondCard);
         if (firstCard.getHealth() > 0) {
             battleHistory.append(messageFormatter.getWinLossMessage(firstUser, secondUser));
-            AnswerDTO answerDTO = new AnswerDTO(true, battleHistory.toString(), KeyboardType.LEAF, null, null);
+            AnswerDTO answerDTO = new AnswerDTO(true, battleHistory.toString(), KeyboardType.LEAF, null, null, firstUser);
             answerDTO.setBot(bot);
             cardService.save(secondCard);
             notificationService.notify(secondUser, answerDTO);
@@ -106,7 +106,7 @@ public class BattleServiceImpl implements BattleService {
             userService.save(secondUser);
         } else {
             battleHistory.append(messageFormatter.getWinLossMessage(secondUser, firstUser));
-            AnswerDTO answerDTO = new AnswerDTO(true, battleHistory.toString(), KeyboardType.LEAF, null, null);
+            AnswerDTO answerDTO = new AnswerDTO(true, battleHistory.toString(), KeyboardType.LEAF, null, null, secondUser);
             answerDTO.setBot(bot);
             cardService.save(firstCard);
             notificationService.notify(firstUser, answerDTO);
@@ -177,11 +177,11 @@ public class BattleServiceImpl implements BattleService {
             userService.higherBalance(user, enemy.getAward());
             return new AnswerDTO(true, battleHistory.toString() + "\n" +
                     messageFormatter.getEnemyBattleWinMessage(card, enemy),
-                    KeyboardType.DUNGEON, null, null)
+                    KeyboardType.DUNGEON, null, null, user)
                     .append(calcLevelUp(card, enemy.getEnemyCard()));
         } else
             return new AnswerDTO(true, battleHistory.toString() + "\n" +
-                    messageFormatter.getEnemyBattleLoseMessage(card, enemy), KeyboardType.DUNGEON_LEAF, null, null);
+                    messageFormatter.getEnemyBattleLoseMessage(card, enemy), KeyboardType.DUNGEON_LEAF, null, null, user);
     }
 
     @Override

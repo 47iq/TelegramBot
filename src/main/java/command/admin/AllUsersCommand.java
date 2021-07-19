@@ -1,24 +1,22 @@
-package command.stats;
+package command.admin;
 
 import command.Command;
 import communication.keyboard.KeyboardType;
 import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
 import communication.util.MessageFormatter;
-import data.User;
 import data.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-
 /**
- * Command, which displays users top.
- * Syntax: /top_stats
+ * Command, which shows all of the current users' usernames.
+ * Available for admin only.
+ * Syntax sample: /all_users
  */
 
 @Component
-public class TopStatsCommand implements Command {
+public class AllUsersCommand implements Command {
     @Autowired
     UserService userService;
     @Autowired
@@ -26,8 +24,6 @@ public class TopStatsCommand implements Command {
 
     @Override
     public AnswerDTO execute(CommandDTO commandDTO) {
-        User user = commandDTO.getUser();
-        List<User> userList = userService.getAllUsers();
-        return new AnswerDTO(true, messageFormatter.getGlobalStatsMessage(userList), KeyboardType.LEAF, null, null, user);
+        return new AnswerDTO(true, messageFormatter.getUsersStats(userService.getAllUsers()), KeyboardType.LEAF, null, null, commandDTO.getUser());
     }
 }

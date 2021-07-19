@@ -2,6 +2,7 @@ package command.shop;
 
 import command.Command;
 import command.service_command.OpenBoxCommand;
+import data.User;
 import data.UserService;
 import communication.keyboard.KeyboardType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,13 +28,14 @@ public class BuyHealCommand implements Command {
 
     @Override
     public AnswerDTO execute(CommandDTO commandDTO) {
+        User user = commandDTO.getUser();
         long price = Long.parseLong(MessageBundle.getSetting("HEAL_COST"));
         if(userService.getBalance(commandDTO.getUser()) < price)
-            return new AnswerDTO(true, MessageBundle.getMessage("err_nomoney"), KeyboardType.SHOP, null, null);
+            return new AnswerDTO(true, MessageBundle.getMessage("err_nomoney"), KeyboardType.SHOP, null, null, user);
         else {
             userService.lowerBalance(commandDTO.getUser(), price);
             userService.addHeal(commandDTO.getUser());
-            return new AnswerDTO(true, MessageBundle.getMessage("info_success") + "\n" + messageFormatter.getShopInfo(commandDTO.getUser()),KeyboardType.SHOP, null, null);
+            return new AnswerDTO(true, MessageBundle.getMessage("info_success") + "\n" + messageFormatter.getShopInfo(commandDTO.getUser()),KeyboardType.SHOP, null, null, user);
         }
     }
 }

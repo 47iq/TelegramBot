@@ -36,24 +36,26 @@ public class CaveServiceImpl implements CaveService {
 
     @Override
     public AnswerDTO enterCaves(CommandDTO commandDTO, Card card) {
-        if (cardMap.containsKey(commandDTO.getUser()))
-            return new AnswerDTO(true, MessageBundle.getMessage("err_incaves"), KeyboardType.LEAF, null, null);
-        cardMap.put(commandDTO.getUser(), card);
+        User user = commandDTO.getUser();
+        cardMap.remove(user);
+        cardMap.put(user, card);
         return enterNextCave(commandDTO);
     }
 
     @Override
     public AnswerDTO leaveCaves(CommandDTO commandDTO) {
+        User user = commandDTO.getUser();
         cardMap.remove(commandDTO.getUser());
-        return new AnswerDTO(true, null, KeyboardType.CLASSIC, null, null);
+        return new AnswerDTO(true, null, KeyboardType.CLASSIC, null, null, user);
     }
 
     @Override
     public AnswerDTO enterNextCave(CommandDTO commandDTO) {
+        User user = commandDTO.getUser();
         if (!cardMap.containsKey(commandDTO.getUser()))
-            return new AnswerDTO(true, MessageBundle.getMessage("err_notincaves"), KeyboardType.LEAF, null, null);
+            return new AnswerDTO(true, MessageBundle.getMessage("err_notincaves"), KeyboardType.LEAF, null, null, user);
         if (cardMap.get(commandDTO.getUser()).getHealth() <= 0)
-            return new AnswerDTO(false, MessageBundle.getMessage("err_nohealth"), KeyboardType.LEAF, null, null);
+            return new AnswerDTO(false, MessageBundle.getMessage("err_nohealth"), KeyboardType.LEAF, null, null, user);
         Cave cave = getCave();
         if (cave instanceof LevelUpCave && cardMap.get(commandDTO.getUser()).getLevel() >= 10)
             cave = new ArmorCave();
@@ -83,11 +85,16 @@ public class CaveServiceImpl implements CaveService {
             return new BattleCave();
         else if (rnd < 98)
             return new WeaponCave();
-        else if (rnd < 99)
+        else if (rnd < 99.35)
             return new ArmorCave();
         else if (rnd < 99.75)
             return new LevelUpCave();
         else
             return new LootBoxCave();
+    }
+
+    @Override
+    public Card getCard(User user) {
+        return cardMap.get(user);
     }
 }

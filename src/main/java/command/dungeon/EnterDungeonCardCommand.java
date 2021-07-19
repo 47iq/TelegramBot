@@ -6,7 +6,6 @@ import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
 import communication.util.MessageBundle;
 import data.CardService;
-import data.UserService;
 import game.dungeon.CaveService;
 import game.entity.Card;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,11 +30,11 @@ public class EnterDungeonCardCommand implements Command {
         long id = Long.parseLong(commandDTO.getArg());
         Card card = cardService.getMyCardById(id, commandDTO.getUser().getUID());
         if(card == null)
-            return new AnswerDTO(false, MessageBundle.getMessage("err_nocard"), KeyboardType.LEAF, null, null);
+            return new AnswerDTO(false, MessageBundle.getMessage("err_nocard"), KeyboardType.LEAF, null, null, commandDTO.getUser());
         if(card.getHealth() <= 0)
-            return new AnswerDTO(false, MessageBundle.getMessage("err_nohealth"), KeyboardType.LEAF, null, null);
+            return new AnswerDTO(false, MessageBundle.getMessage("err_nohealth"), KeyboardType.LEAF, null, null, commandDTO.getUser());
         if(commandDTO.getUser().getTokens() <= 0)
-            return new AnswerDTO(false, MessageBundle.getMessage("err_nomoney2"), KeyboardType.LEAF, null, null);
+            return new AnswerDTO(false, MessageBundle.getMessage("err_nomoney2"), KeyboardType.LEAF, null, null, commandDTO.getUser());
         return caveService.enterCaves(commandDTO,  card);
     }
 }

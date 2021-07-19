@@ -35,15 +35,15 @@ public class HealCardCommand implements Command {
         User user = commandDTO.getUser();
         Card card = cardService.getMyCardById(id, user.getUID());
         if (card == null)
-            return new AnswerDTO(false, MessageBundle.getMessage("err_nocard"), KeyboardType.CLASSIC, null, null);
+            return new AnswerDTO(false, MessageBundle.getMessage("err_nocard"), KeyboardType.CLASSIC, null, null, user);
         else {
             if (userService.getHealCount(user) < 1)
-                return new AnswerDTO(false, MessageBundle.getMessage("err_noheal"), KeyboardType.CLASSIC, null, null);
+                return new AnswerDTO(false, MessageBundle.getMessage("err_noheal"), KeyboardType.CLASSIC, null, null, user);
             userService.spendHeal(user);
             cardService.heal(card);
             return new AnswerDTO(true, MessageBundle.getMessage("info_succheal") + "\n"
                     +  messageFormatter.getCardMessage(card), KeyboardType.LEAF,
-                    imageParser.getImage(new ImageIdentifier(card.getName(), card.getType())), null);
+                    imageParser.getImage(new ImageIdentifier(card.getName(), card.getType())), null, user);
         }
     }
 }

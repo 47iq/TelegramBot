@@ -30,11 +30,11 @@ public class SellCardCommand implements Command {
         long id = Long.parseLong(commandDTO.getArg());
         Card card = cardService.getMyCardById(id, commandDTO.getUser().getUID());
         if(card == null)
-            return new AnswerDTO(false, MessageBundle.getMessage("err_nocard"), KeyboardType.CLASSIC, null, null);
+            return new AnswerDTO(false, MessageBundle.getMessage("err_nocard"), KeyboardType.CLASSIC, null, null, commandDTO.getUser());
         long price = priceCalculator.calculatePrice(card);
         cardService.delete(card);
         userService.higherBalance(commandDTO.getUser(), price);
         return new AnswerDTO(true, MessageBundle.getMessage("info_sold"), KeyboardType.LEAF,
-                null, null);
+                null, null, commandDTO.getUser());
     }
 }

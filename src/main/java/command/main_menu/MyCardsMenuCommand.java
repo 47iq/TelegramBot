@@ -1,8 +1,8 @@
 package command.main_menu;
 
 import command.Command;
-import command.item.BoostCardCommand;
 import data.CardService;
+import data.User;
 import game.entity.Card;
 import communication.keyboard.KeyboardType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,13 +29,14 @@ public class MyCardsMenuCommand implements Command {
 
     @Override
     public AnswerDTO execute(CommandDTO commandDTO) {
+        User user = commandDTO.getUser();
         List<Card> userCards = cardService.getAllCardsOf(commandDTO.getUser());
         if(userCards.isEmpty())
-            return new AnswerDTO(true, MessageBundle.getMessage("info_nocards"), KeyboardType.CLASSIC, null, null);
+            return new AnswerDTO(true, MessageBundle.getMessage("info_nocards"), KeyboardType.CLASSIC, null, null, user);
         StringBuilder builder = new StringBuilder();
         builder.append(MessageBundle.getMessage("info_yourcards")).append("\n");
         for(var card : userCards)
             builder.append(messageFormatter.getCardMessage(card)).append("\n");
-        return new AnswerDTO(true, builder.toString(), KeyboardType.MENU, null, null);
+        return new AnswerDTO(true, builder.toString(), KeyboardType.MENU, null, null, user);
     }
 }

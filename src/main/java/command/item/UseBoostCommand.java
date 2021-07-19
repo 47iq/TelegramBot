@@ -34,6 +34,6 @@ public class UseBoostCommand implements Command {
         Map<String, String> cardReferences = new HashMap<>();
         cardList.stream().filter(x -> x.getLevel() < Long.parseLong(MessageBundle.getSetting("MAX_BOOST_LEVEL"))).forEach(x -> cardReferences.put("/boost_card." + x.getUID(), messageFormatter.getCardViewMessage(x)));
         cardReferences.put("/help", MessageBundle.getMessage("back"));
-        return new AnswerDTO(true, MessageBundle.getMessage("ask_whatcard"), KeyboardType.CUSTOM, null, cardReferences);
+        return new AnswerDTO(true, MessageBundle.getMessage("ask_whatcard"), KeyboardType.CUSTOM, null, cardReferences, commandDTO.getUser());
     }
 }

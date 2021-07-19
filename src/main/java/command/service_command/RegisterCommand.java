@@ -21,8 +21,8 @@ public class RegisterCommand implements Command {
     @Override
     public AnswerDTO execute(CommandDTO commandDTO) {
         if(userDAO.create(commandDTO.getUser()) )
-            return new AnswerDTO(true, null, KeyboardType.CLASSIC, null, null);
+            return new AnswerDTO(true, null, KeyboardType.CLASSIC, null, null, commandDTO.getUser());
         else
-            return new AnswerDTO(false, null, KeyboardType.CLASSIC, null, null);
+            return new AnswerDTO(false, null, KeyboardType.CLASSIC, null, null, commandDTO.getUser());
     }
 }

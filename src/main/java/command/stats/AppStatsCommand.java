@@ -30,8 +30,9 @@ public class AppStatsCommand implements Command {
 
     @Override
     public AnswerDTO execute(CommandDTO commandDTO) {
+        User user = commandDTO.getUser();
         List<User> userList = userService.getAllUsers();
         List<Card> cardList = cardService.getAllCards();
-        return new AnswerDTO(true, messageFormatter.getAppStats(userList, cardList), KeyboardType.LEAF, null, null);
+        return new AnswerDTO(true, messageFormatter.getAppStats(userList, cardList), KeyboardType.LEAF, null, null, user);
     }
 }

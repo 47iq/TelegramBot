@@ -13,6 +13,6 @@ public class BattleMenuCommand implements Command {
 
     @Override
     public AnswerDTO execute(CommandDTO commandDTO) {
-        return new AnswerDTO(true, null, KeyboardType.BATTLE, null, null);
+        return new AnswerDTO(true, null, KeyboardType.BATTLE, null, null, commandDTO.getUser());
     }
 }

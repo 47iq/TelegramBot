@@ -35,19 +35,19 @@ public class BoostCardCommand implements Command {
         User user = commandDTO.getUser();
         Card card = cardService.getMyCardById(id, user.getUID());
         if (card == null)
-            return new AnswerDTO(false, MessageBundle.getMessage("err_nocard"), KeyboardType.CLASSIC, null, null);
+            return new AnswerDTO(false, MessageBundle.getMessage("err_nocard"), KeyboardType.CLASSIC, null, null, user);
         else {
             if (userService.getBoostCount(user) < 1)
-                return new AnswerDTO(false, MessageBundle.getMessage("err_noboost"), KeyboardType.CLASSIC, null, null);
+                return new AnswerDTO(false, MessageBundle.getMessage("err_noboost"), KeyboardType.CLASSIC, null, null, user);
             if (card.getLevel() >= Long.parseLong(MessageBundle.getSetting("MAX_BOOST_LEVEL")))
-                return new AnswerDTO(false, MessageBundle.getMessage("err_maxboost"), KeyboardType.CLASSIC, null, null);
+                return new AnswerDTO(false, MessageBundle.getMessage("err_maxboost"), KeyboardType.CLASSIC, null, null, user);
             if(cardService.boost(card))  {
                 userService.spendBoost(user);
                 return new AnswerDTO(true, MessageBundle.getMessage("info_succboost") + "\n"
                         + messageFormatter.getCardMessage(card), KeyboardType.LEAF,
-                        imageParser.getImage(new ImageIdentifier(card.getName(), card.getType())), null);
+                        imageParser.getImage(new ImageIdentifier(card.getName(), card.getType())), null, user);
             } else {
-                return new AnswerDTO(false, MessageBundle.getMessage("err_maxlvl"), KeyboardType.LEAF, null, null);
+                return new AnswerDTO(false, MessageBundle.getMessage("err_maxlvl"), KeyboardType.LEAF, null, null, user);
             }
         }
     }

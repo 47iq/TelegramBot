@@ -33,12 +33,12 @@ public class StartSearchCommand implements Command {
         long id = Long.parseLong(commandDTO.getArg());
         Card card = cardService.getMyCardById(id, commandDTO.getUser().getUID());
         if(card == null)
-            return new AnswerDTO(false, MessageBundle.getMessage("err_nocard"), KeyboardType.CLASSIC, null, null);
+            return new AnswerDTO(false, MessageBundle.getMessage("err_nocard"), KeyboardType.CLASSIC, null, null, commandDTO.getUser());
         if(card.getHealth()  <=  0)
-            return new AnswerDTO(false, MessageBundle.getMessage("err_dead"), KeyboardType.CLASSIC, null, null);
+            return new AnswerDTO(false, MessageBundle.getMessage("err_dead"), KeyboardType.CLASSIC, null, null, commandDTO.getUser());
         if(battleService.isBattling(commandDTO.getUser()))
-            return new AnswerDTO(false, MessageBundle.getMessage("err_insearch"), KeyboardType.CLASSIC, null, null);
+            return new AnswerDTO(false, MessageBundle.getMessage("err_insearch"), KeyboardType.CLASSIC, null, null, commandDTO.getUser());
         battleService.startSearch(commandDTO.getUser(), card, commandDTO.getBot());
-        return new AnswerDTO(true, MessageBundle.getMessage("info_startsearch"), KeyboardType.LEAF, null, null);
+        return new AnswerDTO(true, MessageBundle.getMessage("info_startsearch"), KeyboardType.LEAF, null, null, commandDTO.getUser());
     }
 }

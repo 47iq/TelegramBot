@@ -6,6 +6,7 @@ import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
 import communication.util.MessageFormatter;
 import data.CardService;
+import data.User;
 import data.UserService;
 import game.entity.Card;
 import game.service.BattleService;
@@ -25,8 +26,9 @@ public class ArmorCave implements Cave{
     @Override
     public AnswerDTO enterThisCave(CommandDTO commandDTO, Card card, BattleService battleService,
                                    MessageFormatter messageFormatter, CardService cardService, UserService userService, OpenSuperRareBoxCommand command) {
+        User user = commandDTO.getUser();
         card.setDefence(card.getDefence() + armorBoost);
         cardService.save(card);
-        return new AnswerDTO(true, messageFormatter.getArmorCaveMessage((long) (Math.random()*4), armorBoost, card), KeyboardType.DUNGEON, null, null);
+        return new AnswerDTO(true, messageFormatter.getArmorCaveMessage((long) (Math.random()*4), armorBoost, card), KeyboardType.DUNGEON, null, null, user);
     }
 }

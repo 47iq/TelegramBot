@@ -36,6 +36,6 @@ public class UseHealCommand implements Command {
         cardList.stream().filter(x -> x.getHealth() < x.getMaxHealth()).forEach(x -> cardReferences.put("/heal_card." + x.getUID(),
                 messageFormatter.getCardViewMessage(x) + " " + messageFormatter.getHealthMessage(x)));
         cardReferences.put("/help", MessageBundle.getMessage("back"));
-        return new AnswerDTO(true, MessageBundle.getMessage("ask_whatcard"), KeyboardType.CUSTOM, null, cardReferences);
+        return new AnswerDTO(true, MessageBundle.getMessage("ask_whatcard"), KeyboardType.CUSTOM, null, cardReferences, commandDTO.getUser());
     }
 }

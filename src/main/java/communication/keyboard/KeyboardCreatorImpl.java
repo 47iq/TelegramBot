@@ -1,6 +1,11 @@
 package communication.keyboard;
 
+import data.User;
+import data.UserService;
+import game.dungeon.CaveService;
 import org.jvnet.hk2.component.MultiMap;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import communication.util.MessageBundle;
@@ -10,31 +15,37 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Component
 public class KeyboardCreatorImpl implements KeyboardCreator {
+
+    @Autowired
+    UserService userService;
+    @Autowired
+    CaveService caveService;
 
     private final int BUTTONS_IN_ROW = 2;
     private final int MAX_ROWS = 5;
 
     @Override
-    public InlineKeyboardMarkup getKeyboard(KeyboardType keyboard, Map<String, String> buttons) {
+    public InlineKeyboardMarkup getKeyboard(KeyboardType keyboard, Map<String, String> buttons, User user) {
         if (buttons != null)
             return getKeyboard(buttons);
         else
-            return getKeyboard(keyboard);
+            return getKeyboard(keyboard, user);
     }
 
-    private InlineKeyboardMarkup getKeyboard(KeyboardType type) {
+    private InlineKeyboardMarkup getKeyboard(KeyboardType type, User user) {
         return switch (type) {
             case CLASSIC -> getClassicKeyboard();
             case MENU -> getMenuKeyboard();
             case WELCOME -> getWelcomeKeyboard();
             case SHOP -> getShopKeyboard();
             case LEAF -> getLeafKeyboard();
-            case ITEM -> getItemKeyboard();
+            case ITEM -> getItemKeyboard(user);
             case BATTLE -> getBattleKeyboard();
             case STATS -> getStatsKeyBoard();
             case DUNGEON -> getDungeonKeyboard();
-            case DUNGEON_LEAF -> getDungeonLeafKeyboard();
+            case DUNGEON_LEAF -> getDungeonLeafKeyboard(user);
             case DUNGEON_MENU -> getDungeonMenuKeyboard();
             case START_SHOP -> getStartShopKeyboard();
             default -> null;
@@ -73,10 +84,15 @@ public class KeyboardCreatorImpl implements KeyboardCreator {
      * Method that creates a keyboard for a dungeon with "back" button only.
      *
      * @return a keyboard for a dungeon with "back" button only
+     * @param user user
      */
 
-    private InlineKeyboardMarkup getDungeonLeafKeyboard() {
+    private InlineKeyboardMarkup getDungeonLeafKeyboard(User user) {
         Map<String, String> menu = new HashMap<>();
+        if(userService.getHealCount(user) > 0)
+            menu.put("/instant_heal." + caveService.getCard(user).getUID(), MessageBundle.getMessage("instant_heal"));
+        else
+            menu.put("/shop", MessageBundle.getMessage("instant_shop"));
         menu.put("/dungeon_leave", MessageBundle.getMessage("dungeon_leave"));
         return getKeyboard(menu);
     }
@@ -131,12 +147,17 @@ public class KeyboardCreatorImpl implements KeyboardCreator {
      *
      * @return a keyboard for an item menu
      * @see command.main_menu.UseItemMenuCommand
+     * @param user
      */
 
-    private InlineKeyboardMarkup getItemKeyboard() {
+    private InlineKeyboardMarkup getItemKeyboard(User user) {
         Map<String, String> menu = new HashMap<>();
-        menu.put("/use_heal", MessageBundle.getMessage("info_useheal"));
-        menu.put("/use_boost", MessageBundle.getMessage("info_useboost"));
+        if(userService.getHealCount(user) > 0)
+            menu.put("/use_heal", MessageBundle.getMessage("info_useheal"));
+        if(userService.getBoostCount(user) > 0)
+            menu.put("/use_boost", MessageBundle.getMessage("info_useboost"));
+        if(userService.getHealCount(user) <= 0 || userService.getBoostCount(user) <= 0)
+            menu.put("/shop", MessageBundle.getMessage("instant_shop"));
         menu.put("/item_info", MessageBundle.getMessage("/info"));
         menu.put("/help", MessageBundle.getMessage("back"));
         return getKeyboard(menu);
@@ -200,6 +221,7 @@ public class KeyboardCreatorImpl implements KeyboardCreator {
         menu.put("/view", MessageBundle.getMessage("/view"));
         menu.put("/sell", MessageBundle.getMessage("info_sell"));
         menu.put("/help", MessageBundle.getMessage("back"));
+        menu.put("/use_item", MessageBundle.getMessage("/use_item"));
         return getKeyboard(menu);
     }
 

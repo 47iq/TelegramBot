@@ -13,6 +13,6 @@ import communication.util.CommandDTO;
 public class HelpCommand implements Command {
     @Override
     public AnswerDTO execute(CommandDTO commandDTO) {
-        return new AnswerDTO(true, null, KeyboardType.CLASSIC, null, null);
+        return new AnswerDTO(true, null, KeyboardType.CLASSIC, null, null, commandDTO.getUser());
     }
 }

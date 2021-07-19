@@ -352,4 +352,31 @@ public interface MessageFormatter {
      */
 
     String getLootBoxCaveMessage(CardName cardName);
+
+    /**
+     * All users message
+     *
+     * @param allUsers all users of app
+     * @return users message
+     */
+
+    String getUsersStats(List<User> allUsers);
+
+    /**
+     * Instant heal message
+     *
+     * @param card card
+     * @return instant heal message
+     */
+
+    String getInstantHealMessage(Card card);
+
+    /**
+     * Item list message
+     *
+     * @param user user
+     * @return  user item list
+     */
+
+    String getItemMessage(User user);
 }

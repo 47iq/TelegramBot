@@ -19,7 +19,7 @@ public class ImageSenderServiceImpl implements ImageSenderService {
         SendPhoto photo = new SendPhoto();
         photo.setPhoto(new InputFile(answerDTO.getImage()));
         photo.setCaption(answerDTO.getMessage());
-        InlineKeyboardMarkup markup = creator.getKeyboard(answerDTO.getKeyboard(), answerDTO.getButtons());
+        InlineKeyboardMarkup markup = creator.getKeyboard(answerDTO.getKeyboard(), answerDTO.getButtons(), answerDTO.getUser());
         photo.setReplyMarkup(markup);
         return photo;
     }

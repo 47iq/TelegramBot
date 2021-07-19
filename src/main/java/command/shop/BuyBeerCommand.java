@@ -5,6 +5,7 @@ import communication.keyboard.KeyboardType;
 import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
 import communication.util.MessageBundle;
+import data.User;
 
 /**
  * Command, which displays beer info for user.
@@ -14,6 +15,7 @@ import communication.util.MessageBundle;
 public class BuyBeerCommand implements Command {
     @Override
     public AnswerDTO execute(CommandDTO commandDTO) {
-        return new AnswerDTO(true, MessageBundle.getMessage("info_beer"), KeyboardType.LEAF, null, null);
+        User user = commandDTO.getUser();
+        return new AnswerDTO(true, MessageBundle.getMessage("info_beer"), KeyboardType.LEAF, null, null, user);
     }
 }

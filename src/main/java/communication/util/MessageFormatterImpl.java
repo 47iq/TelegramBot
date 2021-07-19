@@ -13,8 +13,10 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
@@ -321,6 +323,28 @@ public class MessageFormatterImpl implements MessageFormatter {
         return getCardMessage2(winner) + " " + MessageBundle.getMessage("info_gainsnewlevel") + " " + winner.getLevel()
                 + MessageBundle.getMessage("info_level2") + "\n" +
                 MessageBundle.getMessage("info_nextxp") + " " + winner.getNextLevelXp() + MessageBundle.getMessage("info_xp2");
+    }
+
+    @Override
+    public String getUsersStats(List<User> allUsers) {
+        return allUsers.stream()
+                .map(x -> x.getUID() + " " + x.getLastTokensRedeemed().format(DateTimeFormatter.ISO_DATE))
+                .reduce((x, y) -> x + "\n" + y)
+                .orElse("");
+    }
+
+    @Override
+    public String getInstantHealMessage(Card card) {
+        return MessageBundle.getMessage("info_succheal") + " " + MessageBundle.getMessage(card.getName().name()) + ": " + MessageBundle.getMessage("info_health2") +
+                " " + String.format("%.1f", card.getHealth()) + "/" + String.format("%.1f", card.getMaxHealth());
+    }
+
+    @Override
+    public String getItemMessage(User user) {
+        long heal = user.getHealCount();
+        long boost = user.getBoostCount();
+        return MessageBundle.getMessage("info_heal").substring(0, 1).toUpperCase(Locale.ROOT) + MessageBundle.getMessage("info_heal").substring(1) + " " + heal + ", " +
+                MessageBundle.getMessage("info_boost") + " " + boost;
     }
 
     private String getCardMessage2(Card card) {

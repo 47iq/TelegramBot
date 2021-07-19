@@ -25,7 +25,7 @@ public class TextSenderServiceImpl implements TextSenderService {
         } else {
             sendMessage.setText(answerDTO.getMessage());
         }
-        InlineKeyboardMarkup markup = creator.getKeyboard(answerDTO.getKeyboard(), answerDTO.getButtons());
+        InlineKeyboardMarkup markup = creator.getKeyboard(answerDTO.getKeyboard(), answerDTO.getButtons(), answerDTO.getUser());
         sendMessage.setReplyMarkup(markup);
         return sendMessage;
     }

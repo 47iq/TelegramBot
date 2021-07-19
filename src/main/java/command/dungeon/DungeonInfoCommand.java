@@ -19,6 +19,6 @@ public class DungeonInfoCommand implements Command {
     MessageFormatter messageFormatter;
     @Override
     public AnswerDTO execute(CommandDTO commandDTO) {
-        return new AnswerDTO(true, messageFormatter.getDungeonInfo(), KeyboardType.LEAF, null, null);
+        return new AnswerDTO(true, messageFormatter.getDungeonInfo(), KeyboardType.LEAF, null, null, commandDTO.getUser());
     }
 }

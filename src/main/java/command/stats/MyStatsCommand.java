@@ -2,6 +2,7 @@ package command.stats;
 
 import command.Command;
 import communication.keyboard.KeyboardType;
+import data.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import communication.util.AnswerDTO;
@@ -21,6 +22,7 @@ public class MyStatsCommand implements Command {
 
     @Override
     public AnswerDTO execute(CommandDTO commandDTO) {
-        return new AnswerDTO(true, messageFormatter.getUserStats(commandDTO.getUser()), KeyboardType.LEAF, null, null);
+        User user = commandDTO.getUser();
+        return new AnswerDTO(true, messageFormatter.getUserStats(commandDTO.getUser()), KeyboardType.LEAF, null, null, user);
     }
 }

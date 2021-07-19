@@ -40,16 +40,16 @@ public class OpenBoxCommand {
                         + card.getMaxHealth() + ", " + card.getAttack() + ", " + card.getDefence());
                 AnswerDTO answerDTO = new AnswerDTO(true,
                         MessageBundle.getMessage("info_youget") + "\n" + messageFormatter.getCardMessage(card),
-                        KeyboardType.LEAF, imageParser.getImage(new ImageIdentifier(card.getName(), card.getType())), null);
+                        KeyboardType.LEAF, imageParser.getImage(new ImageIdentifier(card.getName(), card.getType())), null, commandDTO.getUser());
                 answerDTO.setCardName(card.getName());
                 return answerDTO;
             } else {
                 LOGGER.error("Error while opening a lootbox");
-                return new AnswerDTO(false, MessageBundle.getMessage("err_unk"), KeyboardType.CLASSIC, null, null);
+                return new AnswerDTO(false, MessageBundle.getMessage("err_unk"), KeyboardType.CLASSIC, null, null, commandDTO.getUser());
             }
         } catch (Exception e) {
             e.printStackTrace();
-            return new AnswerDTO(false, MessageBundle.getMessage("err_unk"), KeyboardType.CLASSIC, null, null);
+            return new AnswerDTO(false, MessageBundle.getMessage("err_unk"), KeyboardType.CLASSIC, null, null, commandDTO.getUser());
         }
     }
 }

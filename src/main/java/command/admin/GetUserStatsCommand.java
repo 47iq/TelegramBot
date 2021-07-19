@@ -24,6 +24,6 @@ public class GetUserStatsCommand implements Command {
 
     @Override
     public AnswerDTO execute(CommandDTO commandDTO) {
-        return new AnswerDTO(true, messageFormatter.getUserStats(userService.getUserData(new User(commandDTO.getArg(), 0))), KeyboardType.LEAF, null, null);
+        return new AnswerDTO(true, messageFormatter.getUserStats(userService.getUserData(new User(commandDTO.getArg(), 0))), KeyboardType.LEAF, null, null, commandDTO.getUser());
     }
 }

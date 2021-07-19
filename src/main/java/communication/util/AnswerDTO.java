@@ -1,6 +1,7 @@
 package communication.util;
 
 import communication.keyboard.KeyboardType;
+import data.User;
 import game.entity.CardName;
 import org.jvnet.hk2.annotations.Optional;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -20,23 +21,25 @@ public class AnswerDTO {
     Map<String, String> buttons;
     TelegramLongPollingBot bot;
     CardName cardName;
+    final User user;
 
     /**
      * Constructor
-     *
-     * @param isSuccessful is the answer successful
+     *  @param isSuccessful is the answer successful
      * @param message      answer text
      * @param keyboardType keyboard type for a Telegram messenger
      * @param image        image that needs to be sent as well
      * @param buttons      buttons for a custom keyboard(if needed)
+     * @param user
      */
 
-    public AnswerDTO(boolean isSuccessful, String message, KeyboardType keyboardType, @Optional File image, @Optional Map<String, String> buttons) {
+    public AnswerDTO(boolean isSuccessful, String message, KeyboardType keyboardType, @Optional File image, @Optional Map<String, String> buttons, User user) {
         this.isSuccessful = isSuccessful;
         this.message = message;
         this.keyboardType = keyboardType;
         this.image = image;
         this.buttons = buttons;
+        this.user = user;
     }
 
     public CardName getCardName() {
@@ -110,5 +113,9 @@ public class AnswerDTO {
                 ", image=" + image +
                 ", cardName=" + cardName +
                 '}';
+    }
+
+    public User getUser() {
+        return user;
     }
 }

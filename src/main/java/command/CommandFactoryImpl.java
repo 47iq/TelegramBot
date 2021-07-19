@@ -46,7 +46,7 @@ public class CommandFactoryImpl implements CommandFactory {
             else {
                 //todo
                 System.err.println(commandDTO.getMessageText() + " " + commandDTO.getArg());
-                return new AnswerDTO(false, MessageBundle.getMessage("err_unk_command"), KeyboardType.CLASSIC, null, null);
+                return new AnswerDTO(false, MessageBundle.getMessage("err_unk_command"), KeyboardType.CLASSIC, null, null, commandDTO.getUser());
             }
         }
         return command.execute(commandDTO);
