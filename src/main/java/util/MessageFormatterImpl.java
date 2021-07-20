@@ -1,4 +1,4 @@
-package communication.util;
+package util;
 
 import data.CardService;
 import data.UserService;
@@ -17,7 +17,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
-import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 @Component

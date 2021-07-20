@@ -9,6 +9,7 @@ import communication.keyboard.KeyboardType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import communication.util.*;
+import util.MessageBundle;
 
 /**
  * Command, which makes user open a basic lootbox.

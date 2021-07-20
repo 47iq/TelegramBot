@@ -1,14 +1,12 @@
 package data;
 
-import communication.util.MessageBundle;
-import org.springframework.stereotype.Component;
+import util.MessageBundle;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.ResourceBundle;
 
 /**
  * User object

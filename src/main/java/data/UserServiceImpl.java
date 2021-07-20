@@ -1,13 +1,12 @@
 package data;
 
-import communication.util.MessageBundle;
+import util.MessageBundle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
-import java.util.ResourceBundle;
 
 @Component
 public class UserServiceImpl implements UserService{

@@ -3,7 +3,7 @@ package game.dungeon;
 import command.service_command.OpenSuperRareBoxCommand;
 import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
-import communication.util.MessageFormatter;
+import util.MessageFormatter;
 import data.CardService;
 import data.UserService;
 import game.entity.Card;

@@ -1,7 +1,7 @@
 package command.card_collection;
 
 import command.Command;
-import communication.util.MessageFormatter;
+import util.MessageFormatter;
 import data.CardService;
 import game.entity.Card;
 import communication.keyboard.KeyboardType;
@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
-import communication.util.MessageBundle;
+import util.MessageBundle;
 
 import java.util.HashMap;
 import java.util.List;

@@ -1,4 +1,4 @@
-package communication.util;
+package util;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -11,10 +11,9 @@ import java.util.ResourceBundle;
 
 public class MessageBundle {
 
-    /**
-     * OS type - used for bundle switching for test and production
-     */
-    private static final String osName = System.getProperty("os.name");
+    private static AppMode appMode;
+
+    private static MessageMode messageMode;
 
     /**
      * Method that gets message from a messages resource bundle by key.
@@ -24,7 +23,7 @@ public class MessageBundle {
      */
 
     public static String getMessage(String key) {
-        return ResourceBundle.getBundle("messages").getString(key);
+        return ResourceBundle.getBundle("messages_" + messageMode.name().toLowerCase()).getString(key);
     }
 
     /**
@@ -35,9 +34,14 @@ public class MessageBundle {
      */
 
     public static String getSetting(String key) {
-        if (osName.toLowerCase(Locale.ROOT).contains("windows"))
-            return ResourceBundle.getBundle("settings_windows").getString(key);
-        else
-            return ResourceBundle.getBundle("settings_ubuntu").getString(key);
+            return ResourceBundle.getBundle("settings_" + appMode.name().toLowerCase()+ "_" + messageMode.name().toLowerCase()).getString(key) ;
+    }
+
+    public static void setAppMode(AppMode appMode) {
+        MessageBundle.appMode = appMode;
+    }
+
+    public static void setMessageMode(MessageMode messageMode) {
+        MessageBundle.messageMode = messageMode;
     }
 }

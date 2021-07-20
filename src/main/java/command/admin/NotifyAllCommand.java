@@ -5,7 +5,7 @@ import communication.keyboard.KeyboardType;
 import communication.notification.NotificationService;
 import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
-import communication.util.MessageBundle;
+import util.MessageBundle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

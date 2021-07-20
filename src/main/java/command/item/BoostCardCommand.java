@@ -11,6 +11,8 @@ import game.entity.ImageIdentifier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import communication.util.*;
+import util.MessageBundle;
+import util.MessageFormatter;
 
 /**
  * Command, which uses boost item on card(if possible) and displays the card

@@ -1,12 +1,11 @@
 package data;
 
-import communication.util.MessageBundle;
+import util.MessageBundle;
 import game.entity.Card;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 @Component

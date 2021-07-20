@@ -1,4 +1,4 @@
-package communication.util;
+package util;
 
 import game.dungeon.Enemy;
 import game.entity.Card;

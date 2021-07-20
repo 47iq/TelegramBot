@@ -14,8 +14,8 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import communication.util.*;
-
-import java.util.ResourceBundle;
+import util.MessageBundle;
+import util.MessageFormatter;
 
 /**
  * Command, which makes user open a lootbox of a certain type.

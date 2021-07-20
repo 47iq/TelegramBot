@@ -1,7 +1,7 @@
 package communication.connection;
 
 import command.CommandFactory;
-import communication.util.MessageBundle;
+import util.MessageBundle;
 import data.PSQLUserDAO;
 import data.UserService;
 import data.User;

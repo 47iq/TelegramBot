@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
-import communication.util.MessageBundle;
-import communication.util.MessageFormatter;
+import util.MessageBundle;
+import util.MessageFormatter;
 
 /**
  * Command, which makes user redeem daily free tokens(if possible).

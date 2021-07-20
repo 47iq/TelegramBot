@@ -4,7 +4,7 @@ import command.service_command.OpenSuperRareBoxCommand;
 import communication.keyboard.KeyboardType;
 import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
-import communication.util.MessageFormatter;
+import util.MessageFormatter;
 import data.CardService;
 import data.User;
 import data.UserService;

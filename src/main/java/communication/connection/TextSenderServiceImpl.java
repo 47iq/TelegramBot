@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import communication.util.AnswerDTO;
-import communication.util.MessageBundle;
+import util.MessageBundle;
 
 @Component
 public class TextSenderServiceImpl implements TextSenderService {

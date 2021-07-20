@@ -3,12 +3,11 @@ package communication.keyboard;
 import data.User;
 import data.UserService;
 import game.dungeon.CaveService;
-import org.jvnet.hk2.component.MultiMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
-import communication.util.MessageBundle;
+import util.MessageBundle;
 
 import java.util.ArrayList;
 import java.util.HashMap;

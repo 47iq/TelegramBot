@@ -4,7 +4,7 @@ import command.Command;
 import communication.keyboard.KeyboardType;
 import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
-import communication.util.MessageBundle;
+import util.MessageBundle;
 import data.CardService;
 import game.dungeon.CaveService;
 import game.entity.Card;

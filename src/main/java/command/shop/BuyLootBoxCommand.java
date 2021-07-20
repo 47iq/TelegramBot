@@ -4,14 +4,12 @@ import command.Command;
 import communication.keyboard.KeyboardType;
 import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
-import communication.util.MessageBundle;
-import communication.util.MessageFormatter;
+import util.MessageBundle;
+import util.MessageFormatter;
 import data.CardService;
 import data.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.ResourceBundle;
 
 @Component
 public class BuyLootBoxCommand implements Command {

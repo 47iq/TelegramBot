@@ -1,6 +1,6 @@
 package game.dungeon;
 
-import communication.util.MessageBundle;
+import util.MessageBundle;
 import game.entity.Card;
 
 /**

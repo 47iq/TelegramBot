@@ -1,13 +1,12 @@
 package game.entity;
 
-import communication.util.MessageBundle;
+import util.MessageBundle;
 import data.User;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Nullable;
 import javax.persistence.*;
 import java.io.File;
-import java.util.ResourceBundle;
 
 /**
  * Card class

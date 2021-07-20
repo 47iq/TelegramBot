@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
-import communication.util.MessageFormatter;
+import util.MessageFormatter;
 
 /**
  * Command, which displays a shop menu.
