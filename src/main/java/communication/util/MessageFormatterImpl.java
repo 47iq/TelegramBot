@@ -111,14 +111,13 @@ public class MessageFormatterImpl implements MessageFormatter {
                 MessageBundle.getMessage("info_rarecnt") + " " + cardList.stream().filter(x -> x.getType().equals(CardType.RARE)).count() + "\n" +
                 MessageBundle.getMessage("info_epiccnt") + " " + cardList.stream().filter(x -> x.getType().equals(CardType.EPIC)).count() + "\n" +
                 MessageBundle.getMessage("info_legcnt") + " " + cardList.stream().filter(x -> x.getType().equals(CardType.LEGENDARY)).count() + "\n" +
-                MessageBundle.getMessage("info_distinct") + " " + count + "/9" + "\n" +
+                MessageBundle.getMessage("info_distinct") + " " + count + "/" +  CardName.values().length + "\n" +
                 MessageBundle.getMessage("info_battlestats") + " " + user.getTotalWins() + " " + MessageBundle.getMessage("info_of") + " " + user.getTotalBattles() + "\n";
         if (user.getTotalBattles() != 0) {
             double a = user.getTotalWins();
             double b = user.getTotalBattles();
             message += MessageBundle.getMessage("info_winrate") + " " + String.format("%.1f", a / b * 100) + "%\n";
         }
-        //todo
         return message;
     }
 
@@ -208,6 +207,8 @@ public class MessageFormatterImpl implements MessageFormatter {
             topStr.append(String.valueOf(top1)).append(") @").append(top.get(i).getUID()).append(" ")
                     .append(top.get(i).getTotalWins()).append(" ").append(MessageBundle.getMessage("info_of")).append(" ").append(top.get(i).getTotalBattles()).append("\n");
         }
+        if(topStr.toString().isEmpty())
+            return MessageBundle.getMessage("empty_top");
         return topStr.toString();
     }
 
@@ -253,21 +254,17 @@ public class MessageFormatterImpl implements MessageFormatter {
 
     @Override
     public String getLevelUpCaveMessage(long l, Card card) {
-        //todo
         return MessageBundle.getMessage("dungeon_levelupcave_0") + MessageBundle.getMessage("info_level2");
 
     }
 
     @Override
     public String getLevelUpCaveMaxLevelMessage(long l, Card card) {
-        //todo
         return MessageBundle.getMessage("dungeon_nolevelupcave_0");
     }
 
     @Override
     public String getLootBoxCaveMessage(CardName cardName) {
-        System.out.println(cardName.name() + "_dropmsg");
-        //todo
         return MessageBundle.getMessage(cardName.name() + "_dropmsg");
     }
 
@@ -319,7 +316,7 @@ public class MessageFormatterImpl implements MessageFormatter {
     @Override
     public String getUsersStats(List<User> allUsers) {
         return allUsers.stream()
-                .map(x -> x.getUID() + " " + x.getLastTokensRedeemed().format(DateTimeFormatter.ISO_DATE))
+                .map(x -> "@" + x.getUID() + " " + x.getLastTokensRedeemed().format(DateTimeFormatter.ISO_DATE))
                 .reduce((x, y) -> x + "\n" + y)
                 .orElse("");
     }

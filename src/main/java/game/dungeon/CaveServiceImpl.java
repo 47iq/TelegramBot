@@ -8,7 +8,7 @@ import communication.util.MessageBundle;
 import communication.util.MessageFormatter;
 import data.*;
 import game.entity.Card;
-import game.entity.WeightedRandomizer;
+import game.service.WeightedRandomizer;
 import game.service.BattleService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -41,7 +41,7 @@ public class CaveServiceImpl implements CaveService {
 
     private static final Logger LOGGER = LogManager.getLogger(CaveServiceImpl.class);
 
-    static Map<User, Card> cardMap = new HashMap<>();
+    private static final Map<User, Card> cardMap = new HashMap<>();
 
     @Override
     public AnswerDTO enterCaves(CommandDTO commandDTO, Card card) {

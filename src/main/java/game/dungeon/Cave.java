@@ -7,7 +7,7 @@ import communication.util.MessageFormatter;
 import data.CardService;
 import data.UserService;
 import game.entity.Card;
-import game.entity.WeightedRandomizer;
+import game.service.WeightedRandomizer;
 import game.service.BattleService;
 
 /**

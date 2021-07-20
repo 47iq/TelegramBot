@@ -1,4 +1,4 @@
-package game.entity;
+package game.service;
 
 import java.util.*;
 
@@ -7,6 +7,12 @@ public class WeightedRandomizerImpl<T> implements WeightedRandomizer<T> {
     NavigableMap<Double, T> weights = new TreeMap<>();
     Random random = new Random();
     double totalWeight;
+
+    /**
+     * Default  constructor
+     *
+     * @param weights weights of items for random
+     */
 
     public WeightedRandomizerImpl(Map<T, Double> weights) {
         double currentVal = 0;

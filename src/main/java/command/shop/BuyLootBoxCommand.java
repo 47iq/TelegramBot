@@ -4,19 +4,28 @@ import command.Command;
 import communication.keyboard.KeyboardType;
 import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
+import communication.util.MessageBundle;
 import communication.util.MessageFormatter;
+import data.CardService;
 import data.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.ResourceBundle;
 
 @Component
 public class BuyLootBoxCommand implements Command {
     @Autowired
     MessageFormatter messageFormatter;
+    @Autowired
+    CardService cardService;
 
     @Override
     public AnswerDTO execute(CommandDTO commandDTO) {
         User user = commandDTO.getUser();
-        return new AnswerDTO(true, messageFormatter.getBuyLootboxInfo(user), KeyboardType.BUY_BOX, null, null, user);
+        if(cardService.getAllCardsOf(user).size() > Long.parseLong(MessageBundle.getSetting("MAX_CARDS")))
+            return new AnswerDTO(true, MessageBundle.getMessage("err_maxcards"), KeyboardType.SHOP, null, null, user);
+        else
+            return new AnswerDTO(true, messageFormatter.getBuyLootboxInfo(user), KeyboardType.BUY_BOX, null, null, user);
     }
 }

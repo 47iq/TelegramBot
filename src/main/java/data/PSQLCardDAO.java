@@ -17,7 +17,6 @@ import java.util.stream.Collectors;
 
 public class PSQLCardDAO implements CardDAO{
 
-    private List<Card> cardCache = new ArrayList<>();
     private Session session = null;
 
     private static final Logger LOGGER = LogManager.getLogger(PSQLCardDAO.class);
@@ -56,27 +55,22 @@ public class PSQLCardDAO implements CardDAO{
             Transaction transaction = session.beginTransaction();
             List<Card> users = session.createQuery("select p from " + Card.class.getSimpleName() + " p").list();
             transaction.commit();
-            cardCache = users;
-            return cardCache;
+            return users;
         } catch (Exception e) {
-            //todo
-            System.err.println(e.toString() +  " while getting users.");
-            LOGGER.error(e.toString() +  " while getting users.");
+            LOGGER.error("Error while parsing cards table: " + e.getClass());
             return null;
         }
     }
 
     @Override
     public Card getEntityById(long UID) {
-        return cardCache.stream().filter(x ->  x.getUID().equals(UID)).findAny().orElse(null);
+        return getAll().stream().filter(x ->  x.getUID().equals(UID)).findAny().orElse(null);
     }
 
     @Override
     public Card update(Card card) {
         Transaction transaction = session.beginTransaction();
         session.update(card);
-        cardCache = cardCache.stream().filter(x -> !x.getUID().equals(card.getUID())).collect(Collectors.toList());
-        cardCache.add(card);
         transaction.commit();
         return card;
     }
@@ -87,7 +81,6 @@ public class PSQLCardDAO implements CardDAO{
             Transaction transaction = session.beginTransaction();
             session.delete(card);
             transaction.commit();
-            cardCache = cardCache.stream().filter(x -> !x.getUID().equals(card.getUID())).collect(Collectors.toList());
             return true;
         } catch (Exception e) {
             return false;

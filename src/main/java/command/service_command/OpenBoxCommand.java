@@ -2,6 +2,8 @@ package command.service_command;
 
 import data.CardDAO;
 import communication.keyboard.KeyboardType;
+import data.CardService;
+import data.User;
 import game.entity.Card;
 import game.entity.ImageIdentifier;
 import game.entity.LootBox;
@@ -12,6 +14,8 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import communication.util.*;
+
+import java.util.ResourceBundle;
 
 /**
  * Command, which makes user open a lootbox of a certain type.
@@ -31,10 +35,15 @@ public class OpenBoxCommand {
     MessageFormatter messageFormatter;
     @Autowired
     ImageParser imageParser;
+    @Autowired
+    CardService cardService;
 
     public AnswerDTO execute(CommandDTO commandDTO, LootBoxType type) {
         try {
             Card card = lootBox.open(type, commandDTO.getUser());
+            User user = commandDTO.getUser();
+            if(!type.equals(LootBoxType.SUPER_RARE) && cardService.getAllCardsOf(user).size() > Long.parseLong(MessageBundle.getSetting("MAX_CARDS")))
+                return new AnswerDTO(true, MessageBundle.getMessage("err_maxcards"), KeyboardType.SHOP, null, null, user);
             if (cardDAO.create(card)) {
                 LOGGER.info(commandDTO.getUser().getUID() + " gets: " + card.getType() + " "+card.getName() + ": "
                         + card.getMaxHealth() + ", " + card.getAttack() + ", " + card.getDefence());

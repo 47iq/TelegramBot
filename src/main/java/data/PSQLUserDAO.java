@@ -11,11 +11,11 @@ import org.hibernate.cfg.Configuration;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.stream.Collectors;
 
 public class PSQLUserDAO implements UserDAO{
 
-    private List<User> usersCache;
     private Session session = null;
 
     private static final Logger LOGGER = LogManager.getLogger(PSQLUserDAO.class);
@@ -53,8 +53,7 @@ public class PSQLUserDAO implements UserDAO{
             Transaction transaction = session.beginTransaction();
             List<User> users = session.createQuery("select p from "+ User.class.getSimpleName() + " p").list();
             transaction.commit();
-            usersCache = users;
-            return usersCache;
+            return users;
         } catch (Exception e) {
             e.printStackTrace();
             LOGGER.error("ERROR while getting users: " + Arrays.toString(e.getStackTrace()));
@@ -64,7 +63,7 @@ public class PSQLUserDAO implements UserDAO{
 
     @Override
     public User getEntityById(String UID) {
-        return usersCache.stream().filter(x -> x.getUID().equals(UID)).findAny().orElse(null);
+        return getAll().stream().filter(x -> x.getUID().equals(UID)).findAny().orElse(null);
     }
 
     @Override
@@ -72,8 +71,6 @@ public class PSQLUserDAO implements UserDAO{
         Transaction transaction = session.beginTransaction();
         session.update(user);
         transaction.commit();
-        usersCache = usersCache.stream().filter(x -> !x.getUID().equals(user.getUID())).collect(Collectors.toList());
-        usersCache.add(user);
         return user;
     }
 
@@ -83,7 +80,6 @@ public class PSQLUserDAO implements UserDAO{
             Transaction transaction = session.beginTransaction();
             session.delete(UID);
             transaction.commit();
-            usersCache = usersCache.stream().filter(x -> !x.getUID().equals(UID)).collect(Collectors.toList());
             return true;
         } catch (Exception e) {
             return false;
@@ -95,7 +91,6 @@ public class PSQLUserDAO implements UserDAO{
         try {
             Transaction tx = session.beginTransaction();
             session.save(user);
-            usersCache.add(user);
             tx.commit();
             return true;
         } catch (Exception e) {

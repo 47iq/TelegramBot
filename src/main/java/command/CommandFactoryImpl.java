@@ -6,6 +6,8 @@ import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
 import communication.util.MessageBundle;
 import data.UserDAO;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -22,6 +24,8 @@ public class CommandFactoryImpl implements CommandFactory {
     private final Map<String, Command> commandMap;
 
     private final Map<String, Command> adminCommands;
+
+    private static final Logger LOGGER = LogManager.getLogger(CommandFactoryImpl.class);
 
     /**
      * Default constructor
@@ -44,8 +48,7 @@ public class CommandFactoryImpl implements CommandFactory {
             if (commandDTO.getUser().getUID().equals(MessageBundle.getSetting("ADMIN_UID")) && adminCommands.containsKey(commandDTO.getMessageText()))
                 return adminCommands.get(commandDTO.getMessageText()).execute(commandDTO);
             else {
-                //todo
-                System.err.println(commandDTO.getMessageText() + " " + commandDTO.getArg());
+                LOGGER.info("Unknown command got from " + commandDTO.getUser().getUID() + ": "+ commandDTO.getMessageText() + " " + commandDTO.getArg());
                 return new AnswerDTO(false, MessageBundle.getMessage("err_unk_command"), KeyboardType.CLASSIC, null, null, commandDTO.getUser());
             }
         }

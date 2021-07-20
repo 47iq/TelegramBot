@@ -1,6 +1,7 @@
 package game.entity;
 
 import data.User;
+import game.service.WeightedRandomizer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
