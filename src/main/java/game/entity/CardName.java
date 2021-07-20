@@ -48,12 +48,6 @@ public enum CardName {
             return 1.32;
         }
     },
-    STANKEVICH {
-        @Override
-        public double gerMultiplier() {
-            return 1.34;
-        }
-    },
     VOZIANOVA {
         @Override
         public double gerMultiplier() {
@@ -64,6 +58,12 @@ public enum CardName {
         @Override
         public double gerMultiplier() {
             return 1.10;
+        }
+    },
+    STANKEVICH {
+        @Override
+        public double gerMultiplier() {
+            return 1.34;
         }
     };
 

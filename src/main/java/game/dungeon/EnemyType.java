@@ -17,7 +17,7 @@ public enum EnemyType {
 
         @Override
         public String getBattleMessage() {
-            return MessageBundle.getMessage("enemy_students");
+            return MessageBundle.getMessage("ANGRY_STUDENTS_enemy");
         }
 
         @Override
@@ -33,7 +33,7 @@ public enum EnemyType {
 
         @Override
         public String getBattleMessage() {
-            return MessageBundle.getMessage("enemy_rector");
+            return MessageBundle.getMessage("RECTOR_enemy");
         }
 
         @Override
@@ -49,7 +49,7 @@ public enum EnemyType {
 
         @Override
         public String getBattleMessage() {
-            return MessageBundle.getMessage("enemy_expelled");
+            return MessageBundle.getMessage("EXPELLED_STUDENT_enemy");
         }
 
         @Override
@@ -65,7 +65,7 @@ public enum EnemyType {
 
         @Override
         public String getBattleMessage() {
-            return MessageBundle.getMessage("enemy_dungeon_master");
+            return MessageBundle.getMessage("DUNGEON_MASTER_enemy");
         }
 
         @Override
@@ -81,7 +81,7 @@ public enum EnemyType {
 
         @Override
         public String getBattleMessage() {
-            return MessageBundle.getMessage("enemy_rad_cockroach");
+            return MessageBundle.getMessage("RAD_COCKROACH_enemy");
         }
 
         @Override
@@ -97,7 +97,7 @@ public enum EnemyType {
 
         @Override
         public String getBattleMessage() {
-            return MessageBundle.getMessage("enemy_proglab");
+            return MessageBundle.getMessage("PROGRAMMING_LAB_enemy");
         }
 
         @Override
@@ -113,7 +113,7 @@ public enum EnemyType {
 
         @Override
         public String getBattleMessage() {
-            return MessageBundle.getMessage("enemy_dev");
+            return MessageBundle.getMessage("DEV_enemy");
         }
 
         @Override
@@ -129,7 +129,7 @@ public enum EnemyType {
 
         @Override
         public String getBattleMessage() {
-            return MessageBundle.getMessage("enemy_wolf");
+            return MessageBundle.getMessage("WOLF_enemy");
         }
 
         @Override
@@ -145,7 +145,7 @@ public enum EnemyType {
 
         @Override
         public String getBattleMessage() {
-            return MessageBundle.getMessage("enemy_so");
+            return MessageBundle.getMessage("STUDENT_OFFICE_enemy");
         }
 
         @Override
@@ -161,7 +161,7 @@ public enum EnemyType {
 
         @Override
         public String getBattleMessage() {
-            return MessageBundle.getMessage("enemy_lary");
+            return MessageBundle.getMessage("LARY_enemy");
         }
 
         @Override
@@ -177,7 +177,7 @@ public enum EnemyType {
 
         @Override
         public String getBattleMessage() {
-            return MessageBundle.getMessage("enemy_andrew");
+            return MessageBundle.getMessage("ANDREW_enemy");
         }
 
         @Override
@@ -193,7 +193,7 @@ public enum EnemyType {
 
         @Override
         public String getBattleMessage() {
-            return MessageBundle.getMessage("enemy_robot");
+            return MessageBundle.getMessage("ROBOT_enemy");
         }
 
         @Override
@@ -209,7 +209,7 @@ public enum EnemyType {
 
         @Override
         public String getBattleMessage() {
-            return MessageBundle.getMessage("enemy_vietnam");
+            return MessageBundle.getMessage("VIETNAM_GUY_enemy");
         }
 
         @Override
@@ -225,7 +225,7 @@ public enum EnemyType {
 
         @Override
         public String getBattleMessage() {
-            return MessageBundle.getMessage("enemy_plastic");
+            return MessageBundle.getMessage("PLASTIC_WORLD_enemy");
         }
 
         @Override
