@@ -7,6 +7,7 @@ import communication.util.MessageFormatter;
 import data.CardService;
 import data.UserService;
 import game.entity.Card;
+import game.entity.WeightedRandomizer;
 import game.service.BattleService;
 
 /**
@@ -24,9 +25,10 @@ public interface Cave {
      * @param cardService card service
      * @param userService user service
      * @param command super rare box command
+     * @param enemyWeightedRandomizer randomizer for enemies
      * @return answer on a request
      */
 
     AnswerDTO enterThisCave(CommandDTO commandDTO, Card card, BattleService battleService,
-                            MessageFormatter messageFormatter, CardService cardService, UserService userService, OpenSuperRareBoxCommand command);
+                            MessageFormatter messageFormatter, CardService cardService, UserService userService, OpenSuperRareBoxCommand command, WeightedRandomizer<EnemyType> enemyWeightedRandomizer);
 }

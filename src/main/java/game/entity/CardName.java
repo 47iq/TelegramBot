@@ -74,6 +74,7 @@ public enum CardName {
      * @return card name
      */
 
+    @Deprecated
     public static CardName valueOf(int val) {
         return switch (val) {
             case 0 -> KLIMENKOV;
@@ -84,23 +85,6 @@ public enum CardName {
             case 5 -> PERTSEV;
             case 6 -> VOZIANOVA;
             default -> throw new IllegalStateException("Unexpected value: " + val);
-        };
-    }
-
-    /**
-     * Method that gets card name for a special loot box from a number
-     *
-     * @param rand type of card
-     * @return card name
-     * @see command.service_command.OpenSuperRareBoxCommand
-     */
-
-    public static CardName specialValueOf(int rand) {
-        return switch (rand) {
-            case 0, 1, 2 -> BILLIE_HARRINGTON;
-            case 3, 4 -> SVYATOSLAV;
-            case 5, 6 -> STANKEVICH;
-            default -> throw new IllegalStateException("Unexpected value: " + rand);
         };
     }
 

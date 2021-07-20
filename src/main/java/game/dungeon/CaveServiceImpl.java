@@ -8,12 +8,15 @@ import communication.util.MessageBundle;
 import communication.util.MessageFormatter;
 import data.*;
 import game.entity.Card;
+import game.entity.WeightedRandomizer;
 import game.service.BattleService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,6 +32,12 @@ public class CaveServiceImpl implements CaveService {
     private BattleService battleService;
     @Autowired
     private OpenSuperRareBoxCommand command;
+    @Autowired
+    @Qualifier("cave_random")
+    private WeightedRandomizer<Class<? extends Cave>> caveWeightedRandomizer;
+    @Autowired
+    @Qualifier("enemy_random")
+    private WeightedRandomizer<EnemyType> enemyWeightedRandomizer;
 
     private static final Logger LOGGER = LogManager.getLogger(CaveServiceImpl.class);
 
@@ -60,7 +69,7 @@ public class CaveServiceImpl implements CaveService {
         if (cave instanceof LevelUpCave && cardMap.get(commandDTO.getUser()).getLevel() >= 10)
             cave = new ArmorCave();
         LOGGER.info(commandDTO.getUser().getUID() + " has entered cave: " + cave.getClass());
-        return cave.enterThisCave(commandDTO, cardMap.get(commandDTO.getUser()), battleService, messageFormatter, cardService, userService, command);
+        return cave.enterThisCave(commandDTO, cardMap.get(commandDTO.getUser()), battleService, messageFormatter, cardService, userService, command, enemyWeightedRandomizer);
     }
 
     /**
@@ -70,27 +79,12 @@ public class CaveServiceImpl implements CaveService {
      */
 
     public Cave getCave() {
-        double rnd = (Math.random() * 100);
-        //todo
-        System.out.println("Cave: " + rnd);
-        if (rnd < 10)
-            return new RobberyCave();
-        else if (rnd < 20)
-            return new TrapCave();
-        else if (rnd < 30)
-            return new LootCave();
-        else if (rnd < 40)
-            return new HealCave();
-        else if (rnd < 97)
+        try {
+            return caveWeightedRandomizer.getRandom().getConstructor().newInstance();
+        } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
+            LOGGER.error("Cant use reflection: " + e.getClass());
             return new BattleCave();
-        else if (rnd < 98)
-            return new WeaponCave();
-        else if (rnd < 99.35)
-            return new ArmorCave();
-        else if (rnd < 99.75)
-            return new LevelUpCave();
-        else
-            return new LootBoxCave();
+        }
     }
 
     @Override

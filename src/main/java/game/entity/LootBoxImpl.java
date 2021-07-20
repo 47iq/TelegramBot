@@ -1,8 +1,20 @@
 package game.entity;
 
 import data.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
+@Component
 public class LootBoxImpl implements LootBox {
+
+    @Autowired
+    @Qualifier("card_random")
+    WeightedRandomizer<CardName> lootBoxRandom;
+
+    @Autowired
+    @Qualifier("elite_card_random")
+    WeightedRandomizer<CardName> eliteLootBoxRandom;
 
     @Override
     public Card open(LootBoxType type, User user) {
@@ -45,12 +57,10 @@ public class LootBoxImpl implements LootBox {
     }
 
     private CardName superBoxRandName() {
-        int rand = (int) (Math.random() * 7);
-        return CardName.specialValueOf(rand);
+        return eliteLootBoxRandom.getRandom();
     }
 
     private CardName randName() {
-        int rand = (int) (Math.random() * 7);
-        return CardName.valueOf(rand);
+        return lootBoxRandom.getRandom();
     }
 }

@@ -9,6 +9,7 @@ import data.CardService;
 import data.User;
 import data.UserService;
 import game.entity.Card;
+import game.entity.WeightedRandomizer;
 import game.service.BattleService;
 
 /**
@@ -25,7 +26,7 @@ public class TrapCave implements Cave {
 
     @Override
     public AnswerDTO enterThisCave(CommandDTO commandDTO, Card card, BattleService battleService,
-                                   MessageFormatter messageFormatter, CardService cardService, UserService userService, OpenSuperRareBoxCommand command) {
+                                   MessageFormatter messageFormatter, CardService cardService, UserService userService, OpenSuperRareBoxCommand command, WeightedRandomizer<EnemyType> enemyWeightedRandomizer) {
         User user = commandDTO.getUser();
         card.setHealth(Math.max(card.getHealth() - lostHealth, 0));
         cardService.save(card);

@@ -26,15 +26,12 @@ import data.*;
 import communication.keyboard.KeyboardCreator;
 import communication.keyboard.KeyboardCreatorImpl;
 import game.dungeon.*;
-import game.entity.CardName;
-import game.entity.CardType;
-import game.entity.LootBox;
-import game.entity.LootBoxImpl;
+import game.entity.*;
 import game.service.*;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
-import game.entity.ImageIdentifier;
 import communication.util.MessageFormatter;
 import communication.util.MessageFormatterImpl;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -51,6 +48,72 @@ import java.util.*;
 public class AppConfig {
 
     Map<String, Command> commandMap = new HashMap<>();
+
+    @Bean
+    @Scope("singleton")
+    @Qualifier("cave_random")
+    public WeightedRandomizer<Class<? extends Cave>> caveWeightedRandomizer(){
+        Map<Class<? extends Cave>, Double> weights  =  new HashMap<>();
+        weights.put(RobberyCave.class, 10.0);
+        weights.put(HealCave.class, 10.0);
+        weights.put(LootCave.class, 10.0);
+        weights.put(TrapCave.class, 10.0);
+        weights.put(BattleCave.class, 60.0);
+        weights.put(ArmorCave.class, 1.0);
+        weights.put(WeaponCave.class, 1.0);
+        weights.put(LevelUpCave.class, 0.5);
+        weights.put(LootBoxCave.class, 0.25);
+        return new WeightedRandomizerImpl<>(weights);
+    }
+
+    @Bean
+    @Scope
+    @Qualifier("enemy_random")
+    public WeightedRandomizer<EnemyType> enemyWeightedRandomizer() {
+        Map<EnemyType, Double> weights = new HashMap<>();
+        weights.put(EnemyType.ANGRY_STUDENTS, 15.0);
+        weights.put(EnemyType.ROBOT, 10.0);
+        weights.put(EnemyType.LARY, 10.0);
+        weights.put(EnemyType.PROGRAMMING_LAB, 12.0);
+        weights.put(EnemyType.ANDREW, 10.0);
+        weights.put(EnemyType.WOLF, 12.0);
+        weights.put(EnemyType.RAD_COCKROACH, 10.0);
+        weights.put(EnemyType.VIETNAM_GUY, 12.0);
+        weights.put(EnemyType.DUNGEON_MASTER, 12.0);
+        weights.put(EnemyType.STUDENT_OFFICE, 12.0);
+        weights.put(EnemyType.EXPELLED_STUDENT, 10.0);
+        weights.put(EnemyType.PLASTIC_WORLD, 12.0);
+        weights.put(EnemyType.DEV, 8.0);
+        weights.put(EnemyType.RECTOR, 2.0);
+        return new WeightedRandomizerImpl<>(weights);
+    }
+
+    @Bean
+    @Scope("singleton")
+    @Qualifier("card_random")
+    public WeightedRandomizer<CardName> cardWeightedRandomizer() {
+        Map<CardName, Double> weights = new HashMap<>();
+        weights.put(CardName.KLIMENKOV, 1.0);
+        weights.put(CardName.KOROBKOV, 1.0);
+        weights.put(CardName.POLYAKOV, 1.0);
+        weights.put(CardName.BALAKSHIN, 1.0);
+        weights.put(CardName.GAVRILOV, 1.0);
+        weights.put(CardName.PERTSEV, 1.0);
+        weights.put(CardName.VOZIANOVA, 1.0);
+        return new WeightedRandomizerImpl<>(weights);
+    }
+
+    @Bean
+    @Scope("singleton")
+    @Qualifier("elite_card_random")
+    public WeightedRandomizer<CardName> eliteCardWeightedRandomizer() {
+        Map<CardName, Double> weights = new HashMap<>();
+        weights.put(CardName.BILLIE_HARRINGTON, 1.0);
+        weights.put(CardName.STANKEVICH, 1.0);
+        weights.put(CardName.SVYATOSLAV, 1.0);
+        return new WeightedRandomizerImpl<>(weights);
+    }
+
 
     @Bean
     @Scope("singleton")
@@ -108,12 +171,26 @@ public class AppConfig {
         commandMap.put("/battle_info", getBattleInfoCommand());
         commandMap.put("/start_shop", getStartShopCommand());
         commandMap.put("/instant_heal", getInstantHealCommand());
+        commandMap.put("/buy_item", getBuyItemCommand());
+        commandMap.put("/buy_box",  getBuyBoxCommand());
         Map<String, Command> adminCommands = new HashMap<>();
         adminCommands.put("/add_tokens", getAddTokensCommand());
         adminCommands.put("/notify_all", getNotifyAllCommand());
         adminCommands.put("/user_stats", getUserStatsCommand());
         adminCommands.put("/all_users", getUsersStatsCommand());
         return new CommandFactoryImpl(commandMap, adminCommands);
+    }
+
+    @Bean
+    @Scope("singleton")
+    public Command getBuyItemCommand() {
+        return new BuyItemMenuCommand();
+    }
+
+    @Bean
+    @Scope("singleton")
+    public Command getBuyBoxCommand() {
+        return new BuyLootBoxCommand();
     }
 
     @Bean

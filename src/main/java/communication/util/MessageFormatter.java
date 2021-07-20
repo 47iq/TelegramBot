@@ -379,4 +379,22 @@ public interface MessageFormatter {
      */
 
     String getItemMessage(User user);
+
+    /**
+     * Lootbox shop menu message
+     *
+     * @param user user
+     * @return lootbox shop menu message
+     */
+
+    String getBuyLootboxInfo(User user);
+
+    /**
+     * Item shop menu message
+     *
+     * @param user user
+     * @return item shop menu message
+     */
+
+    String getBuyItemInfo(User user);
 }

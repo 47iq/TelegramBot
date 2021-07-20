@@ -48,8 +48,28 @@ public class KeyboardCreatorImpl implements KeyboardCreator {
             case DUNGEON_LEAF -> getDungeonLeafKeyboard(user);
             case DUNGEON_MENU -> getDungeonMenuKeyboard();
             case START_SHOP -> getStartShopKeyboard();
+            case BUY_BOX -> getBuyBoxKeyboard();
+            case BUY_ITEM -> getBuyItemKeyboard();
             default -> null;
         };
+    }
+
+    private InlineKeyboardMarkup getBuyItemKeyboard() {
+        Map<String, String> menu = new HashMap<>();
+        menu.put("/buy_boost", MessageBundle.getMessage("info_buyboost"));
+        menu.put("/buy_heal", MessageBundle.getMessage("info_buyheal"));
+        menu.put("/help", MessageBundle.getMessage("back"));
+        menu.put("/buy_beer", MessageBundle.getMessage("info_buybeer"));
+        return getKeyboard(menu);
+    }
+
+    private InlineKeyboardMarkup getBuyBoxKeyboard() {
+        Map<String, String> menu = new HashMap<>();
+        menu.put("/open_basic", MessageBundle.getMessage("info_openbasic"));
+        menu.put("/open_advanced", MessageBundle.getMessage("info_openadvanced"));
+        menu.put("/open_pro", MessageBundle.getMessage("info_openpro"));
+        menu.put("/help", MessageBundle.getMessage("back"));
+        return getKeyboard(menu);
     }
 
     /**
@@ -147,7 +167,7 @@ public class KeyboardCreatorImpl implements KeyboardCreator {
      *
      * @return a keyboard for an item menu
      * @see command.main_menu.UseItemMenuCommand
-     * @param user
+     * @param user user
      */
 
     private InlineKeyboardMarkup getItemKeyboard(User user) {
@@ -184,14 +204,10 @@ public class KeyboardCreatorImpl implements KeyboardCreator {
 
     private InlineKeyboardMarkup getShopKeyboard() {
         Map<String, String> menu = new HashMap<>();
-        menu.put("/open_basic", MessageBundle.getMessage("info_openbasic"));
-        menu.put("/open_advanced", MessageBundle.getMessage("info_openadvanced"));
-        menu.put("/open_pro", MessageBundle.getMessage("info_openpro"));
-        menu.put("/buy_boost", MessageBundle.getMessage("info_buyboost"));
-        menu.put("/buy_heal", MessageBundle.getMessage("info_buyheal"));
+        menu.put("/buy_box", MessageBundle.getMessage("info_buybox"));
+        menu.put("/buy_item", MessageBundle.getMessage("info_buyitem"));
         menu.put("/free_tokens", MessageBundle.getMessage("info_freetokens"));
         menu.put("/help", MessageBundle.getMessage("back"));
-        menu.put("/buy_beer", MessageBundle.getMessage("info_buybeer"));
         menu.put("/shop_info", MessageBundle.getMessage("/info"));
         return getKeyboard(menu);
     }
@@ -233,14 +249,19 @@ public class KeyboardCreatorImpl implements KeyboardCreator {
      */
 
     public InlineKeyboardMarkup getKeyboard(Map<String, String> buttonTexts) {
+        boolean hasHelpCommand = false;
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
         List<InlineKeyboardButton> buttons = new ArrayList<>();
         for (var text : buttonTexts.keySet()) {
-            InlineKeyboardButton button = new InlineKeyboardButton();
-            button.setText(buttonTexts.get(text));
-            button.setCallbackData(text);
-            buttons.add(button);
+            if(!text.equals("/help")) {
+                InlineKeyboardButton button = new InlineKeyboardButton();
+                button.setText(buttonTexts.get(text));
+                button.setCallbackData(text);
+                buttons.add(button);
+            } else
+                hasHelpCommand = true;
         }
+
         List<List<InlineKeyboardButton>> rows = new ArrayList<>();
         int rowCounter = 0;
         int counter = 0;
@@ -258,6 +279,14 @@ public class KeyboardCreatorImpl implements KeyboardCreator {
             }
         }
         rows.add(row);
+        if(hasHelpCommand) {
+            row = new ArrayList<>();
+            InlineKeyboardButton button = new InlineKeyboardButton();
+            button.setText(buttonTexts.get("/help"));
+            button.setCallbackData("/help");
+            row.add(button);
+            rows.add(row);
+        }
         inlineKeyboardMarkup.setKeyboard(rows);
         return inlineKeyboardMarkup;
     }

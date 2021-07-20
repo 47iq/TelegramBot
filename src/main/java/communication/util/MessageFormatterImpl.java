@@ -47,18 +47,9 @@ public class MessageFormatterImpl implements MessageFormatter {
         long tokens = userService.getBalance(user);
         long heal = user.getHealCount();
         long boost = user.getBoostCount();
-        String message = MessageBundle.getMessage("info_tokens") + " " + tokens + ", " +
-                MessageBundle.getMessage("info_heal") + " " + heal + ", " +
-                MessageBundle.getMessage("info_boost") + " " + boost + "\n" +
-                MessageBundle.getMessage("info_prices") + "\n";
-        message += MessageBundle.getMessage("info_heal1") + " " + MessageBundle.getSetting("HEAL_COST") + MessageBundle.getMessage("info_price2") + "\n";
-        message += MessageBundle.getMessage("info_boost1") + " " + MessageBundle.getSetting("BOOST_COST") + MessageBundle.getMessage("info_price2") + "\n";
-        message += MessageBundle.getMessage("info_boxes") + '\n';
-        message += MessageBundle.getMessage("info_basic") + " " + MessageBundle.getSetting("BASIC_COST") + MessageBundle.getMessage("info_price2") + "\n";
-        message += MessageBundle.getMessage("info_advanced") + " " + MessageBundle.getSetting("ADVANCED_COST") + MessageBundle.getMessage("info_price2") + "\n";
-        message += MessageBundle.getMessage("info_pro") + " " + MessageBundle.getSetting("PRO_COST") + MessageBundle.getMessage("info_price2") + "\n";
-        message += MessageBundle.getMessage("info_beer1") + "\n";
-        return message;
+        return MessageBundle.getMessage("info_tokens") + " " + tokens + ",\n" +
+                MessageBundle.getMessage("info_heal") + " " + heal + ",\n" +
+                MessageBundle.getMessage("info_boost") + " " + boost + "\n";
     }
 
     @Override
@@ -345,6 +336,37 @@ public class MessageFormatterImpl implements MessageFormatter {
         long boost = user.getBoostCount();
         return MessageBundle.getMessage("info_heal").substring(0, 1).toUpperCase(Locale.ROOT) + MessageBundle.getMessage("info_heal").substring(1) + " " + heal + ", " +
                 MessageBundle.getMessage("info_boost") + " " + boost;
+    }
+
+    @Override
+    public String getBuyLootboxInfo(User user) {
+        long tokens = userService.getBalance(user);
+        String message = MessageBundle.getMessage("info_tokens") + " " + tokens + "\n" +
+                MessageBundle.getMessage("info_prices") + "\n";
+        message = addLootBoxInfo(message);
+        return message;
+    }
+
+    private String addLootBoxInfo(String message) {
+        message += MessageBundle.getMessage("info_basic") + " " + MessageBundle.getSetting("BASIC_COST") + MessageBundle.getMessage("info_price2") + "\n";
+        message += MessageBundle.getMessage("info_advanced") + " " + MessageBundle.getSetting("ADVANCED_COST") + MessageBundle.getMessage("info_price2") + "\n";
+        message += MessageBundle.getMessage("info_pro") + " " + MessageBundle.getSetting("PRO_COST") + MessageBundle.getMessage("info_price2") + "\n";
+        return message;
+    }
+
+    @Override
+    public String getBuyItemInfo(User user) {
+        long tokens = userService.getBalance(user);
+        long heal = user.getHealCount();
+        long boost = user.getBoostCount();
+        String message = MessageBundle.getMessage("info_tokens") + " " + tokens + ", " +
+                MessageBundle.getMessage("info_heal") + " " + heal + ", " +
+                MessageBundle.getMessage("info_boost") + " " + boost + "\n" +
+                MessageBundle.getMessage("info_prices") + "\n";
+        message += MessageBundle.getMessage("info_heal1") + " " + MessageBundle.getSetting("HEAL_COST") + MessageBundle.getMessage("info_price2") + "\n";
+        message += MessageBundle.getMessage("info_boost1") + " " + MessageBundle.getSetting("BOOST_COST") + MessageBundle.getMessage("info_price2") + "\n";
+        message += MessageBundle.getMessage("info_beer1") + "\n";
+        return message;
     }
 
     private String getCardMessage2(Card card) {

@@ -7,6 +7,7 @@ import communication.util.MessageFormatter;
 import data.CardService;
 import data.UserService;
 import game.entity.Card;
+import game.entity.WeightedRandomizer;
 import game.service.BattleService;
 
 /**
@@ -15,15 +16,13 @@ import game.service.BattleService;
 
 public class BattleCave implements Cave {
 
-    Enemy enemy;
-
     public BattleCave() {
-        enemy = new Enemy();
     }
 
     @Override
     public AnswerDTO enterThisCave(CommandDTO commandDTO, Card card, BattleService battleService,
-                                   MessageFormatter messageFormatter, CardService cardService, UserService userService, OpenSuperRareBoxCommand command) {
+                                   MessageFormatter messageFormatter, CardService cardService, UserService userService, OpenSuperRareBoxCommand command, WeightedRandomizer<EnemyType> enemyWeightedRandomizer) {
+        Enemy enemy = new Enemy(enemyWeightedRandomizer.getRandom());
         return battleService.battleEnemy(commandDTO, enemy, card);
     }
 }

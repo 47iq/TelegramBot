@@ -24,9 +24,9 @@ public class Enemy {
      * Constructor that generates a random enemy
      */
 
-    public Enemy() {
-        this.enemyType = EnemyType.getRandom();
+    public Enemy(EnemyType enemyType) {
         LOGGER.info(enemyType.name() + " has been created.");
+        this.enemyType = enemyType;
         this.enemyCard = enemyType.getStats();
         this.award = enemyType.getAward();
     }
