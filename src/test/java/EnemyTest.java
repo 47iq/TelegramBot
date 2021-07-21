@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import util.MessageBundle;
 
 import java.io.File;
 import java.util.HashMap;
@@ -25,19 +26,19 @@ public class EnemyTest extends Assert {
         System.err.println("\nRunning defined dungeon enemy tests:");
         for (EnemyType val : EnemyType.values()) {
             System.out.print(val);
-            String message = ResourceBundle.getBundle("messages").getString(val.name());
+            String message = MessageBundle.getMessage(val.name());
             assertNotNull(message);
             assertNotEquals(message,"");
-            message = ResourceBundle.getBundle("messages").getString(val.name() + "_name");
+            message = MessageBundle.getMessage(val.name() + "_name");
             assertNotNull(message);
             assertNotEquals(message,"");
-            message = ResourceBundle.getBundle("messages").getString(val.name() + "_winhook");
+            message = MessageBundle.getMessage(val.name() + "_winhook");
             assertNotNull(message);
             assertNotEquals(message,"");
-            message = ResourceBundle.getBundle("messages").getString(val.name() + "_losehook");
+            message = MessageBundle.getMessage(val.name() + "_losehook");
             assertNotNull(message);
             assertNotEquals(message,"");
-            message = ResourceBundle.getBundle("messages").getString(val.name() + "_enemy");
+            message = MessageBundle.getMessage(val.name() + "_enemy");
             assertNotNull(message);
             assertNotEquals(message,"");
             System.out.println(" has been passed");

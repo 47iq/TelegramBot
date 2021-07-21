@@ -84,10 +84,10 @@ communication/keyboard/KeyboardCreator.java
  communication.keyboard.KeyboardCreator
 command/battle/BattleMenuCommand.java
  command.battle.BattleMenuCommand
+communication/util/CommandDTO.java
+ communication.util.CommandDTO
 communication/notification/NotificationServiceImpl.java
  communication.notification.NotificationServiceImpl
-data/PSQLUserDAO.java
- data.PSQLUserDAO
 game/dungeon/RobberyCave.java
  game.dungeon.RobberyCave
 game/service/ImageParserImpl.java
@@ -136,16 +136,12 @@ command/stats/AppStatsCommand.java
  command.stats.AppStatsCommand
 communication/connection/TextSenderService.java
  communication.connection.TextSenderService
-data/PSQLCardDAO.java
- data.PSQLCardDAO
+game/dungeon/TrapCave.java
+ game.dungeon.TrapCave
 command/Command.java
  command.Command
 game/entity/LootBox.java
  game.entity.LootBox
-game/dungeon/TrapCave.java
- game.dungeon.TrapCave
-communication/util/CommandDTO.java
- communication.util.CommandDTO
 command/dungeon/InstantHealCommand.java
  command.dungeon.InstantHealCommand
 data/User.java
@@ -194,6 +190,8 @@ game/dungeon/EnemyType.java
  game.dungeon.EnemyType$9
 command/shop/OpenProBoxCommand.java
  command.shop.OpenProBoxCommand
+data/PSQLCardDAO.java
+ data.PSQLCardDAO
 game/entity/Card.java
  game.entity.Card
 command/shop/BuyBeerCommand.java
@@ -228,6 +226,8 @@ command/admin/NotifyAllCommand.java
  command.admin.NotifyAllCommand
 command/card_collection/NavigateToCardCommand.java
  command.card_collection.NavigateToCardCommand
+data/PSQLUserDAO.java
+ data.PSQLUserDAO
 command/CommandFactoryImpl.java
  command.CommandFactoryImpl
 command/shop/BuyBoostCommand.java

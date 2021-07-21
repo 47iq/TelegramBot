@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Component;
+import util.MessageBundle;
 
 import java.io.File;
 import java.util.HashMap;
@@ -39,14 +40,14 @@ public class CardsTest extends Assert {
                 System.out.print(val + " " + rar);
                 if(exclusions.containsKey(val)) {
                     File image = imageParser.getImage(new ImageIdentifier(val, exclusions.get(val)));
-                    String message = ResourceBundle.getBundle("messages").getString(val.name() + "_dropmsg");
+                    String message = MessageBundle.getMessage(val.name() + "_dropmsg");
                     assertNotNull(message);
                     assertNotNull(image);
                 } else {
                     File image = imageParser.getImage(new ImageIdentifier(val, rar));
                     assertNotNull(image);
                 }
-                String shortMsg = ResourceBundle.getBundle("messages").getString(val.name() + "_short");
+                String shortMsg = MessageBundle.getMessage(val.name() + "_short");
                 assertNotNull(shortMsg);
                 System.out.println(" has been passed");
             }

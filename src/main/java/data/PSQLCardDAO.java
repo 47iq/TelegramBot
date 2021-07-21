@@ -9,6 +9,7 @@ import org.hibernate.Transaction;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
+import util.MessageBundle;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,8 +32,8 @@ public class PSQLCardDAO implements CardDAO{
         ServiceRegistry serviceRegistry;
         try {
             try {
-                Configuration cfg = new Configuration().
-                        addResource("card.hbm.xml").configure();
+                Configuration cfg = new Configuration().configure(MessageBundle.getSetting("HIBERNATE_CONFIG")).
+                        addResource("card.hbm.xml");
                 serviceRegistry = new StandardServiceRegistryBuilder().
                         applySettings(cfg.getProperties()).build();
                 sessionFactory = cfg.buildSessionFactory(serviceRegistry);

@@ -8,6 +8,7 @@ import org.hibernate.Transaction;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.service.ServiceRegistry;
 import org.hibernate.cfg.Configuration;
+import util.MessageBundle;
 
 import java.util.Arrays;
 import java.util.List;
@@ -29,8 +30,8 @@ public class PSQLUserDAO implements UserDAO{
         ServiceRegistry serviceRegistry;
         try {
             try {
-                Configuration cfg = new Configuration().
-                        addResource("user.hbm.xml").configure();
+                Configuration cfg =  new Configuration().configure(MessageBundle.getSetting("HIBERNATE_CONFIG")).
+                        addResource("user.hbm.xml");
                 serviceRegistry = new StandardServiceRegistryBuilder().
                         applySettings(cfg.getProperties()).build();
                 sessionFactory = cfg.buildSessionFactory(serviceRegistry);
