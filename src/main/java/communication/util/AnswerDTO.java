@@ -19,7 +19,6 @@ public class AnswerDTO {
     KeyboardType keyboardType;
     File image;
     Map<String, String> buttons;
-    TelegramLongPollingBot bot;
     CardName cardName;
     final User user;
 
@@ -49,15 +48,7 @@ public class AnswerDTO {
     public void setCardName(CardName cardName) {
         this.cardName = cardName;
     }
-
-    public TelegramLongPollingBot getBot() {
-        return bot;
-    }
-
-    public void setBot(TelegramLongPollingBot bot) {
-        this.bot = bot;
-    }
-
+    
     public boolean isSuccessful() {
         return isSuccessful;
     }

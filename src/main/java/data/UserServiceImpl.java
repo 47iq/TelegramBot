@@ -107,4 +107,9 @@ public class UserServiceImpl implements UserService{
     public List<User> getAllUsers() {
         return userDAO.getAll();
     }
+
+    @Override
+    public boolean create(User user) {
+        return userDAO.create(user);
+    }
 }

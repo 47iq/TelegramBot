@@ -4,6 +4,7 @@ import command.admin.AllUsersCommand;
 import command.battle.*;
 import command.dungeon.*;
 import command.item.*;
+import command.stats.AchievementStatsCommand;
 import command.stats.AppStatsCommand;
 import command.admin.GetUserStatsCommand;
 import command.admin.NotifyAllCommand;
@@ -173,12 +174,19 @@ public class AppConfig {
         commandMap.put("/instant_heal", getInstantHealCommand());
         commandMap.put("/buy_item", getBuyItemCommand());
         commandMap.put("/buy_box",  getBuyBoxCommand());
+        commandMap.put("/achievements",  getAchievementsCommand());
         Map<String, Command> adminCommands = new HashMap<>();
         adminCommands.put("/add_tokens", getAddTokensCommand());
         adminCommands.put("/notify_all", getNotifyAllCommand());
         adminCommands.put("/user_stats", getUserStatsCommand());
         adminCommands.put("/all_users", getUsersStatsCommand());
         return new CommandFactoryImpl(commandMap, adminCommands);
+    }
+
+    @Bean
+    @Scope("singleton")
+    public Command getAchievementsCommand() {
+        return new AchievementStatsCommand();
     }
 
     @Bean
@@ -536,6 +544,24 @@ public class AppConfig {
     @Scope("singleton")
     public CardService getCardService() {
         return new CardServiceImpl();
+    }
+
+    @Bean
+    @Scope("singleton")
+    public AchievementService achievementService() {
+        return new AchievementServiceImpl();
+    }
+
+    @Bean
+    @Scope("singleton")
+    public AchievementDAO achievementDAO () {
+        return new PSQLAchievementDAO();
+    }
+
+    @Bean
+    @Scope("singleton")
+    public AchievementChecker achievementChecker() {
+        return new AchievementCheckerImpl();
     }
 
     @Bean

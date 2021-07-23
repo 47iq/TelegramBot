@@ -11,9 +11,9 @@ import java.util.ResourceBundle;
 
 public class MessageBundle {
 
-    private static AppMode appMode;
+    private static AppMode appMode = AppMode.TEST;
 
-    private static MessageMode messageMode;
+    private static MessageMode messageMode = MessageMode.ITMO;
 
     /**
      * Method that gets message from a messages resource bundle by key.

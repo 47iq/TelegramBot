@@ -4,8 +4,9 @@ import command.tutorial.StartCommand;
 import communication.keyboard.KeyboardType;
 import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
+import data.UserService;
+import game.service.AchievementService;
 import util.MessageBundle;
-import data.UserDAO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,9 @@ public class CommandFactoryImpl implements CommandFactory {
     @Autowired
     StartCommand startCommand;
     @Autowired
-    UserDAO userDAO;
+    UserService userService;
+    @Autowired
+    AchievementService achievementService;
 
     private final Map<String, Command> commandMap;
 
@@ -42,7 +45,7 @@ public class CommandFactoryImpl implements CommandFactory {
     @Override
     public AnswerDTO execute(CommandDTO commandDTO) {
         Command command = commandMap.get(commandDTO.getMessageText());
-        if (userDAO.getEntityById(commandDTO.getUser().getUID()) == null)
+        if (userService.getUserData(commandDTO.getUser()) == null)
             return startCommand.execute(commandDTO);
         else if (command == null) {
             if (commandDTO.getUser().getUID().equals(MessageBundle.getSetting("ADMIN_UID")) && adminCommands.containsKey(commandDTO.getMessageText()))
@@ -52,6 +55,8 @@ public class CommandFactoryImpl implements CommandFactory {
                 return new AnswerDTO(false, MessageBundle.getMessage("err_unk_command"), KeyboardType.CLASSIC, null, null, commandDTO.getUser());
             }
         }
+        if(achievementService.getUsersAchievements(commandDTO.getUser()) == null)
+            achievementService.create(commandDTO.getUser());
         return command.execute(commandDTO);
     }
 }

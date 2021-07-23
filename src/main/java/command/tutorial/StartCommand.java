@@ -2,8 +2,8 @@ package command.tutorial;
 
 import command.Command;
 import command.service_command.RegisterCommand;
-import data.UserDAO;
 import communication.keyboard.KeyboardType;
+import data.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import communication.util.AnswerDTO;
@@ -21,11 +21,11 @@ public class StartCommand implements Command {
     @Autowired
     RegisterCommand registerCommand;
     @Autowired
-    UserDAO userDAO;
+    UserService userService;
 
     @Override
     public AnswerDTO execute(CommandDTO commandDTO) {
-        if(userDAO.getEntityById(commandDTO.getUser().getUID()) == null)
+        if(userService.getUserData(commandDTO.getUser()) == null)
             registerCommand.execute(commandDTO);
         return new AnswerDTO(true, MessageBundle.getMessage("info_start"), KeyboardType.WELCOME, null, null, commandDTO.getUser());
     }

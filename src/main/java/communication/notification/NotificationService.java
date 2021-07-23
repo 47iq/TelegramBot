@@ -18,6 +18,8 @@ public interface NotificationService {
 
     void notify(User user, AnswerDTO answerDTO);
 
+    void notify(User user, AnswerDTO answerDTO, int delay);
+
     /**
      * Method that sends message to all users.
      *

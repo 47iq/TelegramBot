@@ -1,3 +1,4 @@
+import communication.notification.NotificationServiceImpl;
 import org.hibernate.cfg.Configuration;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -53,7 +54,9 @@ public class Main {
             MessageBundle.setAppMode(appMode);
             ApplicationContext  context  =  new AnnotationConfigApplicationContext(AppConfig.class);
             TelegramBotsApi telegramBotsApi = new TelegramBotsApi(DefaultBotSession.class);
-            telegramBotsApi.registerBot(context.getBean(TelegramLongPollingBot.class));
+            TelegramLongPollingBot bot = context.getBean(TelegramLongPollingBot.class);
+            context.getBean(NotificationServiceImpl.class).setBot(bot);
+            telegramBotsApi.registerBot(bot);
         } catch (Exception e) {
             e.printStackTrace();
             System.exit(1);

@@ -4,6 +4,7 @@ import command.service_command.OpenSuperRareBoxCommand;
 import communication.keyboard.KeyboardType;
 import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
+import game.service.AchievementService;
 import util.MessageBundle;
 import util.MessageFormatter;
 import data.*;
@@ -38,6 +39,8 @@ public class CaveServiceImpl implements CaveService {
     @Autowired
     @Qualifier("enemy_random")
     private WeightedRandomizer<EnemyType> enemyWeightedRandomizer;
+    @Autowired
+    private AchievementService achievementService;
 
     private static final Logger LOGGER = LogManager.getLogger(CaveServiceImpl.class);
 
@@ -69,6 +72,7 @@ public class CaveServiceImpl implements CaveService {
         if (cave instanceof LevelUpCave && cardMap.get(commandDTO.getUser()).getLevel() >= 10)
             cave = new ArmorCave();
         LOGGER.info(commandDTO.getUser().getUID() + " has entered cave: " + cave.getClass());
+        achievementService.addCave(user);
         return cave.enterThisCave(commandDTO, cardMap.get(commandDTO.getUser()), battleService, messageFormatter, cardService, userService, command, enemyWeightedRandomizer);
     }
 

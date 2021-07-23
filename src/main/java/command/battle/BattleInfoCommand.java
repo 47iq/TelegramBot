@@ -6,7 +6,6 @@ import communication.keyboard.KeyboardType;
 import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
 import util.MessageBundle;
-import data.UserDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -20,8 +19,6 @@ import org.springframework.stereotype.Component;
 public class BattleInfoCommand implements Command {
     @Autowired
     RegisterCommand registerCommand;
-    @Autowired
-    UserDAO userDAO;
 
     @Override
     public AnswerDTO execute(CommandDTO commandDTO) {

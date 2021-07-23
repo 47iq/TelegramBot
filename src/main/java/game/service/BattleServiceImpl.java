@@ -30,6 +30,8 @@ public class BattleServiceImpl implements BattleService {
     UserService userService;
     @Autowired
     BattleXpCalculator battleXpCalculator;
+    @Autowired
+    AchievementService achievementService;
 
     TelegramLongPollingBot bot;
 
@@ -92,10 +94,11 @@ public class BattleServiceImpl implements BattleService {
         firstUser.addBattle();
         secondUser.addBattle();
         completeBattle(battleHistory, firstCard, secondCard);
+        achievementService.addBattle(firstUser);
+        achievementService.addBattle(secondUser);
         if (firstCard.getHealth() > 0) {
             battleHistory.append(messageFormatter.getWinLossMessage(firstUser, secondUser));
             AnswerDTO answerDTO = new AnswerDTO(true, battleHistory.toString(), KeyboardType.LEAF, null, null, firstUser);
-            answerDTO.setBot(bot);
             cardService.save(secondCard);
             notificationService.notify(secondUser, answerDTO);
             notificationService.notify(firstUser, answerDTO.append(calcLevelUp(firstCard, secondCard)));
@@ -107,7 +110,6 @@ public class BattleServiceImpl implements BattleService {
         } else {
             battleHistory.append(messageFormatter.getWinLossMessage(secondUser, firstUser));
             AnswerDTO answerDTO = new AnswerDTO(true, battleHistory.toString(), KeyboardType.LEAF, null, null, secondUser);
-            answerDTO.setBot(bot);
             cardService.save(firstCard);
             notificationService.notify(firstUser, answerDTO);
             notificationService.notify(secondUser, answerDTO.append(calcLevelUp(secondCard, firstCard)));
@@ -173,6 +175,7 @@ public class BattleServiceImpl implements BattleService {
             cardService.save(card);
         }
         User user = commandDTO.getUser();
+        achievementService.addBattle(user);
         if (card.getHealth() > 0) {
             userService.higherBalance(user, enemy.getAward());
             return new AnswerDTO(true, battleHistory.toString() + "\n" +
@@ -192,9 +195,8 @@ public class BattleServiceImpl implements BattleService {
     }
 
     @Override
-    public void startSearch(User user, Card card, TelegramLongPollingBot bot) {
+    public void startSearch(User user, Card card) {
         synchronized (battleQueue) {
-            this.bot = bot;
             battleQueue.put(user, card);
             battleQueue.notify();
         }

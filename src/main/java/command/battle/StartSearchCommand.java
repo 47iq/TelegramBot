@@ -38,7 +38,7 @@ public class StartSearchCommand implements Command {
             return new AnswerDTO(false, MessageBundle.getMessage("err_dead"), KeyboardType.CLASSIC, null, null, commandDTO.getUser());
         if(battleService.isBattling(commandDTO.getUser()))
             return new AnswerDTO(false, MessageBundle.getMessage("err_insearch"), KeyboardType.CLASSIC, null, null, commandDTO.getUser());
-        battleService.startSearch(commandDTO.getUser(), card, commandDTO.getBot());
+        battleService.startSearch(commandDTO.getUser(), card);
         return new AnswerDTO(true, MessageBundle.getMessage("info_startsearch"), KeyboardType.LEAF, null, null, commandDTO.getUser());
     }
 }

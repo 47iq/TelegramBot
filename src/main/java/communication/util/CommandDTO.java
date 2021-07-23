@@ -12,20 +12,17 @@ public class CommandDTO {
     private final User user;
     private final String messageText;
     private String arg;
-    private TelegramLongPollingBot bot;
 
     /**
      * Light constructor
      *
      * @param user        user that sent a request
      * @param messageText command
-     * @param bot         bot(needed for async operations)
      */
 
     public CommandDTO(User user, String messageText, TelegramLongPollingBot bot) {
         this.user = user;
         this.messageText = messageText;
-        this.bot = bot;
     }
 
     /**
@@ -41,7 +38,6 @@ public class CommandDTO {
         this.user = user;
         this.messageText = messageText;
         this.arg = arg;
-        this.bot = bot;
     }
 
     public User getUser() {
@@ -54,9 +50,5 @@ public class CommandDTO {
 
     public String getArg() {
         return arg;
-    }
-
-    public TelegramLongPollingBot getBot() {
-        return bot;
     }
 }

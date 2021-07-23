@@ -131,4 +131,6 @@ public interface UserService {
      */
 
     List<User> getAllUsers();
+
+    boolean create(User user);
 }

@@ -8,6 +8,7 @@ import game.entity.Card;
 import game.entity.ImageIdentifier;
 import game.entity.LootBox;
 import game.entity.LootBoxType;
+import game.service.AchievementService;
 import game.service.ImageParser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -37,6 +38,8 @@ public class OpenBoxCommand {
     ImageParser imageParser;
     @Autowired
     CardService cardService;
+    @Autowired
+    AchievementService achievementService;
 
     public AnswerDTO execute(CommandDTO commandDTO, LootBoxType type) {
         try {
@@ -51,13 +54,14 @@ public class OpenBoxCommand {
                         MessageBundle.getMessage("info_youget") + "\n" + messageFormatter.getCardMessage(card),
                         KeyboardType.LEAF, imageParser.getImage(new ImageIdentifier(card.getName(), card.getType())), null, commandDTO.getUser());
                 answerDTO.setCardName(card.getName());
+                achievementService.addCardsNumber(user);
                 return answerDTO;
             } else {
                 LOGGER.error("Error while opening a lootbox");
                 return new AnswerDTO(false, MessageBundle.getMessage("err_unk"), KeyboardType.CLASSIC, null, null, commandDTO.getUser());
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error("Error while opening a lootbox " + e.getClass());
             return new AnswerDTO(false, MessageBundle.getMessage("err_unk"), KeyboardType.CLASSIC, null, null, commandDTO.getUser());
         }
     }

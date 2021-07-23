@@ -25,10 +25,9 @@ public interface BattleService {
      * Method that starts battle search
      * @param user user that starts search
      * @param card card that starts search
-     * @param bot bot for notification
      */
 
-    void startSearch(User user, Card card, TelegramLongPollingBot bot);
+    void startSearch(User user, Card card);
 
     /**
      * Method that makes user leave search

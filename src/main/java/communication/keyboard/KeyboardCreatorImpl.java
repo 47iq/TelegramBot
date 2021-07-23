@@ -141,6 +141,7 @@ public class KeyboardCreatorImpl implements KeyboardCreator {
         menu.put("/my_stats", MessageBundle.getMessage("info_mystats"));
         menu.put("/top_stats", MessageBundle.getMessage("info_top"));
         menu.put("/app_stats", MessageBundle.getMessage("info_app"));
+        menu.put("/achievements", MessageBundle.getMessage("info_achievements"));
         menu.put("/help", MessageBundle.getMessage("back"));
         return getKeyboard(menu);
     }

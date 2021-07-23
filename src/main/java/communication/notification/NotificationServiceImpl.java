@@ -24,7 +24,9 @@ public class NotificationServiceImpl implements NotificationService {
     @Autowired
     KeyboardCreator keyboardCreator;
 
-    private static final Logger LOGGER = LogManager.getLogger(PSQLUserDAO.class);
+    private TelegramLongPollingBot bot;
+
+    private static final Logger LOGGER = LogManager.getLogger(NotificationServiceImpl.class);
 
     @Override
     public void notify(User user, AnswerDTO answerDTO) {
@@ -37,7 +39,7 @@ public class NotificationServiceImpl implements NotificationService {
                     sendPhoto.setCaption(answerDTO.getMessage());
                 if (answerDTO.getKeyboard() != null)
                     sendPhoto.setReplyMarkup(keyboardCreator.getKeyboard(answerDTO.getKeyboard(), answerDTO.getButtons(), answerDTO.getUser()));
-                answerDTO.getBot().execute(sendPhoto);
+                bot.execute(sendPhoto);
             } else{
                 SendMessage sendMessage  = new SendMessage();
                 sendMessage.setChatId(String.valueOf(user.getChatID()));
@@ -45,12 +47,24 @@ public class NotificationServiceImpl implements NotificationService {
                     sendMessage.setText(answerDTO.getMessage());
                 if (answerDTO.getKeyboard() != null)
                     sendMessage.setReplyMarkup(keyboardCreator.getKeyboard(answerDTO.getKeyboard(), answerDTO.getButtons(), answerDTO.getUser()));
-                answerDTO.getBot().execute(sendMessage );
+                bot.execute(sendMessage );
             }
         } catch (Exception e) {
-            LOGGER.error("Error while sending response: " + Arrays.toString(e.getStackTrace()));
+            LOGGER.error("Error while sending response: " + e.getClass());
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void notify(User user, AnswerDTO answerDTO, int delay) {
+        new Thread(() -> {
+            try {
+                Thread.sleep(delay  * 1000L);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            notify(user, answerDTO);
+        }).start();
     }
 
     @Override
@@ -58,5 +72,9 @@ public class NotificationServiceImpl implements NotificationService {
         List<User> userList = userService.getAllUsers();
         for(var user: userList)
             notify(user, answerDTO);
+    }
+
+    public void setBot(TelegramLongPollingBot bot) {
+        this.bot = bot;
     }
 }

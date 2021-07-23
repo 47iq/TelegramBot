@@ -1,5 +1,6 @@
 package util;
 
+import data.Achievement;
 import game.dungeon.Enemy;
 import game.entity.Card;
 import data.User;
@@ -397,4 +398,14 @@ public interface MessageFormatter {
      */
 
     String getBuyItemInfo(User user);
+
+    String getCaveAchievementMessage(User user);
+
+    String getBoxCaveAchievementMessage(User user);
+
+    String getBattleAchievementMessage(User user);
+
+    String getCardsAchievementMessage(User user);
+
+    String getUserAchievementsMessage(Achievement usersAchievements);
 }
