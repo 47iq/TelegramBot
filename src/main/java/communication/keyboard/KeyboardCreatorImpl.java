@@ -35,7 +35,7 @@ public class KeyboardCreatorImpl implements KeyboardCreator {
 
     private InlineKeyboardMarkup getKeyboard(KeyboardType type, User user) {
         return switch (type) {
-            case CLASSIC -> getClassicKeyboard();
+            case CLASSIC -> getClassicKeyboard(user);
             case MENU -> getMenuKeyboard();
             case WELCOME -> getWelcomeKeyboard();
             case SHOP -> getShopKeyboard();
@@ -49,8 +49,15 @@ public class KeyboardCreatorImpl implements KeyboardCreator {
             case START_SHOP -> getStartShopKeyboard();
             case BUY_BOX -> getBuyBoxKeyboard();
             case BUY_ITEM -> getBuyItemKeyboard();
+            case ADMIN -> getAdminKeyboard();
             default -> null;
         };
+    }
+
+    private InlineKeyboardMarkup getAdminKeyboard() {
+        Map<String, String> menu = new HashMap<>();
+        menu.put("/all_users", MessageBundle.getMessage("info_allusers"));
+        return getKeyboard(menu);
     }
 
     private InlineKeyboardMarkup getBuyItemKeyboard() {
@@ -298,7 +305,7 @@ public class KeyboardCreatorImpl implements KeyboardCreator {
      * @see command.service_command.HelpCommand
      */
 
-    public InlineKeyboardMarkup getClassicKeyboard() {
+    public InlineKeyboardMarkup getClassicKeyboard(User user) {
         List<String> buttonTexts = new ArrayList<>();
         buttonTexts.add("/shop");
         buttonTexts.add("/stats");
@@ -307,6 +314,8 @@ public class KeyboardCreatorImpl implements KeyboardCreator {
         buttonTexts.add("/battle_menu");
         buttonTexts.add("/dungeon_menu");
         buttonTexts.add("/info");
+        if(user.getUID().equals(MessageBundle.getSetting("ADMIN_UID")))
+            buttonTexts.add("/admin");
         Map<String, String> texts = new HashMap<>();
         for (var text : buttonTexts) {
             texts.put(text, MessageBundle.getMessage(text));

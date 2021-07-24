@@ -1,19 +1,22 @@
-command/dungeon/DungeonInfoCommand.java
- command.dungeon.DungeonInfoCommand
-command/item/BoostCardCommand.java
- command.item.BoostCardCommand
-command/shop/BuyLootBoxCommand.java
- command.shop.BuyLootBoxCommand
-command/item/ItemInfoCommand.java
- command.item.ItemInfoCommand
-game/dungeon/ArmorCave.java
- game.dungeon.ArmorCave
+game/service/AchievementCheckerImpl.java
+ game.service.AchievementCheckerImpl
+game/entity/CardType.java
+ game.entity.CardType
+ game.entity.CardType$1
+ game.entity.CardType$2
+ game.entity.CardType$3
+communication/connection/TelegramBot.java
+ communication.connection.TelegramBot
+game/service/AchievementService.java
+ game.service.AchievementService
+util/MessageMode.java
+ util.MessageMode
 game/service/BattleXpCalculator.java
  game.service.BattleXpCalculator
 game/service/WeightedRandomizerImpl.java
  game.service.WeightedRandomizerImpl
-command/main_menu/StatsMenuCommand.java
- command.main_menu.StatsMenuCommand
+data/Achievement.java
+ data.Achievement
 data/CardDAO.java
  data.CardDAO
 game/dungeon/EnemyType.java
@@ -32,205 +35,61 @@ game/dungeon/EnemyType.java
  game.dungeon.EnemyType$7
  game.dungeon.EnemyType$8
  game.dungeon.EnemyType$9
-game/dungeon/CaveService.java
- game.dungeon.CaveService
-communication/notification/NotificationService.java
- communication.notification.NotificationService
+game/entity/LootBoxType.java
+ game.entity.LootBoxType
+game/entity/LootBox.java
+ game.entity.LootBox
 game/entity/Card.java
  game.entity.Card
-command/service_command/RegisterCommand.java
- command.service_command.RegisterCommand
-game/dungeon/LevelUpCave.java
- game.dungeon.LevelUpCave
-command/main_menu/DungeonMenuCommand.java
- command.main_menu.DungeonMenuCommand
+game/dungeon/Enemy.java
+ game.dungeon.Enemy
+data/CardServiceImpl.java
+ data.CardServiceImpl
+data/User.java
+ data.User
 game/service/PriceCalculator.java
  game.service.PriceCalculator
 data/UserService.java
  data.UserService
-communication/util/AnswerDTO.java
- communication.util.AnswerDTO
-command/dungeon/LeaveDungeonCommand.java
- command.dungeon.LeaveDungeonCommand
-communication/connection/ImageSenderService.java
- communication.connection.ImageSenderService
-command/main_menu/UseItemMenuCommand.java
- command.main_menu.UseItemMenuCommand
-command/main_menu/InfoCommand.java
- command.main_menu.InfoCommand
-command/tutorial/StartShopCommand.java
- command.tutorial.StartShopCommand
-game/dungeon/LootCave.java
- game.dungeon.LootCave
-game/dungeon/CaveServiceImpl.java
- game.dungeon.CaveServiceImpl
+data/UserServiceImpl.java
+ data.UserServiceImpl
+data/AchievementDAO.java
+ data.AchievementDAO
+data/PSQLUserDAO.java
+ data.PSQLUserDAO
+util/MessageBundle.java
+ util.MessageBundle
+communication/util/CommandDTO.java
+ communication.util.CommandDTO
+util/AppMode.java
+ util.AppMode
+game/entity/ImageIdentifier.java
+ game.entity.ImageIdentifier
+util/MessageFormatterImpl.java
+ util.MessageFormatterImpl
 game/service/ImageParser.java
  game.service.ImageParser
-command/admin/AllUsersCommand.java
- command.admin.AllUsersCommand
-game/dungeon/WeaponCave.java
- game.dungeon.WeaponCave
-command/service_command/OpenSuperRareBoxCommand.java
- command.service_command.OpenSuperRareBoxCommand
+game/service/PriceCalculatorImpl.java
+ game.service.PriceCalculatorImpl
+data/PSQLCardDAO.java
+ data.PSQLCardDAO
+game/service/AchievementChecker.java
+ game.service.AchievementChecker
 data/UserDAO.java
  data.UserDAO
 data/PSQLAchievementDAO.java
  data.PSQLAchievementDAO
-command/admin/AddTokensCommand.java
- command.admin.AddTokensCommand
-command/item/UseBoostCommand.java
- command.item.UseBoostCommand
-game/dungeon/LootBoxCave.java
- game.dungeon.LootBoxCave
+game/service/BattleXpCalculatorImpl.java
+ game.service.BattleXpCalculatorImpl
+game/service/WeightedRandomizer.java
+ game.service.WeightedRandomizer
+util/MessageFormatter.java
+ util.MessageFormatter
 data/CardService.java
  data.CardService
 game/entity/LootBoxImpl.java
  game.entity.LootBoxImpl
  game.entity.LootBoxImpl$1
-command/service_command/OpenBoxCommand.java
- command.service_command.OpenBoxCommand
-game/service/AchievementServiceImpl.java
- game.service.AchievementServiceImpl
-communication/connection/TextSenderServiceImpl.java
- communication.connection.TextSenderServiceImpl
-game/service/WeightedRandomizer.java
- game.service.WeightedRandomizer
-communication/keyboard/KeyboardCreator.java
- communication.keyboard.KeyboardCreator
-command/battle/BattleMenuCommand.java
- command.battle.BattleMenuCommand
-command/dungeon/EnterNextCaveCommand.java
- command.dungeon.EnterNextCaveCommand
-command/CommandFactoryImpl.java
- command.CommandFactoryImpl
-command/shop/BuyBoostCommand.java
- command.shop.BuyBoostCommand
-game/service/ImageParserImpl.java
- game.service.ImageParserImpl
-game/service/AchievementService.java
- game.service.AchievementService
-command/dungeon/EnterDungeonCardCommand.java
- command.dungeon.EnterDungeonCardCommand
-command/service_command/HelpCommand.java
- command.service_command.HelpCommand
-util/MessageMode.java
- util.MessageMode
-communication/keyboard/KeyboardType.java
- communication.keyboard.KeyboardType
-command/stats/TopStatsCommand.java
- command.stats.TopStatsCommand
-util/MessageFormatter.java
- util.MessageFormatter
-command/battle/BattleInfoCommand.java
- command.battle.BattleInfoCommand
-command/card_collection/SellCardCommand.java
- command.card_collection.SellCardCommand
-command/main_menu/ShopMenuCommand.java
- command.main_menu.ShopMenuCommand
-command/shop/OpenBasicBoxCommand.java
- command.shop.OpenBasicBoxCommand
-command/battle/StartSearchCommand.java
- command.battle.StartSearchCommand
-game/entity/LootBoxType.java
- game.entity.LootBoxType
-command/shop/ShopInfoCommand.java
- command.shop.ShopInfoCommand
-AppConfig.java
- AppConfig
-game/service/BattleService.java
- game.service.BattleService
-command/stats/AppStatsCommand.java
- command.stats.AppStatsCommand
-command/stats/AchievementStatsCommand.java
- command.stats.AchievementStatsCommand
-command/shop/OpenProBoxCommand.java
- command.shop.OpenProBoxCommand
-data/PSQLCardDAO.java
- data.PSQLCardDAO
-command/Command.java
- command.Command
-command/shop/BuyBeerCommand.java
- command.shop.BuyBeerCommand
-game/dungeon/TrapCave.java
- game.dungeon.TrapCave
-data/AchievementDAO.java
- data.AchievementDAO
-communication/util/CommandDTO.java
- communication.util.CommandDTO
-game/dungeon/HealCave.java
- game.dungeon.HealCave
-util/MessageFormatterImpl.java
- util.MessageFormatterImpl
-game/service/BattleServiceImpl.java
- game.service.BattleServiceImpl
-game/entity/ImageIdentifier.java
- game.entity.ImageIdentifier
-util/AppMode.java
- util.AppMode
-command/card_collection/SellCommand.java
- command.card_collection.SellCommand
-command/item/HealCardCommand.java
- command.item.HealCardCommand
-command/main_menu/MyCardsMenuCommand.java
- command.main_menu.MyCardsMenuCommand
-command/admin/NotifyAllCommand.java
- command.admin.NotifyAllCommand
-data/PSQLUserDAO.java
- data.PSQLUserDAO
-util/MessageBundle.java
- util.MessageBundle
-game/dungeon/RobberyCave.java
- game.dungeon.RobberyCave
-command/shop/DailyFreeTokensCommand.java
- command.shop.DailyFreeTokensCommand
-command/shop/OpenAdvancedBoxCommand.java
- command.shop.OpenAdvancedBoxCommand
-communication/notification/NotificationServiceImpl.java
- communication.notification.NotificationServiceImpl
-command/shop/BuyItemMenuCommand.java
- command.shop.BuyItemMenuCommand
-command/dungeon/InstantHealCommand.java
- command.dungeon.InstantHealCommand
-data/User.java
- data.User
-command/shop/BuyHealCommand.java
- command.shop.BuyHealCommand
-command/battle/LeaveSearchCommand.java
- command.battle.LeaveSearchCommand
-command/battle/PrepareBattleCommand.java
- command.battle.PrepareBattleCommand
-game/dungeon/Enemy.java
- game.dungeon.Enemy
-game/dungeon/Cave.java
- game.dungeon.Cave
-data/CardServiceImpl.java
- data.CardServiceImpl
-game/service/PriceCalculatorImpl.java
- game.service.PriceCalculatorImpl
-game/entity/LootBox.java
- game.entity.LootBox
-Main.java
- Main
-communication/connection/TextSenderService.java
- communication.connection.TextSenderService
-game/dungeon/BattleCave.java
- game.dungeon.BattleCave
-data/UserServiceImpl.java
- data.UserServiceImpl
-command/dungeon/EnterDungeonCommand.java
- command.dungeon.EnterDungeonCommand
-game/service/BattleXpCalculatorImpl.java
- game.service.BattleXpCalculatorImpl
-command/CommandFactory.java
- command.CommandFactory
-command/stats/MyStatsCommand.java
- command.stats.MyStatsCommand
-data/Achievement.java
- data.Achievement
-command/item/UseHealCommand.java
- command.item.UseHealCommand
-command/card_collection/CardViewCommand.java
- command.card_collection.CardViewCommand
 game/entity/CardName.java
  game.entity.CardName
  game.entity.CardName$1
@@ -243,25 +102,168 @@ game/entity/CardName.java
  game.entity.CardName$7
  game.entity.CardName$8
  game.entity.CardName$9
+game/service/ImageParserImpl.java
+ game.service.ImageParserImpl
+command/dungeon/DungeonInfoCommand.java
+ command.dungeon.DungeonInfoCommand
+command/item/BoostCardCommand.java
+ command.item.BoostCardCommand
+command/shop/BuyLootBoxCommand.java
+ command.shop.BuyLootBoxCommand
+communication/keyboard/KeyboardType.java
+ communication.keyboard.KeyboardType
+command/stats/TopStatsCommand.java
+ command.stats.TopStatsCommand
+command/battle/BattleInfoCommand.java
+ command.battle.BattleInfoCommand
+command/card_collection/SellCardCommand.java
+ command.card_collection.SellCardCommand
+command/main_menu/ShopMenuCommand.java
+ command.main_menu.ShopMenuCommand
+command/item/ItemInfoCommand.java
+ command.item.ItemInfoCommand
+command/shop/OpenBasicBoxCommand.java
+ command.shop.OpenBasicBoxCommand
+game/dungeon/ArmorCave.java
+ game.dungeon.ArmorCave
+command/battle/StartSearchCommand.java
+ command.battle.StartSearchCommand
+command/main_menu/StatsMenuCommand.java
+ command.main_menu.StatsMenuCommand
+command/shop/ShopInfoCommand.java
+ command.shop.ShopInfoCommand
+AppConfig.java
+ AppConfig
+game/service/BattleService.java
+ game.service.BattleService
+command/stats/AppStatsCommand.java
+ command.stats.AppStatsCommand
+command/stats/AchievementStatsCommand.java
+ command.stats.AchievementStatsCommand
+game/dungeon/CaveService.java
+ game.dungeon.CaveService
+command/shop/OpenProBoxCommand.java
+ command.shop.OpenProBoxCommand
+command/Command.java
+ command.Command
+communication/notification/NotificationService.java
+ communication.notification.NotificationService
+command/shop/BuyBeerCommand.java
+ command.shop.BuyBeerCommand
+game/dungeon/TrapCave.java
+ game.dungeon.TrapCave
+game/dungeon/HealCave.java
+ game.dungeon.HealCave
+command/service_command/RegisterCommand.java
+ command.service_command.RegisterCommand
+game/dungeon/LevelUpCave.java
+ game.dungeon.LevelUpCave
+game/service/BattleServiceImpl.java
+ game.service.BattleServiceImpl
+command/card_collection/SellCommand.java
+ command.card_collection.SellCommand
+command/main_menu/DungeonMenuCommand.java
+ command.main_menu.DungeonMenuCommand
+command/item/HealCardCommand.java
+ command.item.HealCardCommand
+command/main_menu/MyCardsMenuCommand.java
+ command.main_menu.MyCardsMenuCommand
+communication/util/AnswerDTO.java
+ communication.util.AnswerDTO
+command/dungeon/LeaveDungeonCommand.java
+ command.dungeon.LeaveDungeonCommand
+command/admin/NotifyAllCommand.java
+ command.admin.NotifyAllCommand
+communication/connection/ImageSenderService.java
+ communication.connection.ImageSenderService
+command/main_menu/UseItemMenuCommand.java
+ command.main_menu.UseItemMenuCommand
+game/dungeon/RobberyCave.java
+ game.dungeon.RobberyCave
+command/shop/DailyFreeTokensCommand.java
+ command.shop.DailyFreeTokensCommand
+command/shop/OpenAdvancedBoxCommand.java
+ command.shop.OpenAdvancedBoxCommand
+communication/notification/NotificationServiceImpl.java
+ communication.notification.NotificationServiceImpl
+command/main_menu/InfoCommand.java
+ command.main_menu.InfoCommand
+command/tutorial/StartShopCommand.java
+ command.tutorial.StartShopCommand
+game/dungeon/LootCave.java
+ game.dungeon.LootCave
+command/shop/BuyItemMenuCommand.java
+ command.shop.BuyItemMenuCommand
+game/dungeon/CaveServiceImpl.java
+ game.dungeon.CaveServiceImpl
+command/dungeon/InstantHealCommand.java
+ command.dungeon.InstantHealCommand
+command/shop/BuyHealCommand.java
+ command.shop.BuyHealCommand
+command/battle/LeaveSearchCommand.java
+ command.battle.LeaveSearchCommand
+command/battle/PrepareBattleCommand.java
+ command.battle.PrepareBattleCommand
+command/admin/AllUsersCommand.java
+ command.admin.AllUsersCommand
+game/dungeon/Cave.java
+ game.dungeon.Cave
+command/admin/AdminMenuCommand.java
+ command.admin.AdminMenuCommand
+game/dungeon/WeaponCave.java
+ game.dungeon.WeaponCave
+command/service_command/OpenSuperRareBoxCommand.java
+ command.service_command.OpenSuperRareBoxCommand
+Main.java
+ Main
+communication/connection/TextSenderService.java
+ communication.connection.TextSenderService
+command/admin/AddTokensCommand.java
+ command.admin.AddTokensCommand
+command/item/UseBoostCommand.java
+ command.item.UseBoostCommand
+game/dungeon/LootBoxCave.java
+ game.dungeon.LootBoxCave
+game/dungeon/BattleCave.java
+ game.dungeon.BattleCave
+command/dungeon/EnterDungeonCommand.java
+ command.dungeon.EnterDungeonCommand
+command/service_command/OpenBoxCommand.java
+ command.service_command.OpenBoxCommand
+game/service/AchievementServiceImpl.java
+ game.service.AchievementServiceImpl
+command/CommandFactory.java
+ command.CommandFactory
+communication/connection/TextSenderServiceImpl.java
+ communication.connection.TextSenderServiceImpl
+command/stats/MyStatsCommand.java
+ command.stats.MyStatsCommand
+command/item/UseHealCommand.java
+ command.item.UseHealCommand
+communication/keyboard/KeyboardCreator.java
+ communication.keyboard.KeyboardCreator
+command/card_collection/CardViewCommand.java
+ command.card_collection.CardViewCommand
+command/battle/BattleMenuCommand.java
+ command.battle.BattleMenuCommand
+command/dungeon/EnterNextCaveCommand.java
+ command.dungeon.EnterNextCaveCommand
 command/card_collection/NavigateToCardCommand.java
  command.card_collection.NavigateToCardCommand
+command/CommandFactoryImpl.java
+ command.CommandFactoryImpl
+command/shop/BuyBoostCommand.java
+ command.shop.BuyBoostCommand
 command/tutorial/StartCommand.java
  command.tutorial.StartCommand
 communication/connection/ImageSenderServiceImpl.java
  communication.connection.ImageSenderServiceImpl
-communication/connection/TelegramBot.java
- communication.connection.TelegramBot
-game/service/AchievementChecker.java
- game.service.AchievementChecker
+command/dungeon/EnterDungeonCardCommand.java
+ command.dungeon.EnterDungeonCardCommand
+command/service_command/HelpCommand.java
+ command.service_command.HelpCommand
 communication/keyboard/KeyboardCreatorImpl.java
  communication.keyboard.KeyboardCreatorImpl
  communication.keyboard.KeyboardCreatorImpl$1
 command/admin/GetUserStatsCommand.java
  command.admin.GetUserStatsCommand
-game/entity/CardType.java
- game.entity.CardType
- game.entity.CardType$1
- game.entity.CardType$2
- game.entity.CardType$3
-game/service/AchievementCheckerImpl.java
- game.service.AchievementCheckerImpl

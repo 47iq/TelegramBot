@@ -1,13 +1,10 @@
 import command.*;
-import command.admin.AddTokensCommand;
-import command.admin.AllUsersCommand;
+import command.admin.*;
 import command.battle.*;
 import command.dungeon.*;
 import command.item.*;
 import command.stats.AchievementStatsCommand;
 import command.stats.AppStatsCommand;
-import command.admin.GetUserStatsCommand;
-import command.admin.NotifyAllCommand;
 import command.card_collection.CardViewCommand;
 import command.card_collection.NavigateToCardCommand;
 import command.card_collection.SellCardCommand;
@@ -180,7 +177,14 @@ public class AppConfig {
         adminCommands.put("/notify_all", getNotifyAllCommand());
         adminCommands.put("/user_stats", getUserStatsCommand());
         adminCommands.put("/all_users", getUsersStatsCommand());
+        adminCommands.put("/admin", getAdminCommand());
         return new CommandFactoryImpl(commandMap, adminCommands);
+    }
+
+    @Bean
+    @Scope("singleton")
+    public Command getAdminCommand() {
+        return new AdminMenuCommand();
     }
 
     @Bean
