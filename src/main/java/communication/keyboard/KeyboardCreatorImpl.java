@@ -6,6 +6,8 @@ import game.battle.AttackType;
 import game.battle.DefenceType;
 import game.dungeon.CaveService;
 import game.service.BattleService;
+import game.service.EventType;
+import game.service.NotificationPublisher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
@@ -23,6 +25,8 @@ public class KeyboardCreatorImpl implements KeyboardCreator {
     CaveService caveService;
     @Autowired
     BattleService battleService;
+    @Autowired
+    NotificationPublisher notificationPublisher;
 
     private final int BUTTONS_IN_ROW = 2;
     private final int MAX_ROWS = 5;
@@ -190,6 +194,10 @@ public class KeyboardCreatorImpl implements KeyboardCreator {
             menu.put("/leave_search", MessageBundle.getMessage("info_leavesearch"));
         else
             menu.put("/battle", MessageBundle.getMessage("info_battle"));
+        if(notificationPublisher.isSubscribed(user, EventType.BATTLE_ENEMY))
+            menu.put("/unsubscribe_battle", MessageBundle.getMessage("battle_unsubscribe"));
+        else
+            menu.put("/subscribe_battle", MessageBundle.getMessage("battle_subscribe"));
         menu.put("/help", MessageBundle.getMessage("back"));
         return getKeyboard(menu);
     }

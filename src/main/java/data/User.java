@@ -1,5 +1,6 @@
 package data;
 
+import org.hibernate.annotations.ColumnDefault;
 import util.MessageBundle;
 
 import javax.persistence.Column;
@@ -40,6 +41,10 @@ public class User {
     @Column(name = "wins")
     private int totalWins;
 
+    @Column(name = "subscribed_battle")
+    @ColumnDefault("false")
+    private Boolean isSubscribedToBattle;
+
     /**
      * Constructor for user
      * @param username username
@@ -55,6 +60,7 @@ public class User {
         lastTokensRedeemed = LocalDateTime.now(ZoneId.systemDefault());
         totalBattles = 0;
         totalWins = 0;
+        isSubscribedToBattle = false;
     }
 
     public User() {
@@ -139,5 +145,13 @@ public class User {
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
         return Objects.equals(UID, user.UID);
+    }
+
+    public Boolean getIsSubscribedToBattle() {
+        return isSubscribedToBattle;
+    }
+
+    public void setIsSubscribedToBattle(Boolean subscribedToBattle) {
+        isSubscribedToBattle = subscribedToBattle;
     }
 }

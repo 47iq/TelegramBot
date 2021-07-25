@@ -176,6 +176,8 @@ public class AppConfig {
         commandMap.put("/achievements",  getAchievementsCommand());
         commandMap.put("/set_attack", getSetAttackCommand());
         commandMap.put("/set_defence",  getSetDefenceCommand());
+        commandMap.put("/subscribe_battle", getBattleSubscribeCommand());
+        commandMap.put("/unsubscribe_battle", getBattleUnsubscribeCommand());
         Map<String, Command> adminCommands = new HashMap<>();
         adminCommands.put("/add_tokens", getAddTokensCommand());
         adminCommands.put("/notify_all", getNotifyAllCommand());
@@ -183,6 +185,24 @@ public class AppConfig {
         adminCommands.put("/all_users", getUsersStatsCommand());
         adminCommands.put("/admin", getAdminCommand());
         return new CommandFactoryImpl(commandMap, adminCommands);
+    }
+
+    @Bean
+    @Scope("singleton")
+    public BattleUnsubscribeCommand getBattleUnsubscribeCommand(){
+        return new BattleUnsubscribeCommand();
+    }
+
+    @Bean
+    @Scope("singleton")
+    public BattleSubscribeCommand getBattleSubscribeCommand(){
+        return new BattleSubscribeCommand();
+    }
+
+    @Bean
+    @Scope("singleton")
+    public NotificationPublisher notificationPublisher(){
+        return new BattleNotificationPublisher();
     }
 
     @Bean

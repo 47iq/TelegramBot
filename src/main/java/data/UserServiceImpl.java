@@ -1,5 +1,6 @@
 package data;
 
+import game.service.EventType;
 import util.MessageBundle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -111,5 +112,25 @@ public class UserServiceImpl implements UserService{
     @Override
     public boolean create(User user) {
         return userDAO.create(user);
+    }
+
+    @Override
+    public void subscribe(EventType eventType, User user) {
+        switch (eventType)  {
+            case BATTLE_ENEMY -> {
+                user.setIsSubscribedToBattle(true);
+                userDAO.update(user);
+            }
+        }
+    }
+
+    @Override
+    public void unsubscribe(EventType eventType, User user) {
+        switch (eventType)  {
+            case BATTLE_ENEMY -> {
+                user.setIsSubscribedToBattle(false);
+                userDAO.update(user);
+            }
+        }
     }
 }

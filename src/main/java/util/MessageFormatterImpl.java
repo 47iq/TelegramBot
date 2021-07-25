@@ -516,4 +516,9 @@ public class MessageFormatterImpl implements MessageFormatter {
     public String getBattleQueueTimeoutMessage() {
         return MessageBundle.getMessage("battle_queue.timeout");
     }
+
+    @Override
+    public String getBattleWaitingMessage() {
+        return MessageBundle.getMessage("battle_waiting");
+    }
 }

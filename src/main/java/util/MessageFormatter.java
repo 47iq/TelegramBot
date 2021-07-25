@@ -433,4 +433,6 @@ public interface MessageFormatter {
     String getBattleNotifyMessage();
 
     String getBattleQueueTimeoutMessage();
+
+    String getBattleWaitingMessage();
 }

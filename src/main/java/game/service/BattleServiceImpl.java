@@ -36,6 +36,8 @@ public class BattleServiceImpl implements BattleService {
     BattleXpCalculator battleXpCalculator;
     @Autowired
     AchievementService achievementService;
+    @Autowired
+    NotificationPublisher notificationPublisher;
 
     final static Map<User, Card> battleQueue = new HashMap<>();
 
@@ -92,6 +94,10 @@ public class BattleServiceImpl implements BattleService {
                 }
                 if (battleQueue.size() >= 2)
                     prepareBattle();
+                else
+                    notificationPublisher.notify(EventType.BATTLE_ENEMY,
+                            new AnswerDTO(true, messageFormatter.getBattleWaitingMessage(),
+                                    KeyboardType.NONE, null, null, null, true));
             }
         }).start();
         new Thread(() -> {

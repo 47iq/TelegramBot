@@ -1,5 +1,7 @@
 package data;
 
+import game.service.EventType;
+
 import java.util.List;
 
 /**
@@ -133,4 +135,9 @@ public interface UserService {
     List<User> getAllUsers();
 
     boolean create(User user);
+
+    void subscribe(EventType eventType, User user);
+
+    void unsubscribe(EventType eventType, User user);
+
 }
