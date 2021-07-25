@@ -17,6 +17,6 @@ public class BuyItemMenuCommand implements Command {
     @Override
     public AnswerDTO execute(CommandDTO commandDTO) {
         User user = commandDTO.getUser();
-        return new AnswerDTO(true, messageFormatter.getBuyItemInfo(user), KeyboardType.BUY_ITEM, null, null, user);
+        return new AnswerDTO(true, messageFormatter.getBuyItemInfo(user), KeyboardType.BUY_ITEM, null, null, user, true);
     }
 }

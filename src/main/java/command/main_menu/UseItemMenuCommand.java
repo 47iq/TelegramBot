@@ -23,6 +23,6 @@ public class UseItemMenuCommand implements Command {
     @Override
     public AnswerDTO execute(CommandDTO commandDTO) {
         User user = commandDTO.getUser();
-        return new AnswerDTO(true, messageFormatter.getItemMessage(commandDTO.getUser()), KeyboardType.ITEM, null, null, user);
+        return new AnswerDTO(true, messageFormatter.getItemMessage(commandDTO.getUser()), KeyboardType.ITEM, null, null, user, true);
     }
 }

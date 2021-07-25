@@ -16,6 +16,6 @@ public class DungeonMenuCommand implements Command {
 
     @Override
     public AnswerDTO execute(CommandDTO commandDTO) {
-        return new AnswerDTO(true, MessageBundle.getMessage("dungeon_intro"), KeyboardType.DUNGEON_MENU, null, null, commandDTO.getUser());
+        return new AnswerDTO(true, MessageBundle.getMessage("dungeon_intro"), KeyboardType.DUNGEON_MENU, null, null, commandDTO.getUser(), true);
     }
 }

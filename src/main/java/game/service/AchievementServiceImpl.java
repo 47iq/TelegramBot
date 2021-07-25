@@ -8,7 +8,6 @@ import data.AchievementDAO;
 import data.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import util.MessageBundle;
 import util.MessageFormatter;
 
 @Component
@@ -59,7 +58,7 @@ public class AchievementServiceImpl implements AchievementService{
     }
 
     private AnswerDTO getAnswer(String caveAchievementMessage, User user) {
-        return new AnswerDTO(true, caveAchievementMessage, KeyboardType.NONE, null, null, user);
+        return new AnswerDTO(true, caveAchievementMessage, KeyboardType.NONE, null, null, user, true);
     }
 
     @Override

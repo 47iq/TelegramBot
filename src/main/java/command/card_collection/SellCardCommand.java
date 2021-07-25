@@ -4,6 +4,7 @@ import command.Command;
 import data.CardService;
 import data.UserService;
 import game.entity.Card;
+import game.service.BattleService;
 import game.service.PriceCalculator;
 import communication.keyboard.KeyboardType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,17 +26,21 @@ public class SellCardCommand implements Command {
     UserService userService;
     @Autowired
     PriceCalculator priceCalculator;
+    @Autowired
+    BattleService battleService;
 
     @Override
     public AnswerDTO execute(CommandDTO commandDTO) {
         long id = Long.parseLong(commandDTO.getArg());
         Card card = cardService.getMyCardById(id, commandDTO.getUser().getUID());
+        if(battleService.isBattling(card, commandDTO.getUser()))
+            return new AnswerDTO(false, MessageBundle.getMessage("err_inbattle"), KeyboardType.LEAF, null, null, commandDTO.getUser(), true);
         if(card == null)
-            return new AnswerDTO(false, MessageBundle.getMessage("err_nocard"), KeyboardType.CLASSIC, null, null, commandDTO.getUser());
+            return new AnswerDTO(false, MessageBundle.getMessage("err_nocard"), KeyboardType.CLASSIC, null, null, commandDTO.getUser(), true);
         long price = priceCalculator.calculatePrice(card);
         cardService.delete(card);
         userService.higherBalance(commandDTO.getUser(), price);
         return new AnswerDTO(true, MessageBundle.getMessage("info_sold"), KeyboardType.LEAF,
-                null, null, commandDTO.getUser());
+                null, null, commandDTO.getUser(), true);
     }
 }

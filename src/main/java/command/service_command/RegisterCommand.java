@@ -24,8 +24,8 @@ public class RegisterCommand implements Command {
     @Override
     public AnswerDTO execute(CommandDTO commandDTO) {
         if(userService.create(commandDTO.getUser()) && achievementService.create(commandDTO.getUser()))
-            return new AnswerDTO(true, null, KeyboardType.CLASSIC, null, null, commandDTO.getUser());
+            return new AnswerDTO(true, null, KeyboardType.CLASSIC, null, null, commandDTO.getUser(), true);
         else
-            return new AnswerDTO(false, null, KeyboardType.CLASSIC, null, null, commandDTO.getUser());
+            return new AnswerDTO(false, null, KeyboardType.CLASSIC, null, null, commandDTO.getUser(), true);
     }
 }

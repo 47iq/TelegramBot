@@ -23,6 +23,6 @@ public class StartShopCommand implements Command {
     @Override
     public AnswerDTO execute(CommandDTO commandDTO) {
         User user = commandDTO.getUser();
-        return new AnswerDTO(true, messageFormatter.getStartShopInfo(commandDTO.getUser()), KeyboardType.START_SHOP, null, null, user);
+        return new AnswerDTO(true, messageFormatter.getStartShopInfo(commandDTO.getUser()), KeyboardType.START_SHOP, null, null, user, true);
     }
 }

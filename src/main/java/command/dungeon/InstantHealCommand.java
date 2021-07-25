@@ -41,20 +41,20 @@ public class InstantHealCommand implements Command {
         try {
             card = cardService.getMyCardById(Long.parseLong(commandDTO.getArg()), user.getUID());
         } catch (NumberFormatException e) {
-            return new AnswerDTO(false, MessageBundle.getMessage("err_nocard"), KeyboardType.DUNGEON_LEAF, null, null, user);
+            return new AnswerDTO(false, MessageBundle.getMessage("err_nocard"), KeyboardType.DUNGEON_LEAF, null, null, user, true);
         }
         if(commandDTO.getUser().getHealCount() <= 0) {
-            return new AnswerDTO(false, MessageBundle.getMessage("err_noheal"), KeyboardType.DUNGEON_LEAF, null, null, user);
+            return new AnswerDTO(false, MessageBundle.getMessage("err_noheal"), KeyboardType.DUNGEON_LEAF, null, null, user, true);
         } else if(card == null) {
-            return new AnswerDTO(false, MessageBundle.getMessage("err_nocard"), KeyboardType.DUNGEON_LEAF, null, null, user);
+            return new AnswerDTO(false, MessageBundle.getMessage("err_nocard"), KeyboardType.DUNGEON_LEAF, null, null, user, true);
         } else {
             try {
                 userService.spendHeal(user);
                 cardService.heal(card);
-                return new AnswerDTO(true, messageFormatter.getInstantHealMessage(card), KeyboardType.DUNGEON, null, null, user);
+                return new AnswerDTO(true, messageFormatter.getInstantHealMessage(card), KeyboardType.DUNGEON, null, null, user, true);
             } catch (Exception e)  {
                 logger.error("Error during instant heal: " + e.getClass());
-                return new AnswerDTO(false, MessageBundle.getMessage("err_unk"), KeyboardType.DUNGEON_LEAF, null, null, user);
+                return new AnswerDTO(false, MessageBundle.getMessage("err_unk"), KeyboardType.DUNGEON_LEAF, null, null, user, true);
             }
         }
     }

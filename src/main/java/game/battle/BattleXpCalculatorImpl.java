@@ -1,4 +1,4 @@
-package game.service;
+package game.battle;
 
 import game.entity.Card;
 import org.springframework.stereotype.Component;

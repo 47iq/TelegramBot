@@ -33,6 +33,6 @@ public class CardViewCommand implements Command {
         List<Card> cardList = cardService.getAllCardsOf(commandDTO.getUser());
         Map<String, String> cardReferences = new HashMap<>();
         cardList.forEach(x -> cardReferences.put("/view_card." + x.getUID(), messageFormatter.getCardViewMessage(x)));
-        return new AnswerDTO(true, MessageBundle.getMessage("ask_whatcard"), KeyboardType.CUSTOM, null, cardReferences, commandDTO.getUser());
+        return new AnswerDTO(true, MessageBundle.getMessage("ask_whatcard"), KeyboardType.CUSTOM, null, cardReferences, commandDTO.getUser(), true);
     }
 }

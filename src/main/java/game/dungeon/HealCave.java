@@ -30,6 +30,6 @@ public class HealCave implements Cave{
         User user = commandDTO.getUser();
         card.setHealth(Math.min(card.getHealth() + gainedHealth, card.getMaxHealth()));
         cardService.save(card);
-        return new AnswerDTO(true, messageFormatter.getHealCaveMessage((long) (Math.random()*4),gainedHealth, card), KeyboardType.DUNGEON, null, null, user);
+        return new AnswerDTO(true, messageFormatter.getHealCaveMessage((long) (Math.random()*4),gainedHealth, card), KeyboardType.DUNGEON, null, null, user, true);
     }
 }

@@ -28,6 +28,6 @@ public class TopStatsCommand implements Command {
     public AnswerDTO execute(CommandDTO commandDTO) {
         User user = commandDTO.getUser();
         List<User> userList = userService.getAllUsers();
-        return new AnswerDTO(true, messageFormatter.getGlobalStatsMessage(userList), KeyboardType.LEAF, null, null, user);
+        return new AnswerDTO(true, messageFormatter.getGlobalStatsMessage(userList), KeyboardType.LEAF, null, null, user, true);
     }
 }

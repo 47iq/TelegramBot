@@ -16,6 +16,8 @@ public class TextSenderServiceImpl implements TextSenderService {
 
     @Override
     public SendMessage getMessage(AnswerDTO answerDTO) {
+        if(!answerDTO.isMustSend())
+            return null;
         SendMessage sendMessage = new SendMessage();
         if (answerDTO.isSuccessful()) {
             if (answerDTO.getMessage() != null)

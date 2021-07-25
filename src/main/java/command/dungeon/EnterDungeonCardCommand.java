@@ -4,6 +4,7 @@ import command.Command;
 import communication.keyboard.KeyboardType;
 import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
+import game.service.BattleService;
 import util.MessageBundle;
 import data.CardService;
 import game.dungeon.CaveService;
@@ -24,17 +25,21 @@ public class EnterDungeonCardCommand implements Command {
     CaveService caveService;
     @Autowired
     CardService cardService;
+    @Autowired
+    BattleService battleService;
 
     @Override
     public AnswerDTO execute(CommandDTO commandDTO) {
         long id = Long.parseLong(commandDTO.getArg());
         Card card = cardService.getMyCardById(id, commandDTO.getUser().getUID());
         if(card == null)
-            return new AnswerDTO(false, MessageBundle.getMessage("err_nocard"), KeyboardType.LEAF, null, null, commandDTO.getUser());
+            return new AnswerDTO(false, MessageBundle.getMessage("err_nocard"), KeyboardType.LEAF, null, null, commandDTO.getUser(), true);
         if(card.getHealth() <= 0)
-            return new AnswerDTO(false, MessageBundle.getMessage("err_nohealth"), KeyboardType.LEAF, null, null, commandDTO.getUser());
+            return new AnswerDTO(false, MessageBundle.getMessage("err_nohealth"), KeyboardType.LEAF, null, null, commandDTO.getUser(), true);
         if(commandDTO.getUser().getTokens() <= 0)
-            return new AnswerDTO(false, MessageBundle.getMessage("err_nomoney2"), KeyboardType.LEAF, null, null, commandDTO.getUser());
+            return new AnswerDTO(false, MessageBundle.getMessage("err_nomoney2"), KeyboardType.LEAF, null, null, commandDTO.getUser(), true);
+        if(battleService.isBattling(card, commandDTO.getUser()))
+            return new AnswerDTO(false, MessageBundle.getMessage("err_inbattle"), KeyboardType.LEAF, null, null, commandDTO.getUser(), true);
         return caveService.enterCaves(commandDTO,  card);
     }
 }

@@ -22,6 +22,6 @@ public class ShopInfoCommand implements Command {
     @Override
     public AnswerDTO execute(CommandDTO commandDTO) {
         User user = commandDTO.getUser();
-        return new AnswerDTO(true, messageFormatter.getShopInfo(), KeyboardType.LEAF, null, null, user);
+        return new AnswerDTO(true, messageFormatter.getShopInfo(), KeyboardType.LEAF, null, null, user, true);
     }
 }

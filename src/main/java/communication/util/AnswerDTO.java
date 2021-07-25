@@ -4,7 +4,6 @@ import communication.keyboard.KeyboardType;
 import data.User;
 import game.entity.CardName;
 import org.jvnet.hk2.annotations.Optional;
-import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 
 import java.io.File;
 import java.util.Map;
@@ -20,25 +19,32 @@ public class AnswerDTO {
     File image;
     Map<String, String> buttons;
     CardName cardName;
-    final User user;
+    User user;
+    final boolean mustSend;
 
     /**
      * Constructor
-     *  @param isSuccessful is the answer successful
+     * @param isSuccessful is the answer successful
      * @param message      answer text
      * @param keyboardType keyboard type for a Telegram messenger
      * @param image        image that needs to be sent as well
      * @param buttons      buttons for a custom keyboard(if needed)
      * @param user
+     * @param mustSend
      */
 
-    public AnswerDTO(boolean isSuccessful, String message, KeyboardType keyboardType, @Optional File image, @Optional Map<String, String> buttons, User user) {
+    public AnswerDTO(boolean isSuccessful, String message, KeyboardType keyboardType, @Optional File image, @Optional Map<String, String> buttons, User user, boolean mustSend) {
         this.isSuccessful = isSuccessful;
         this.message = message;
         this.keyboardType = keyboardType;
         this.image = image;
         this.buttons = buttons;
         this.user = user;
+        this.mustSend = mustSend;
+    }
+
+    public AnswerDTO(boolean mustSend) {
+        this.mustSend = mustSend;
     }
 
     public CardName getCardName() {
@@ -104,6 +110,10 @@ public class AnswerDTO {
                 ", image=" + image +
                 ", cardName=" + cardName +
                 '}';
+    }
+
+    public boolean isMustSend() {
+        return mustSend;
     }
 
     public User getUser() {

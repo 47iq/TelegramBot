@@ -27,8 +27,8 @@ public class DailyFreeTokensCommand implements Command {
     public AnswerDTO execute(CommandDTO commandDTO) {
         User user = commandDTO.getUser();
         if(userService.tryGetDailyBonus(commandDTO.getUser()))
-            return new AnswerDTO(true, MessageBundle.getMessage("info_success") + "\n" + messageFormatter.getShopInfo(commandDTO.getUser()), KeyboardType.SHOP, null, null, user);
+            return new AnswerDTO(true, MessageBundle.getMessage("info_success") + "\n" + messageFormatter.getShopInfo(commandDTO.getUser()), KeyboardType.SHOP, null, null, user, true);
         else
-            return new AnswerDTO(true, MessageBundle.getMessage("err_notyet")+ "\n" + messageFormatter.getShopInfo(commandDTO.getUser()), KeyboardType.SHOP, null, null, user);
+            return new AnswerDTO(true, MessageBundle.getMessage("err_notyet")+ "\n" + messageFormatter.getShopInfo(commandDTO.getUser()), KeyboardType.SHOP, null, null, user, true);
     }
 }

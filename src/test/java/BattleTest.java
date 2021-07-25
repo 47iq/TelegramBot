@@ -4,7 +4,6 @@ import game.service.BattleService;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -40,7 +39,7 @@ public class BattleTest extends Assert {
         System.err.println("Running defined battle tests:");
         for(var test: tests) {
             System.out.print(test.first + " " + test.second);
-            battleService.completeBattle(new StringBuilder(), test.first, test.second);
+            battleService.completeFastBattle(new StringBuilder(), test.first, test.second);
             System.out.println(" has been completed");
         }
         runRandomTests();
@@ -61,7 +60,7 @@ public class BattleTest extends Assert {
             Card first = new Card(CardName.valueOf(type1), hp1, attack1, defence1);
             Card second = new Card(CardName.valueOf(type2), hp2, attack2, defence2);
             System.out.print(first + " " + second);
-            battleService.completeBattle(new StringBuilder(), first, second);
+            battleService.completeFastBattle(new StringBuilder(), first, second);
             System.out.println(" has been completed");
         }
     }

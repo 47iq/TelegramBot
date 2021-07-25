@@ -13,7 +13,7 @@ public class MessageBundle {
 
     private static AppMode appMode = AppMode.TEST;
 
-    private static MessageMode messageMode = MessageMode.ITMO;
+    private static MessageMode messageMode = MessageMode.SCH9;
 
     /**
      * Method that gets message from a messages resource bundle by key.

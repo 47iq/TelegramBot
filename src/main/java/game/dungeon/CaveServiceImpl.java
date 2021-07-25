@@ -58,16 +58,18 @@ public class CaveServiceImpl implements CaveService {
     public AnswerDTO leaveCaves(CommandDTO commandDTO) {
         User user = commandDTO.getUser();
         cardMap.remove(commandDTO.getUser());
-        return new AnswerDTO(true, null, KeyboardType.CLASSIC, null, null, user);
+        return new AnswerDTO(true, null, KeyboardType.CLASSIC, null, null, user, true);
     }
 
     @Override
     public AnswerDTO enterNextCave(CommandDTO commandDTO) {
         User user = commandDTO.getUser();
+        if(battleService.isBattling(cardMap.get(user), user))
+            return new AnswerDTO(false, MessageBundle.getMessage("err_inbattle"), KeyboardType.LEAF, null, null, commandDTO.getUser(), true);
         if (!cardMap.containsKey(commandDTO.getUser()))
-            return new AnswerDTO(true, MessageBundle.getMessage("err_notincaves"), KeyboardType.LEAF, null, null, user);
+            return new AnswerDTO(true, MessageBundle.getMessage("err_notincaves"), KeyboardType.LEAF, null, null, user, true);
         if (cardMap.get(commandDTO.getUser()).getHealth() <= 0)
-            return new AnswerDTO(false, MessageBundle.getMessage("err_nohealth"), KeyboardType.LEAF, null, null, user);
+            return new AnswerDTO(false, MessageBundle.getMessage("err_nohealth"), KeyboardType.LEAF, null, null, user, true);
         Cave cave = getCave();
         if (cave instanceof LevelUpCave && cardMap.get(commandDTO.getUser()).getLevel() >= 10)
             cave = new ArmorCave();

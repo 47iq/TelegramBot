@@ -22,8 +22,8 @@ public class BuyLootBoxCommand implements Command {
     public AnswerDTO execute(CommandDTO commandDTO) {
         User user = commandDTO.getUser();
         if(cardService.getAllCardsOf(user).size() > Long.parseLong(MessageBundle.getSetting("MAX_CARDS")))
-            return new AnswerDTO(true, MessageBundle.getMessage("err_maxcards"), KeyboardType.SHOP, null, null, user);
+            return new AnswerDTO(true, MessageBundle.getMessage("err_maxcards"), KeyboardType.SHOP, null, null, user, true);
         else
-            return new AnswerDTO(true, messageFormatter.getBuyLootboxInfo(user), KeyboardType.BUY_BOX, null, null, user);
+            return new AnswerDTO(true, messageFormatter.getBuyLootboxInfo(user), KeyboardType.BUY_BOX, null, null, user, true);
     }
 }

@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.Objects;
 
 /**
  * User object
@@ -130,5 +131,13 @@ public class User {
 
     public void setTotalWins(int totalWins) {
         this.totalWins = totalWins;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(UID, user.UID);
     }
 }

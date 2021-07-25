@@ -52,7 +52,7 @@ public class CommandFactoryImpl implements CommandFactory {
                 return adminCommands.get(commandDTO.getMessageText()).execute(commandDTO);
             else {
                 LOGGER.info("Unknown command got from " + commandDTO.getUser().getUID() + ": "+ commandDTO.getMessageText() + " " + commandDTO.getArg());
-                return new AnswerDTO(false, MessageBundle.getMessage("err_unk_command"), KeyboardType.CLASSIC, null, null, commandDTO.getUser());
+                return new AnswerDTO(false, MessageBundle.getMessage("err_unk_command"), KeyboardType.CLASSIC, null, null, commandDTO.getUser(), true);
             }
         }
         if(achievementService.getUsersAchievements(commandDTO.getUser()) == null)

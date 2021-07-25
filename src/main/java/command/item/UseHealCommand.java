@@ -4,6 +4,7 @@ import command.Command;
 import data.CardService;
 import game.entity.Card;
 import communication.keyboard.KeyboardType;
+import game.service.BattleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import communication.util.AnswerDTO;
@@ -28,14 +29,19 @@ public class UseHealCommand implements Command {
     CardService cardService;
     @Autowired
     MessageFormatter messageFormatter;
+    @Autowired
+    BattleService battleService;
 
     @Override
     public AnswerDTO execute(CommandDTO commandDTO) {
         List<Card> cardList = cardService.getAllCardsOf(commandDTO.getUser());
         Map<String, String> cardReferences = new HashMap<>();
-        cardList.stream().filter(x -> x.getHealth() < x.getMaxHealth()).forEach(x -> cardReferences.put("/heal_card." + x.getUID(),
+        cardList.stream()
+                .filter(x -> x.getHealth() < x.getMaxHealth())
+                .filter(x -> !battleService.isBattling(x, commandDTO.getUser()))
+                .forEach(x -> cardReferences.put("/heal_card." + x.getUID(),
                 messageFormatter.getCardViewMessage(x) + " " + messageFormatter.getHealthMessage(x)));
         cardReferences.put("/help", MessageBundle.getMessage("back"));
-        return new AnswerDTO(true, MessageBundle.getMessage("ask_whatcard"), KeyboardType.CUSTOM, null, cardReferences, commandDTO.getUser());
+        return new AnswerDTO(true, MessageBundle.getMessage("ask_whatcard"), KeyboardType.CUSTOM, null, cardReferences, commandDTO.getUser(), true);
     }
 }

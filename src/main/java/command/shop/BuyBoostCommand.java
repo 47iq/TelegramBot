@@ -32,12 +32,12 @@ public class BuyBoostCommand implements Command {
         User user = commandDTO.getUser();
         long price = Long.parseLong(MessageBundle.getSetting("BOOST_COST"));
         if(userService.getBalance(commandDTO.getUser()) < price)
-            return new AnswerDTO(true, MessageBundle.getMessage("err_nomoney"), KeyboardType.SHOP, null, null, user);
+            return new AnswerDTO(true, MessageBundle.getMessage("err_nomoney"), KeyboardType.SHOP, null, null, user, true);
         else {
             userService.lowerBalance(commandDTO.getUser(), price);
             userService.addBoost(commandDTO.getUser());
             return new AnswerDTO(true, MessageBundle.getMessage("info_success") + "\n" + messageFormatter.getShopInfo(commandDTO.getUser()),
-                    KeyboardType.SHOP, null, null, user);
+                    KeyboardType.SHOP, null, null, user, true);
         }
     }
 }

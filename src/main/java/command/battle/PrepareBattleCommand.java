@@ -33,6 +33,6 @@ public class PrepareBattleCommand implements Command {
         List<Card> cardList = cardService.getAllCardsOf(commandDTO.getUser());
         Map<String, String> cardReferences = new HashMap<>();
         cardList.stream().filter(x  -> x.getHealth() > 0).forEach(x -> cardReferences.put("/battle_card." + x.getUID(), messageFormatter.getCardViewMessage(x)));cardReferences.put("/help", MessageBundle.getMessage("back"));
-        return new AnswerDTO(true, MessageBundle.getMessage("ask_whatcard"), KeyboardType.CUSTOM, null, cardReferences, commandDTO.getUser());
+        return new AnswerDTO(true, MessageBundle.getMessage("ask_whatcard"), KeyboardType.CUSTOM, null, cardReferences, commandDTO.getUser(), true);
     }
 }

@@ -23,6 +23,6 @@ public class InfoCommand implements Command {
     @Override
     public AnswerDTO execute(CommandDTO commandDTO) {
         User user = commandDTO.getUser();
-        return new AnswerDTO(true, messageFormatter.getMainMenuInfo(), KeyboardType.LEAF, null, null, commandDTO.getUser());
+        return new AnswerDTO(true, messageFormatter.getMainMenuInfo(), KeyboardType.LEAF, null, null, commandDTO.getUser(), true);
     }
 }

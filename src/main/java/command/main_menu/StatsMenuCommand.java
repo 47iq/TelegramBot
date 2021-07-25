@@ -16,6 +16,6 @@ public class StatsMenuCommand implements Command {
     @Override
     public AnswerDTO execute(CommandDTO commandDTO) {
         User user = commandDTO.getUser();
-        return new AnswerDTO(true, null, KeyboardType.STATS, null, null, user);
+        return new AnswerDTO(true, null, KeyboardType.STATS, null, null, user, true);
     }
 }

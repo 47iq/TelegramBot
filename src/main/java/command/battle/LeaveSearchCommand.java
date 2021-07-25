@@ -23,6 +23,6 @@ public class LeaveSearchCommand implements Command {
     @Override
     public AnswerDTO execute(CommandDTO commandDTO) {
         battleService.leaveSearch(commandDTO.getUser());
-        return new AnswerDTO(true, MessageBundle.getMessage("info_success"), KeyboardType.LEAF, null, null, commandDTO.getUser());
+        return new AnswerDTO(true, MessageBundle.getMessage("info_success"), KeyboardType.LEAF, null, null, commandDTO.getUser(), true);
     }
 }

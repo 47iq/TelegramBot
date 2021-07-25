@@ -3,6 +3,7 @@ package util;
 import data.Achievement;
 import data.CardService;
 import data.UserService;
+import game.battle.AttackType;
 import game.dungeon.Enemy;
 import game.entity.Card;
 import game.entity.CardName;
@@ -438,5 +439,81 @@ public class MessageFormatterImpl implements MessageFormatter {
         result.append("\n");
         inProgress.forEach(x -> result.append(x).append("\n"));
         return result.toString();
+    }
+
+    @Override
+    public String getLeaveMessage() {
+        return MessageBundle.getMessage("info_leave");
+    }
+
+    @Override
+    public String getOpponentLeaveMessage() {
+        return MessageBundle.getMessage("info_opponent.leave");
+    }
+
+    @Override
+    public String getAttackChoiceMessage() {
+        return MessageBundle.getMessage("info_attack.choice");
+    }
+
+    @Override
+    public String getDefenceChoiceMessage() {
+        return MessageBundle.getMessage("info_defence.choice");
+    }
+
+    @Override
+    public String getBattleSelfKillMessage(Card attackCard) {
+        return MessageBundle.getMessage(attackCard.getName().name() + "_short") + " (id:" + attackCard.getUID() + ") " + " " + MessageBundle.getMessage("info_self.kill");
+    }
+
+    @Override
+    public String getBattleHealMessage(Card attackCard, double value) {
+        return MessageBundle.getMessage(attackCard.getName().name() + "_short") + " (id:" + attackCard.getUID() + ") " + " " + MessageBundle.getMessage("info_heals")
+                + " " + String.format("%.1f", value) + " " + MessageBundle.getMessage("info_health2") + "\n"
+                + MessageBundle.getMessage(attackCard.getName().name()) + " " + MessageBundle.getMessage("battle_nowhas")
+                + " " + String.format("%.1f", attackCard.getHealth());
+    }
+
+    @Override
+    public String getBattleBlockMessage(Card attackCard, Card defenceCard, AttackType attackType) {
+        return MessageBundle.getMessage(attackCard.getName().name() + "_short") + " (id:" + attackCard.getUID() + ") " + " " + MessageBundle.getMessage("info_blocks")
+                + " " + MessageBundle.getMessage(defenceCard.getName().name() + "_short") + " (id:" + attackCard.getUID() + ") ";
+    }
+
+    @Override
+    public String getBattleMissMessage(Card attackCard, AttackType attackType) {
+        return MessageBundle.getMessage(attackCard.getName().name() + "_short") + " (id:" + attackCard.getUID() + ") " + " " + MessageBundle.getMessage("info_misses")
+                + " " + MessageBundle.getMessage("miss_attack." + attackType.name().toLowerCase());
+    }
+
+    @Override
+    public String getBattleHitMessage(Card attackCard, Card defenceCard, double hitPower, AttackType attackType) {
+        String message = "";
+        if (attackCard.getName() != null)
+            message += MessageBundle.getMessage(attackCard.getName().name() + "_short") + " (id:" + attackCard.getUID() + ") ";
+        else
+            message += MessageBundle.getMessage("battle_enemy") + " ";
+        message += MessageBundle.getMessage("battle_deals") + " " + String.format("%.1f", hitPower) + " " + MessageBundle.getMessage("damage." + attackType.name().toLowerCase()) + "\n";
+        if (defenceCard.getName() != null)
+            message += MessageBundle.getMessage(defenceCard.getName().name() + "_short") + " (id:" + defenceCard.getUID() + ") ";
+        else
+            message += MessageBundle.getMessage("battle_enemy") + " ";
+        message += MessageBundle.getMessage("battle_nowhas") + " " + MessageBundle.getMessage("info_health2") + String.format("%.1f", defenceCard.getHealth()) + "\n";
+        return message;
+    }
+
+    @Override
+    public String getBattleCritMessage(AttackType attackType) {
+        return MessageBundle.getMessage("battle_crit");
+    }
+
+    @Override
+    public String getBattleNotifyMessage() {
+        return MessageBundle.getMessage("battle_notify");
+    }
+
+    @Override
+    public String getBattleQueueTimeoutMessage() {
+        return MessageBundle.getMessage("battle_queue.timeout");
     }
 }

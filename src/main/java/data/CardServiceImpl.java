@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-public class CardServiceImpl implements CardService{
+public class CardServiceImpl implements CardService {
     @Autowired
     CardDAO cardDAO;
 
@@ -37,7 +37,7 @@ public class CardServiceImpl implements CardService{
 
     @Override
     public boolean boost(Card card) {
-        if(card.getLevel() < Long.parseLong(MessageBundle.getSetting("MAX_LEVEL"))) {
+        if (card.getLevel() < Long.parseLong(MessageBundle.getSetting("MAX_LEVEL"))) {
             card.levelUp();
             cardDAO.update(card);
             return true;
@@ -62,19 +62,25 @@ public class CardServiceImpl implements CardService{
 
     @Override
     public boolean addXpLeveledUp(Card card, long xp) {
+        boolean res = false;
         Long needXpToLevelUp = card.calcNextLevelXp();
-        if(needXpToLevelUp  ==  null)
+        if (needXpToLevelUp == null)
             return false;
-        System.out.println(needXpToLevelUp  +  "  "  +  xp  +  "  "  +  card.getXp());
-        if(card.getXp() + xp >= needXpToLevelUp && card.getLevel() < Long.parseLong(MessageBundle.getSetting("MAX_LEVEL"))) {
-            card.levelUp();
-            card.setXp(card.getXp() - needXpToLevelUp + xp);
-            cardDAO.update(card);
-            return true;
-        } else {
-            card.setXp(card.getXp() + xp);
-            cardDAO.update(card);
-            return false;
+        card.setXp(card.getXp() + xp);
+        cardDAO.update(card);
+        while (true) {
+            //todo
+            needXpToLevelUp = card.calcNextLevelXp();
+            if (needXpToLevelUp == null)
+                break;
+            if (card.getXp() >= needXpToLevelUp && card.getLevel() < Long.parseLong(MessageBundle.getSetting("MAX_LEVEL"))) {
+                card.levelUp();
+                card.setXp(card.getXp() - needXpToLevelUp);
+                cardDAO.update(card);
+                res = true;
+            } else
+                break;
         }
+        return res;
     }
 }

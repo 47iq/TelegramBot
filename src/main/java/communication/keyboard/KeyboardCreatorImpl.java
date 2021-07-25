@@ -2,17 +2,17 @@ package communication.keyboard;
 
 import data.User;
 import data.UserService;
+import game.battle.AttackType;
+import game.battle.DefenceType;
 import game.dungeon.CaveService;
+import game.service.BattleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import util.MessageBundle;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Component
 public class KeyboardCreatorImpl implements KeyboardCreator {
@@ -21,6 +21,8 @@ public class KeyboardCreatorImpl implements KeyboardCreator {
     UserService userService;
     @Autowired
     CaveService caveService;
+    @Autowired
+    BattleService battleService;
 
     private final int BUTTONS_IN_ROW = 2;
     private final int MAX_ROWS = 5;
@@ -41,7 +43,7 @@ public class KeyboardCreatorImpl implements KeyboardCreator {
             case SHOP -> getShopKeyboard();
             case LEAF -> getLeafKeyboard();
             case ITEM -> getItemKeyboard(user);
-            case BATTLE -> getBattleKeyboard();
+            case BATTLE -> getBattleKeyboard(user);
             case STATS -> getStatsKeyBoard();
             case DUNGEON -> getDungeonKeyboard();
             case DUNGEON_LEAF -> getDungeonLeafKeyboard(user);
@@ -50,8 +52,29 @@ public class KeyboardCreatorImpl implements KeyboardCreator {
             case BUY_BOX -> getBuyBoxKeyboard();
             case BUY_ITEM -> getBuyItemKeyboard();
             case ADMIN -> getAdminKeyboard();
+            case BATTLE_ATTACK -> getAttackKeyboard();
+            case BATTLE_DEFENCE -> getDefenceKeyboard();
+            case SEARCH_LEAF -> getSearchLeafKeyboard();
             default -> null;
         };
+    }
+
+    private InlineKeyboardMarkup getSearchLeafKeyboard() {
+        Map<String, String> menu = new HashMap<>();
+        menu.put("/leave_search", MessageBundle.getMessage("info_leavesearch"));
+        return getKeyboard(menu);
+    }
+
+    private InlineKeyboardMarkup getDefenceKeyboard() {
+        Map<String, String> menu = new HashMap<>();
+        Arrays.stream(DefenceType.values()).forEach(x-> menu.put("/set_defence." + x.name().toLowerCase(), MessageBundle.getMessage("info_defence." + x.name().toLowerCase())));
+        return getKeyboard(menu);
+    }
+
+    private InlineKeyboardMarkup getAttackKeyboard() {
+        Map<String, String> menu = new HashMap<>();
+        Arrays.stream(AttackType.values()).forEach(x-> menu.put("/set_attack." + x.name().toLowerCase(), MessageBundle.getMessage("info_attack." + x.name().toLowerCase())));
+        return getKeyboard(menu);
     }
 
     private InlineKeyboardMarkup getAdminKeyboard() {
@@ -160,11 +183,13 @@ public class KeyboardCreatorImpl implements KeyboardCreator {
      * @see command.battle.BattleMenuCommand
      */
 
-    private InlineKeyboardMarkup getBattleKeyboard() {
+    private InlineKeyboardMarkup getBattleKeyboard(User user) {
         Map<String, String> menu = new HashMap<>();
-        menu.put("/battle", MessageBundle.getMessage("info_battle"));
         menu.put("/battle_info", MessageBundle.getMessage("/info"));
-        menu.put("/leave_search", MessageBundle.getMessage("info_leavesearch"));
+        if(battleService.isBattling(user))
+            menu.put("/leave_search", MessageBundle.getMessage("info_leavesearch"));
+        else
+            menu.put("/battle", MessageBundle.getMessage("info_battle"));
         menu.put("/help", MessageBundle.getMessage("back"));
         return getKeyboard(menu);
     }

@@ -24,9 +24,9 @@ public class LevelUpCave implements Cave{
         if(card.getLevel() < 10) {
             card.levelUp();
             cardService.save(card);
-            return new AnswerDTO(true, messageFormatter.getLevelUpCaveMessage((long) (Math.random()*4), card), KeyboardType.DUNGEON, null, null, user);
+            return new AnswerDTO(true, messageFormatter.getLevelUpCaveMessage((long) (Math.random()*4), card), KeyboardType.DUNGEON, null, null, user, true);
         }  else {
-            return new AnswerDTO(true, messageFormatter.getLevelUpCaveMaxLevelMessage((long) (Math.random()*4), card), KeyboardType.DUNGEON, null, null, user);
+            return new AnswerDTO(true, messageFormatter.getLevelUpCaveMaxLevelMessage((long) (Math.random()*4), card), KeyboardType.DUNGEON, null, null, user, true);
         }
     }
 }

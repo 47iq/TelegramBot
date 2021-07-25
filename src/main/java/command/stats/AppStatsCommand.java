@@ -33,6 +33,6 @@ public class AppStatsCommand implements Command {
         User user = commandDTO.getUser();
         List<User> userList = userService.getAllUsers();
         List<Card> cardList = cardService.getAllCards();
-        return new AnswerDTO(true, messageFormatter.getAppStats(userList, cardList), KeyboardType.LEAF, null, null, user);
+        return new AnswerDTO(true, messageFormatter.getAppStats(userList, cardList), KeyboardType.LEAF, null, null, user, true);
     }
 }

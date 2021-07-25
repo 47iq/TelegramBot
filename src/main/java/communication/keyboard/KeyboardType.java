@@ -18,4 +18,7 @@ public enum KeyboardType {
     BUY_ITEM,
     BUY_BOX,
     ADMIN,
+    BATTLE_ATTACK,
+    BATTLE_DEFENCE,
+    SEARCH_LEAF
 }

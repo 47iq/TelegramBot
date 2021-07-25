@@ -19,6 +19,6 @@ public class ItemInfoCommand implements Command {
     MessageFormatter messageFormatter;
     @Override
     public AnswerDTO execute(CommandDTO commandDTO) {
-        return new AnswerDTO(true, messageFormatter.getItemInfo(), KeyboardType.LEAF, null, null, commandDTO.getUser());
+        return new AnswerDTO(true, messageFormatter.getItemInfo(), KeyboardType.LEAF, null, null, commandDTO.getUser(), true);
     }
 }

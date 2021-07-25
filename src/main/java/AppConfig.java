@@ -19,6 +19,8 @@ import command.tutorial.StartShopCommand;
 import communication.connection.*;
 import communication.notification.NotificationService;
 import communication.notification.NotificationServiceImpl;
+import game.battle.BattleXpCalculator;
+import game.battle.BattleXpCalculatorImpl;
 import util.MessageBundle;
 import data.*;
 import communication.keyboard.KeyboardCreator;
@@ -172,6 +174,8 @@ public class AppConfig {
         commandMap.put("/buy_item", getBuyItemCommand());
         commandMap.put("/buy_box",  getBuyBoxCommand());
         commandMap.put("/achievements",  getAchievementsCommand());
+        commandMap.put("/set_attack", getSetAttackCommand());
+        commandMap.put("/set_defence",  getSetDefenceCommand());
         Map<String, Command> adminCommands = new HashMap<>();
         adminCommands.put("/add_tokens", getAddTokensCommand());
         adminCommands.put("/notify_all", getNotifyAllCommand());
@@ -179,6 +183,18 @@ public class AppConfig {
         adminCommands.put("/all_users", getUsersStatsCommand());
         adminCommands.put("/admin", getAdminCommand());
         return new CommandFactoryImpl(commandMap, adminCommands);
+    }
+
+    @Bean
+    @Scope("singleton")
+    public Command getSetAttackCommand() {
+        return new BattleSetAttackCommand();
+    }
+
+    @Bean
+    @Scope("singleton")
+    public Command getSetDefenceCommand() {
+        return new BattleSetDefenceCommand();
     }
 
     @Bean

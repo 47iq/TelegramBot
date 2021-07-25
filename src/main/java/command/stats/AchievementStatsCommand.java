@@ -20,6 +20,6 @@ public class AchievementStatsCommand implements Command {
     @Override
     public AnswerDTO execute(CommandDTO commandDTO) {
         User user = commandDTO.getUser();
-        return new AnswerDTO(true, messageFormatter.getUserAchievementsMessage(achievementService.getUsersAchievements(user)), KeyboardType.LEAF, null, null, user);
+        return new AnswerDTO(true, messageFormatter.getUserAchievementsMessage(achievementService.getUsersAchievements(user)), KeyboardType.LEAF, null, null, user, true);
     }
 }

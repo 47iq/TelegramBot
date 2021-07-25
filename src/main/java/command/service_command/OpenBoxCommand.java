@@ -46,23 +46,23 @@ public class OpenBoxCommand {
             Card card = lootBox.open(type, commandDTO.getUser());
             User user = commandDTO.getUser();
             if(!type.equals(LootBoxType.SUPER_RARE) && cardService.getAllCardsOf(user).size() > Long.parseLong(MessageBundle.getSetting("MAX_CARDS")))
-                return new AnswerDTO(true, MessageBundle.getMessage("err_maxcards"), KeyboardType.SHOP, null, null, user);
+                return new AnswerDTO(true, MessageBundle.getMessage("err_maxcards"), KeyboardType.SHOP, null, null, user, true);
             if (cardDAO.create(card)) {
                 LOGGER.info(commandDTO.getUser().getUID() + " gets: " + card.getType() + " "+card.getName() + ": "
                         + card.getMaxHealth() + ", " + card.getAttack() + ", " + card.getDefence());
                 AnswerDTO answerDTO = new AnswerDTO(true,
                         MessageBundle.getMessage("info_youget") + "\n" + messageFormatter.getCardMessage(card),
-                        KeyboardType.LEAF, imageParser.getImage(new ImageIdentifier(card.getName(), card.getType())), null, commandDTO.getUser());
+                        KeyboardType.LEAF, imageParser.getImage(new ImageIdentifier(card.getName(), card.getType())), null, commandDTO.getUser(), true);
                 answerDTO.setCardName(card.getName());
                 achievementService.addCardsNumber(user);
                 return answerDTO;
             } else {
                 LOGGER.error("Error while opening a lootbox");
-                return new AnswerDTO(false, MessageBundle.getMessage("err_unk"), KeyboardType.CLASSIC, null, null, commandDTO.getUser());
+                return new AnswerDTO(false, MessageBundle.getMessage("err_unk"), KeyboardType.CLASSIC, null, null, commandDTO.getUser(), true);
             }
         } catch (Exception e) {
             LOGGER.error("Error while opening a lootbox " + e.getClass());
-            return new AnswerDTO(false, MessageBundle.getMessage("err_unk"), KeyboardType.CLASSIC, null, null, commandDTO.getUser());
+            return new AnswerDTO(false, MessageBundle.getMessage("err_unk"), KeyboardType.CLASSIC, null, null, commandDTO.getUser(), true);
         }
     }
 }

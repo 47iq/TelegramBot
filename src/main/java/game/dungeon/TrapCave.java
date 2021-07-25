@@ -31,8 +31,8 @@ public class TrapCave implements Cave {
         card.setHealth(Math.max(card.getHealth() - lostHealth, 0));
         cardService.save(card);
         if(card.getHealth()  >  0)
-            return new AnswerDTO(true, messageFormatter.getTrapCaveMessage((long) (Math.random()*4), lostHealth, card), KeyboardType.DUNGEON, null, null, user);
+            return new AnswerDTO(true, messageFormatter.getTrapCaveMessage((long) (Math.random()*4), lostHealth, card), KeyboardType.DUNGEON, null, null, user, true);
         else
-            return new AnswerDTO(true, messageFormatter.getTrapCaveDeadMessage((long) (Math.random()*4),lostHealth, card), KeyboardType.DUNGEON_LEAF, null, null, user);
+            return new AnswerDTO(true, messageFormatter.getTrapCaveDeadMessage((long) (Math.random()*4),lostHealth, card), KeyboardType.DUNGEON_LEAF, null, null, user, true);
     }
 }

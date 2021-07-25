@@ -29,6 +29,6 @@ public class LootCave implements Cave {
                                    MessageFormatter messageFormatter, CardService cardService, UserService userService, OpenSuperRareBoxCommand command, WeightedRandomizer<EnemyType> enemyWeightedRandomizer) {
         User user = commandDTO.getUser();
         userService.higherBalance(commandDTO.getUser(), tokens);
-        return new AnswerDTO(true, messageFormatter.getLootCaveMessage((long) (Math.random()*4), tokens), KeyboardType.DUNGEON, null, null, user);
+        return new AnswerDTO(true, messageFormatter.getLootCaveMessage((long) (Math.random()*4), tokens), KeyboardType.DUNGEON, null, null, user, true);
     }
 }

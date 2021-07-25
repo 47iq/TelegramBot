@@ -4,6 +4,7 @@ import command.Command;
 import data.CardService;
 import data.UserService;
 import game.entity.Card;
+import game.service.BattleService;
 import game.service.ImageParser;
 import communication.keyboard.KeyboardType;
 import data.User;
@@ -30,6 +31,8 @@ public class BoostCardCommand implements Command {
     UserService userService;
     @Autowired
     ImageParser imageParser;
+    @Autowired
+    BattleService battleService;
 
     @Override
     public AnswerDTO execute(CommandDTO commandDTO) {
@@ -37,19 +40,21 @@ public class BoostCardCommand implements Command {
         User user = commandDTO.getUser();
         Card card = cardService.getMyCardById(id, user.getUID());
         if (card == null)
-            return new AnswerDTO(false, MessageBundle.getMessage("err_nocard"), KeyboardType.CLASSIC, null, null, user);
+            return new AnswerDTO(false, MessageBundle.getMessage("err_nocard"), KeyboardType.CLASSIC, null, null, user, true);
         else {
+            if(battleService.isBattling(card, user))
+                return new AnswerDTO(false, MessageBundle.getMessage("err_inbattle"), KeyboardType.LEAF, null, null, commandDTO.getUser(), true);
             if (userService.getBoostCount(user) < 1)
-                return new AnswerDTO(false, MessageBundle.getMessage("err_noboost"), KeyboardType.CLASSIC, null, null, user);
+                return new AnswerDTO(false, MessageBundle.getMessage("err_noboost"), KeyboardType.CLASSIC, null, null, user, true);
             if (card.getLevel() >= Long.parseLong(MessageBundle.getSetting("MAX_BOOST_LEVEL")))
-                return new AnswerDTO(false, MessageBundle.getMessage("err_maxboost"), KeyboardType.CLASSIC, null, null, user);
+                return new AnswerDTO(false, MessageBundle.getMessage("err_maxboost"), KeyboardType.CLASSIC, null, null, user, true);
             if(cardService.boost(card))  {
                 userService.spendBoost(user);
                 return new AnswerDTO(true, MessageBundle.getMessage("info_succboost") + "\n"
                         + messageFormatter.getCardMessage(card), KeyboardType.LEAF,
-                        imageParser.getImage(new ImageIdentifier(card.getName(), card.getType())), null, user);
+                        imageParser.getImage(new ImageIdentifier(card.getName(), card.getType())), null, user, true);
             } else {
-                return new AnswerDTO(false, MessageBundle.getMessage("err_maxlvl"), KeyboardType.LEAF, null, null, user);
+                return new AnswerDTO(false, MessageBundle.getMessage("err_maxlvl"), KeyboardType.LEAF, null, null, user, true);
             }
         }
     }

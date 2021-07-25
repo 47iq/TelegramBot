@@ -31,7 +31,7 @@ public class OpenProBoxCommand implements Command {
         User user = commandDTO.getUser();
         long price = Long.parseLong(MessageBundle.getSetting("PRO_COST"));
         if(userService.getBalance(commandDTO.getUser()) < price)
-            return new AnswerDTO(true, MessageBundle.getMessage("err_nomoney"), KeyboardType.SHOP, null, null, user);
+            return new AnswerDTO(true, MessageBundle.getMessage("err_nomoney"), KeyboardType.SHOP, null, null, user, true);
         else {
             userService.lowerBalance(commandDTO.getUser(), price);
             return openBoxCommand.execute(commandDTO, LootBoxType.PRO);

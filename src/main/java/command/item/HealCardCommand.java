@@ -4,6 +4,7 @@ import command.Command;
 import data.CardService;
 import data.UserService;
 import game.entity.Card;
+import game.service.BattleService;
 import game.service.ImageParser;
 import communication.keyboard.KeyboardType;
 import data.User;
@@ -30,6 +31,8 @@ public class HealCardCommand implements Command {
     UserService userService;
     @Autowired
     ImageParser imageParser;
+    @Autowired
+    BattleService battleService;
 
     @Override
     public AnswerDTO execute(CommandDTO commandDTO) {
@@ -37,15 +40,17 @@ public class HealCardCommand implements Command {
         User user = commandDTO.getUser();
         Card card = cardService.getMyCardById(id, user.getUID());
         if (card == null)
-            return new AnswerDTO(false, MessageBundle.getMessage("err_nocard"), KeyboardType.CLASSIC, null, null, user);
+            return new AnswerDTO(false, MessageBundle.getMessage("err_nocard"), KeyboardType.CLASSIC, null, null, user, true);
         else {
             if (userService.getHealCount(user) < 1)
-                return new AnswerDTO(false, MessageBundle.getMessage("err_noheal"), KeyboardType.CLASSIC, null, null, user);
+                return new AnswerDTO(false, MessageBundle.getMessage("err_noheal"), KeyboardType.CLASSIC, null, null, user, true);
+            if(battleService.isBattling(card, user))
+                return new AnswerDTO(false, MessageBundle.getMessage("err_inbattle"), KeyboardType.LEAF, null, null, commandDTO.getUser(), true);
             userService.spendHeal(user);
             cardService.heal(card);
             return new AnswerDTO(true, MessageBundle.getMessage("info_succheal") + "\n"
                     +  messageFormatter.getCardMessage(card), KeyboardType.LEAF,
-                    imageParser.getImage(new ImageIdentifier(card.getName(), card.getType())), null, user);
+                    imageParser.getImage(new ImageIdentifier(card.getName(), card.getType())), null, user, true);
         }
     }
 }

@@ -24,7 +24,7 @@ import communication.util.CommandDTO;
 @Component
 public class TelegramBot extends TelegramLongPollingBot {
 
-    private static final Logger LOGGER = LogManager.getLogger(PSQLUserDAO.class);
+    private static final Logger LOGGER = LogManager.getLogger(TelegramBot.class);
 
     @Autowired
     private CommandFactory commandFactory;
@@ -122,6 +122,8 @@ public class TelegramBot extends TelegramLongPollingBot {
     private void sendResponse(AnswerDTO answerDTO, long chatId, String username) {
         if (answerDTO.getImage() == null) {
             SendMessage sendMessage = textSenderService.getMessage(answerDTO);
+            if(sendMessage == null)
+                return;
             sendMessage.setChatId(String.valueOf(chatId));
             try {
                 this.execute(sendMessage);

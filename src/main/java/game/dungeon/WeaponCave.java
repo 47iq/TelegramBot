@@ -30,6 +30,6 @@ public class WeaponCave implements Cave{
         User user = commandDTO.getUser();
         card.setAttack(card.getAttack() + attackBoost);
         cardService.save(card);
-        return new AnswerDTO(true, messageFormatter.getWeaponCaveMessage((long) (Math.random()*4),attackBoost, card), KeyboardType.DUNGEON, null, null, user);
+        return new AnswerDTO(true, messageFormatter.getWeaponCaveMessage((long) (Math.random()*4),attackBoost, card), KeyboardType.DUNGEON, null, null, user, true);
     }
 }

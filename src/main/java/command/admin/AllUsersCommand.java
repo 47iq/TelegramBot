@@ -24,6 +24,6 @@ public class AllUsersCommand implements Command {
 
     @Override
     public AnswerDTO execute(CommandDTO commandDTO) {
-        return new AnswerDTO(true, messageFormatter.getUsersStats(userService.getAllUsers()), KeyboardType.LEAF, null, null, commandDTO.getUser());
+        return new AnswerDTO(true, messageFormatter.getUsersStats(userService.getAllUsers()), KeyboardType.LEAF, null, null, commandDTO.getUser(), true);
     }
 }

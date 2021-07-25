@@ -3,9 +3,10 @@ package game.service;
 import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
 import data.User;
+import game.battle.AttackType;
+import game.battle.DefenceType;
 import game.dungeon.Enemy;
 import game.entity.Card;
-import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 
 /**
  * Interface that provides methods for card battles
@@ -52,7 +53,16 @@ public interface BattleService {
      * @param battleHistory battle history message
      * @param firstCard     first card
      * @param secondCard    second card
-     * @return battle history message
      */
-    StringBuilder completeBattle(StringBuilder battleHistory, Card firstCard, Card secondCard);
+    void completeFastBattle(StringBuilder battleHistory, Card firstCard, Card secondCard);
+
+    boolean setAttackType(User user, AttackType attackType);
+
+    boolean setDefenceType(User user, DefenceType defenceType);
+
+    boolean isTurnReady(User user);
+
+    Card getBattlingCard(User user);
+
+    boolean isBattling(Card card, User user);
 }

@@ -30,6 +30,6 @@ public class ArmorCave implements Cave{
         User user = commandDTO.getUser();
         card.setDefence(card.getDefence() + armorBoost);
         cardService.save(card);
-        return new AnswerDTO(true, messageFormatter.getArmorCaveMessage((long) (Math.random()*4), armorBoost, card), KeyboardType.DUNGEON, null, null, user);
+        return new AnswerDTO(true, messageFormatter.getArmorCaveMessage((long) (Math.random()*4), armorBoost, card), KeyboardType.DUNGEON, null, null, user, true);
     }
 }

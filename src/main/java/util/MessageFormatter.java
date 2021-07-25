@@ -1,6 +1,7 @@
 package util;
 
 import data.Achievement;
+import game.battle.AttackType;
 import game.dungeon.Enemy;
 import game.entity.Card;
 import data.User;
@@ -408,4 +409,28 @@ public interface MessageFormatter {
     String getCardsAchievementMessage(User user);
 
     String getUserAchievementsMessage(Achievement usersAchievements);
+
+    String getLeaveMessage();
+
+    String getAttackChoiceMessage();
+
+    String getBattleHealMessage(Card attackCard, double value);
+
+    String getBattleBlockMessage(Card attackCard, Card defenceCard, AttackType attackType);
+
+    String getBattleMissMessage(Card attackCard, AttackType attackType);
+
+    String getBattleHitMessage(Card attackCard, Card defenceCard, double hitPower, AttackType attackType);
+
+    String getBattleCritMessage(AttackType attackType);
+
+    String getDefenceChoiceMessage();
+
+    String getBattleSelfKillMessage(Card attackCard);
+
+    String getOpponentLeaveMessage();
+
+    String getBattleNotifyMessage();
+
+    String getBattleQueueTimeoutMessage();
 }

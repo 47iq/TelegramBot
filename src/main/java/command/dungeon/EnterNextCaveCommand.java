@@ -23,7 +23,7 @@ public class EnterNextCaveCommand implements Command {
     @Override
     public AnswerDTO execute(CommandDTO commandDTO) {
         if(commandDTO.getUser().getTokens() <= 0)
-            return new AnswerDTO(false, MessageBundle.getMessage("err_nomoney2"), KeyboardType.LEAF, null, null, commandDTO.getUser());
+            return new AnswerDTO(false, MessageBundle.getMessage("err_nomoney2"), KeyboardType.LEAF, null, null, commandDTO.getUser(), true);
         return caveService.enterNextCave(commandDTO);
     }
 }
