@@ -153,6 +153,8 @@ public class BattleServiceImpl implements BattleService {
             Card secondCard = battleQueue.get(secondUser);
             battleQueue.remove(firstUser);
             battleQueue.remove(secondUser);
+            queueTimes.remove(firstUser);
+            queueTimes.remove(secondUser);
             //startBattle(firstUser, firstCard, secondUser, secondCard);
             startOnlineBattle(firstUser, firstCard, secondUser, secondCard);
         }).start();

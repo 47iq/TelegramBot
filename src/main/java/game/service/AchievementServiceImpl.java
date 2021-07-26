@@ -25,25 +25,25 @@ public class AchievementServiceImpl implements AchievementService{
     @Override
     public void addCave(User user) {
         if(achievementsEnabled() && achievementChecker.addCaveAndCheck(user))
-            notificationService.notify(user, getAnswer(messageFormatter.getCaveAchievementMessage(user), user), 1);
+            notificationService.notify(user, getAnswer(messageFormatter.getCaveAchievementMessage(user), user));
     }
 
     @Override
     public void addBattle(User user) {
         if(achievementsEnabled() && achievementChecker.addBattleAndCheck(user))
-            notificationService.notify(user, getAnswer(messageFormatter.getBattleAchievementMessage(user), user), 1);
+            notificationService.notify(user, getAnswer(messageFormatter.getBattleAchievementMessage(user), user));
     }
 
     @Override
     public void addBoxCave(User user) {
         if(achievementsEnabled() && achievementChecker.addBoxCaveAndCheck(user))
-            notificationService.notify(user, getAnswer(messageFormatter.getBoxCaveAchievementMessage(user), user), 1);
+            notificationService.notify(user, getAnswer(messageFormatter.getBoxCaveAchievementMessage(user), user));
     }
 
     @Override
     public void addCardsNumber(User user) {
         if(achievementsEnabled() && achievementChecker.addTotalCardsAndCheck(user))
-            notificationService.notify(user, getAnswer(messageFormatter.getCardsAchievementMessage(user), user), 1);
+            notificationService.notify(user, getAnswer(messageFormatter.getCardsAchievementMessage(user), user));
     }
 
     @Override

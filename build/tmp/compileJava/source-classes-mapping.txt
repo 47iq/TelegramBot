@@ -106,8 +106,9 @@ game/entity/LootBoxImpl.java
  game.entity.LootBoxImpl$1
 command/service_command/OpenBoxCommand.java
  command.service_command.OpenBoxCommand
-game/service/AchievementServiceImpl.java
- game.service.AchievementServiceImpl
+communication/keyboard/KeyboardCreatorImpl.java
+ communication.keyboard.KeyboardCreatorImpl
+ communication.keyboard.KeyboardCreatorImpl$1
 communication/connection/TextSenderServiceImpl.java
  communication.connection.TextSenderServiceImpl
 game/service/WeightedRandomizer.java
@@ -275,8 +276,8 @@ command/marketplace/CancelCommand.java
  command.marketplace.CancelCommand
 command/marketplace/ListCardCommand.java
  command.marketplace.ListCardCommand
-AppConfig.java
- AppConfig
+game/dungeon/LootCave.java
+ game.dungeon.LootCave
 command/item/UseBoostCommand.java
  command.item.UseBoostCommand
 game/dungeon/LootBoxCave.java
@@ -295,9 +296,8 @@ game/dungeon/HealCave.java
  game.dungeon.HealCave
 game/dungeon/LevelUpCave.java
  game.dungeon.LevelUpCave
-game/service/BattleServiceImpl.java
- game.service.BattleServiceImpl
- game.service.BattleServiceImpl$1
+game/dungeon/CaveServiceImpl.java
+ game.dungeon.CaveServiceImpl
 game/service/OccupationServiceImpl.java
  game.service.OccupationServiceImpl
 command/item/UseHealCommand.java
@@ -318,10 +318,10 @@ game/service/BattleNotificationPublisher.java
  game.service.BattleNotificationPublisher
 command/dungeon/EnterDungeonCardCommand.java
  command.dungeon.EnterDungeonCardCommand
-communication/keyboard/KeyboardCreatorImpl.java
- communication.keyboard.KeyboardCreatorImpl
- communication.keyboard.KeyboardCreatorImpl$1
-game/dungeon/LootCave.java
- game.dungeon.LootCave
-game/dungeon/CaveServiceImpl.java
- game.dungeon.CaveServiceImpl
+game/service/BattleServiceImpl.java
+ game.service.BattleServiceImpl
+ game.service.BattleServiceImpl$1
+AppConfig.java
+ AppConfig
+game/service/AchievementServiceImpl.java
+ game.service.AchievementServiceImpl
