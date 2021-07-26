@@ -5,6 +5,7 @@ import data.CardService;
 import game.entity.Card;
 import communication.keyboard.KeyboardType;
 import game.service.BattleService;
+import game.service.OccupationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import communication.util.AnswerDTO;
@@ -30,6 +31,8 @@ public class UseBoostCommand implements Command {
     MessageFormatter messageFormatter;
     @Autowired
     BattleService battleService;
+    @Autowired
+    OccupationService occupationService;
 
     @Override
     public AnswerDTO execute(CommandDTO commandDTO) {
@@ -37,7 +40,7 @@ public class UseBoostCommand implements Command {
         Map<String, String> cardReferences = new HashMap<>();
         cardList.stream()
                 .filter(x -> x.getLevel() < Long.parseLong(MessageBundle.getSetting("MAX_BOOST_LEVEL")))
-                .filter(x -> !battleService.isBattling(x, commandDTO.getUser()))
+                .filter(x -> !occupationService.isOccupied(x))
                 .forEach(x -> cardReferences.put("/boost_card." + x.getUID(), messageFormatter.getCardViewMessage(x)));
         cardReferences.put("/help", MessageBundle.getMessage("back"));
         return new AnswerDTO(true, MessageBundle.getMessage("ask_whatcard"), KeyboardType.CUSTOM, null, cardReferences, commandDTO.getUser(), true);

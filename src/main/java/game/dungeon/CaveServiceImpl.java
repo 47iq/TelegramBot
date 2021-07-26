@@ -5,6 +5,7 @@ import communication.keyboard.KeyboardType;
 import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
 import game.service.AchievementService;
+import game.service.OccupationService;
 import util.MessageBundle;
 import util.MessageFormatter;
 import data.*;
@@ -41,6 +42,8 @@ public class CaveServiceImpl implements CaveService {
     private WeightedRandomizer<EnemyType> enemyWeightedRandomizer;
     @Autowired
     private AchievementService achievementService;
+    @Autowired
+    OccupationService occupationService;
 
     private static final Logger LOGGER = LogManager.getLogger(CaveServiceImpl.class);
 
@@ -64,7 +67,7 @@ public class CaveServiceImpl implements CaveService {
     @Override
     public AnswerDTO enterNextCave(CommandDTO commandDTO) {
         User user = commandDTO.getUser();
-        if(battleService.isBattling(cardMap.get(user), user))
+        if(occupationService.isOccupied(cardMap.get(user)))
             return new AnswerDTO(false, MessageBundle.getMessage("err_inbattle"), KeyboardType.LEAF, null, null, commandDTO.getUser(), true);
         if (!cardMap.containsKey(commandDTO.getUser()))
             return new AnswerDTO(true, MessageBundle.getMessage("err_notincaves"), KeyboardType.LEAF, null, null, user, true);

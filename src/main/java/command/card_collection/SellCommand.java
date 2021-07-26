@@ -5,6 +5,7 @@ import data.CardService;
 import game.entity.Card;
 import communication.keyboard.KeyboardType;
 import game.service.BattleService;
+import game.service.OccupationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import communication.util.AnswerDTO;
@@ -31,13 +32,15 @@ public class SellCommand implements Command {
     MessageFormatter messageFormatter;
     @Autowired
     BattleService battleService;
+    @Autowired
+    OccupationService occupationService;
 
     @Override
     public AnswerDTO execute(CommandDTO commandDTO) {
         List<Card> cardList = cardService.getAllCardsOf(commandDTO.getUser());
         Map<String, String> cardReferences = new HashMap<>();
         cardList.stream()
-                .filter(x -> !battleService.isBattling(x, commandDTO.getUser()))
+                .filter(x -> !occupationService.isOccupied(x))
                 .forEach(x -> cardReferences.put("/sell_card." + x.getUID(), messageFormatter.getCardViewMessage2(x) + " " + messageFormatter.getPriceMessage(x)));
         cardReferences.put("/help", MessageBundle.getMessage("back"));
         return new AnswerDTO(true, MessageBundle.getMessage("ask_whatcard"), KeyboardType.CUSTOM, null, cardReferences, commandDTO.getUser(), true);

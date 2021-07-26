@@ -9,6 +9,7 @@ import game.service.ImageParser;
 import communication.keyboard.KeyboardType;
 import data.User;
 import game.entity.ImageIdentifier;
+import game.service.OccupationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import communication.util.*;
@@ -33,6 +34,8 @@ public class HealCardCommand implements Command {
     ImageParser imageParser;
     @Autowired
     BattleService battleService;
+    @Autowired
+    OccupationService occupationService;
 
     @Override
     public AnswerDTO execute(CommandDTO commandDTO) {
@@ -44,8 +47,8 @@ public class HealCardCommand implements Command {
         else {
             if (userService.getHealCount(user) < 1)
                 return new AnswerDTO(false, MessageBundle.getMessage("err_noheal"), KeyboardType.CLASSIC, null, null, user, true);
-            if(battleService.isBattling(card, user))
-                return new AnswerDTO(false, MessageBundle.getMessage("err_inbattle"), KeyboardType.LEAF, null, null, commandDTO.getUser(), true);
+            if(occupationService.isOccupied(card))
+                return new AnswerDTO(false, MessageBundle.getMessage("err_occupied"), KeyboardType.LEAF, null, null, commandDTO.getUser(), true);
             userService.spendHeal(user);
             cardService.heal(card);
             return new AnswerDTO(true, MessageBundle.getMessage("info_succheal") + "\n"

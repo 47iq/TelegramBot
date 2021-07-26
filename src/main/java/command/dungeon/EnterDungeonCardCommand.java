@@ -5,6 +5,7 @@ import communication.keyboard.KeyboardType;
 import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
 import game.service.BattleService;
+import game.service.OccupationService;
 import util.MessageBundle;
 import data.CardService;
 import game.dungeon.CaveService;
@@ -27,6 +28,8 @@ public class EnterDungeonCardCommand implements Command {
     CardService cardService;
     @Autowired
     BattleService battleService;
+    @Autowired
+    OccupationService occupationService;
 
     @Override
     public AnswerDTO execute(CommandDTO commandDTO) {
@@ -38,8 +41,8 @@ public class EnterDungeonCardCommand implements Command {
             return new AnswerDTO(false, MessageBundle.getMessage("err_nohealth"), KeyboardType.LEAF, null, null, commandDTO.getUser(), true);
         if(commandDTO.getUser().getTokens() <= 0)
             return new AnswerDTO(false, MessageBundle.getMessage("err_nomoney2"), KeyboardType.LEAF, null, null, commandDTO.getUser(), true);
-        if(battleService.isBattling(card, commandDTO.getUser()))
-            return new AnswerDTO(false, MessageBundle.getMessage("err_inbattle"), KeyboardType.LEAF, null, null, commandDTO.getUser(), true);
+        if(occupationService.isOccupied(card))
+            return new AnswerDTO(false, MessageBundle.getMessage("err_occupied"), KeyboardType.LEAF, null, null, commandDTO.getUser(), true);
         return caveService.enterCaves(commandDTO,  card);
     }
 }

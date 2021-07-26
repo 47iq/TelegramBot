@@ -536,7 +536,7 @@ public class MessageFormatterImpl implements MessageFormatter {
 
     @Override
     public String getMarketplaceSoldMessage(Card card) {
-        return MessageBundle.getMessage("info_marketplace.sold");
+        return MessageBundle.getMessage("info_marketplace.sold") + " " + getCardViewMessage(card);
     }
 
     @Override

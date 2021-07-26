@@ -1,7 +1,8 @@
 command/dungeon/DungeonInfoCommand.java
  command.dungeon.DungeonInfoCommand
-command/item/BoostCardCommand.java
- command.item.BoostCardCommand
+communication/keyboard/KeyboardCreatorImpl.java
+ communication.keyboard.KeyboardCreatorImpl
+ communication.keyboard.KeyboardCreatorImpl$1
 command/shop/BuyLootBoxCommand.java
  command.shop.BuyLootBoxCommand
 command/item/ItemInfoCommand.java
@@ -16,8 +17,8 @@ command/main_menu/StatsMenuCommand.java
  command.main_menu.StatsMenuCommand
 game/battle/BattleXpCalculatorImpl.java
  game.battle.BattleXpCalculatorImpl
-command/marketplace/ListCardCommand.java
- command.marketplace.ListCardCommand
+communication/connection/ImageSenderServiceImpl.java
+ communication.connection.ImageSenderServiceImpl
 data/CardDAO.java
  data.CardDAO
 command/MultiStepCommand.java
@@ -70,14 +71,14 @@ command/tutorial/StartShopCommand.java
  command.tutorial.StartShopCommand
 game/dungeon/LootCave.java
  game.dungeon.LootCave
-game/dungeon/CaveServiceImpl.java
- game.dungeon.CaveServiceImpl
+data/Achievement.java
+ data.Achievement
 game/battle/BattleState.java
  game.battle.BattleState
 game/service/ImageParser.java
  game.service.ImageParser
-util/MessageFormatterImpl.java
- util.MessageFormatterImpl
+command/item/UseBoostCommand.java
+ command.item.UseBoostCommand
 command/admin/AllUsersCommand.java
  command.admin.AllUsersCommand
 game/service/EventType.java
@@ -92,8 +93,8 @@ data/PSQLAchievementDAO.java
  data.PSQLAchievementDAO
 command/admin/AddTokensCommand.java
  command.admin.AddTokensCommand
-command/item/UseBoostCommand.java
- command.item.UseBoostCommand
+command/card_collection/CardViewCommand.java
+ command.card_collection.CardViewCommand
 game/dungeon/LootBoxCave.java
  game.dungeon.LootBoxCave
 data/CardService.java
@@ -128,8 +129,18 @@ game/service/AchievementService.java
  game.service.AchievementService
 game/service/BattleNotificationPublisher.java
  game.service.BattleNotificationPublisher
-command/dungeon/EnterDungeonCardCommand.java
- command.dungeon.EnterDungeonCardCommand
+game/entity/CardName.java
+ game.entity.CardName
+ game.entity.CardName$1
+ game.entity.CardName$10
+ game.entity.CardName$2
+ game.entity.CardName$3
+ game.entity.CardName$4
+ game.entity.CardName$5
+ game.entity.CardName$6
+ game.entity.CardName$7
+ game.entity.CardName$8
+ game.entity.CardName$9
 command/service_command/HelpCommand.java
  command.service_command.HelpCommand
 game/service/NotificationPublisher.java
@@ -146,8 +157,8 @@ util/MessageFormatter.java
  util.MessageFormatter
 command/battle/BattleInfoCommand.java
  command.battle.BattleInfoCommand
-command/card_collection/SellCardCommand.java
- command.card_collection.SellCardCommand
+data/PSQLMarketplaceDAO.java
+ data.PSQLMarketplaceDAO
 command/main_menu/ShopMenuCommand.java
  command.main_menu.ShopMenuCommand
 command/marketplace/BuyCardCommand.java
@@ -186,8 +197,8 @@ command/shop/BuyBeerCommand.java
  command.shop.BuyBeerCommand
 game/dungeon/TrapCave.java
  game.dungeon.TrapCave
-command/marketplace/CancelCardCommand.java
- command.marketplace.CancelCardCommand
+command/dungeon/EnterDungeonCardCommand.java
+ command.dungeon.EnterDungeonCardCommand
 command/battle/BattleSubscribeCommand.java
  command.battle.BattleSubscribeCommand
 data/AchievementDAO.java
@@ -205,12 +216,12 @@ game/entity/ImageIdentifier.java
  game.entity.ImageIdentifier
 util/AppMode.java
  util.AppMode
-command/card_collection/SellCommand.java
- command.card_collection.SellCommand
+data/PSQLCardDAO.java
+ data.PSQLCardDAO
 command/admin/GetUserStatsCommand.java
  command.admin.GetUserStatsCommand
-command/item/HealCardCommand.java
- command.item.HealCardCommand
+game/service/AchievementChecker.java
+ game.service.AchievementChecker
 command/main_menu/MyCardsMenuCommand.java
  command.main_menu.MyCardsMenuCommand
 command/admin/NotifyAllCommand.java
@@ -221,8 +232,8 @@ util/MessageBundle.java
  util.MessageBundle
 game/dungeon/RobberyCave.java
  game.dungeon.RobberyCave
-command/marketplace/ListCommand.java
- command.marketplace.ListCommand
+communication/connection/TelegramBot.java
+ communication.connection.TelegramBot
 command/shop/DailyFreeTokensCommand.java
  command.shop.DailyFreeTokensCommand
 command/shop/OpenAdvancedBoxCommand.java
@@ -269,8 +280,8 @@ command/marketplace/MarketplaceMenuCommand.java
  command.marketplace.MarketplaceMenuCommand
 game/entity/LootBox.java
  game.entity.LootBox
-Main.java
- Main
+command/tutorial/StartCommand.java
+ command.tutorial.StartCommand
 communication/connection/TextSenderService.java
  communication.connection.TextSenderService
 game/dungeon/BattleCave.java
@@ -278,46 +289,39 @@ game/dungeon/BattleCave.java
 data/UserServiceImpl.java
  data.UserServiceImpl
  data.UserServiceImpl$1
-command/dungeon/EnterDungeonCommand.java
- command.dungeon.EnterDungeonCommand
+command/card_collection/NavigateToCardCommand.java
+ command.card_collection.NavigateToCardCommand
 command/CommandFactory.java
  command.CommandFactory
 command/stats/MyStatsCommand.java
  command.stats.MyStatsCommand
-data/Achievement.java
- data.Achievement
+command/item/BoostCardCommand.java
+ command.item.BoostCardCommand
+game/dungeon/CaveServiceImpl.java
+ game.dungeon.CaveServiceImpl
 command/item/UseHealCommand.java
  command.item.UseHealCommand
-command/card_collection/CardViewCommand.java
- command.card_collection.CardViewCommand
-game/entity/CardName.java
- game.entity.CardName
- game.entity.CardName$1
- game.entity.CardName$10
- game.entity.CardName$2
- game.entity.CardName$3
- game.entity.CardName$4
- game.entity.CardName$5
- game.entity.CardName$6
- game.entity.CardName$7
- game.entity.CardName$8
- game.entity.CardName$9
-command/card_collection/NavigateToCardCommand.java
- command.card_collection.NavigateToCardCommand
-command/tutorial/StartCommand.java
- command.tutorial.StartCommand
-communication/connection/ImageSenderServiceImpl.java
- communication.connection.ImageSenderServiceImpl
-communication/connection/TelegramBot.java
- communication.connection.TelegramBot
-game/service/AchievementChecker.java
- game.service.AchievementChecker
-data/PSQLCardDAO.java
- data.PSQLCardDAO
-data/PSQLMarketplaceDAO.java
- data.PSQLMarketplaceDAO
+command/card_collection/SellCardCommand.java
+ command.card_collection.SellCardCommand
+command/card_collection/SellCommand.java
+ command.card_collection.SellCommand
+game/service/OccupationService.java
+ game.service.OccupationService
+command/item/HealCardCommand.java
+ command.item.HealCardCommand
+command/marketplace/ListCommand.java
+ command.marketplace.ListCommand
+game/service/OccupationServiceImpl.java
+ game.service.OccupationServiceImpl
+Main.java
+ Main
+command/dungeon/EnterDungeonCommand.java
+ command.dungeon.EnterDungeonCommand
+command/marketplace/CancelCardCommand.java
+ command.marketplace.CancelCardCommand
+util/MessageFormatterImpl.java
+ util.MessageFormatterImpl
+command/marketplace/ListCardCommand.java
+ command.marketplace.ListCardCommand
 AppConfig.java
  AppConfig
-communication/keyboard/KeyboardCreatorImpl.java
- communication.keyboard.KeyboardCreatorImpl
- communication.keyboard.KeyboardCreatorImpl$1

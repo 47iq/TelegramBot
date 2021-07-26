@@ -205,6 +205,12 @@ public class AppConfig {
 
     @Bean
     @Scope("singleton")
+    public OccupationService occupationService(){
+        return new OccupationServiceImpl();
+    }
+
+    @Bean
+    @Scope("singleton")
     public MarketplaceService marketplaceService(){
         return new MarketplaceServiceImpl();
     }

@@ -5,6 +5,7 @@ import communication.keyboard.KeyboardType;
 import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
 import game.service.BattleService;
+import game.service.OccupationService;
 import util.MessageBundle;
 import util.MessageFormatter;
 import data.CardService;
@@ -30,13 +31,15 @@ public class EnterDungeonCommand implements Command {
     MessageFormatter messageFormatter;
     @Autowired
     BattleService battleService;
+    @Autowired
+    OccupationService occupationService;
 
     @Override
     public AnswerDTO execute(CommandDTO commandDTO) {
         List<Card> cardList = cardService.getAllCardsOf(commandDTO.getUser());
         Map<String, String> cardReferences = new HashMap<>();
         cardList.stream().filter(x  -> x.getHealth() > 0)
-                .filter(x -> !battleService.isBattling(x, commandDTO.getUser()))
+                .filter(x -> !occupationService.isOccupied(x))
                 .forEach(x -> cardReferences.put("/dungeon_enter_card." + x.getUID(), messageFormatter.getCardViewMessage(x)));
         return new AnswerDTO(true, MessageBundle.getMessage("ask_whatcard"), KeyboardType.CUSTOM, null, cardReferences, commandDTO.getUser(), true);
     }

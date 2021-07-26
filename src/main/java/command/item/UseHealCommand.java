@@ -5,6 +5,7 @@ import data.CardService;
 import game.entity.Card;
 import communication.keyboard.KeyboardType;
 import game.service.BattleService;
+import game.service.OccupationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import communication.util.AnswerDTO;
@@ -31,6 +32,8 @@ public class UseHealCommand implements Command {
     MessageFormatter messageFormatter;
     @Autowired
     BattleService battleService;
+    @Autowired
+    OccupationService occupationService;
 
     @Override
     public AnswerDTO execute(CommandDTO commandDTO) {
@@ -38,7 +41,7 @@ public class UseHealCommand implements Command {
         Map<String, String> cardReferences = new HashMap<>();
         cardList.stream()
                 .filter(x -> x.getHealth() < x.getMaxHealth())
-                .filter(x -> !battleService.isBattling(x, commandDTO.getUser()))
+                .filter(x -> !occupationService.isOccupied(x))
                 .forEach(x -> cardReferences.put("/heal_card." + x.getUID(),
                 messageFormatter.getCardViewMessage(x) + " " + messageFormatter.getHealthMessage(x)));
         cardReferences.put("/help", MessageBundle.getMessage("back"));
