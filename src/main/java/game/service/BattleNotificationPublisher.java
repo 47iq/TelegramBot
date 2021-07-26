@@ -16,6 +16,8 @@ public class BattleNotificationPublisher implements NotificationPublisher {
     NotificationService notificationService;
     @Autowired
     UserService userService;
+    @Autowired
+    BattleService battleService;
 
     Map<EventType, Set<User>> subscribers = new HashMap<>();
 
@@ -49,7 +51,7 @@ public class BattleNotificationPublisher implements NotificationPublisher {
 
     @Override
     public void notify(EventType eventType, AnswerDTO answerDTO) {
-        subscribers.get(eventType).forEach(x -> notificationService.notify(x, answerDTO));
+        subscribers.get(eventType).stream().filter(x -> !battleService.isInSearch(x)).forEach(x -> notificationService.notify(x, answerDTO));
     }
 
     @Override

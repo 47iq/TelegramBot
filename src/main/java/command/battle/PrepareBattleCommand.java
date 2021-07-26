@@ -4,6 +4,7 @@ import command.Command;
 import communication.keyboard.KeyboardType;
 import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
+import game.service.OccupationService;
 import util.MessageBundle;
 import util.MessageFormatter;
 import data.CardService;
@@ -27,12 +28,14 @@ public class PrepareBattleCommand implements Command {
     CardService cardService;
     @Autowired
     MessageFormatter messageFormatter;
+    @Autowired
+    OccupationService occupationService;
 
     @Override
     public AnswerDTO execute(CommandDTO commandDTO) {
         List<Card> cardList = cardService.getAllCardsOf(commandDTO.getUser());
         Map<String, String> cardReferences = new HashMap<>();
-        cardList.stream().filter(x  -> x.getHealth() > 0).forEach(x -> cardReferences.put("/battle_card." + x.getUID(), messageFormatter.getCardViewMessage(x)));cardReferences.put("/help", MessageBundle.getMessage("back"));
+        cardList.stream().filter(x  -> x.getHealth() > 0 && !occupationService.isOccupied(x)).forEach(x -> cardReferences.put("/battle_card." + x.getUID(), messageFormatter.getCardViewMessage(x)));cardReferences.put("/help", MessageBundle.getMessage("back"));
         return new AnswerDTO(true, MessageBundle.getMessage("ask_whatcard"), KeyboardType.CUSTOM, null, cardReferences, commandDTO.getUser(), true);
     }
 }

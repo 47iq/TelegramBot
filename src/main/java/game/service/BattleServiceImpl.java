@@ -472,6 +472,11 @@ public class BattleServiceImpl implements BattleService {
     }
 
     @Override
+    public boolean isInSearch(User user) {
+        return battleQueue.containsKey(user);
+    }
+
+    @Override
     public boolean isBattling(Card card, User user) {
         return getBattlingCard(user) != null && getBattlingCard(user).equals(card);
     }

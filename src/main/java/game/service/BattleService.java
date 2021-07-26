@@ -65,4 +65,6 @@ public interface BattleService {
     Card getBattlingCard(User user);
 
     boolean isBattling(Card card, User user);
+
+    boolean isInSearch(User user);
 }

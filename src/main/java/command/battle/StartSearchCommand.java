@@ -4,6 +4,7 @@ import command.Command;
 import communication.keyboard.KeyboardType;
 import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
+import game.service.OccupationService;
 import util.MessageBundle;
 import data.CardService;
 import data.UserService;
@@ -27,17 +28,21 @@ public class StartSearchCommand implements Command {
     UserService userService;
     @Autowired
     BattleService battleService;
+    @Autowired
+    OccupationService occupationService;
 
     @Override
     public AnswerDTO execute(CommandDTO commandDTO) {
         long id = Long.parseLong(commandDTO.getArg());
         Card card = cardService.getMyCardById(id, commandDTO.getUser().getUID());
         if(card == null)
-            return new AnswerDTO(false, MessageBundle.getMessage("err_nocard"), KeyboardType.CLASSIC, null, null, commandDTO.getUser(), true);
+            return new AnswerDTO(false, MessageBundle.getMessage("err_nocard"), KeyboardType.LEAF, null, null, commandDTO.getUser(), true);
         if(card.getHealth()  <=  0)
-            return new AnswerDTO(false, MessageBundle.getMessage("err_dead"), KeyboardType.CLASSIC, null, null, commandDTO.getUser(), true);
+            return new AnswerDTO(false, MessageBundle.getMessage("err_dead"), KeyboardType.LEAF, null, null, commandDTO.getUser(), true);
         if(battleService.isBattling(commandDTO.getUser()))
-            return new AnswerDTO(false, MessageBundle.getMessage("err_insearch"), KeyboardType.CLASSIC, null, null, commandDTO.getUser(), true);
+            return new AnswerDTO(false, MessageBundle.getMessage("err_insearch"), KeyboardType.LEAF, null, null, commandDTO.getUser(), true);
+        if(occupationService.isOccupied(card))
+            return new AnswerDTO(false, MessageBundle.getMessage("err_occupied"), KeyboardType.LEAF, null, null, commandDTO.getUser(), true);
         battleService.startSearch(commandDTO.getUser(), card);
         return new AnswerDTO(true, MessageBundle.getMessage("info_startsearch"), KeyboardType.SEARCH_LEAF, null, null, commandDTO.getUser(), true);
     }
