@@ -3,6 +3,7 @@ import command.admin.*;
 import command.battle.*;
 import command.dungeon.*;
 import command.item.*;
+import command.marketplace.*;
 import command.stats.AchievementStatsCommand;
 import command.stats.AppStatsCommand;
 import command.card_collection.CardViewCommand;
@@ -21,6 +22,8 @@ import communication.notification.NotificationService;
 import communication.notification.NotificationServiceImpl;
 import game.battle.BattleXpCalculator;
 import game.battle.BattleXpCalculatorImpl;
+import game.marketplace.MarketplaceService;
+import game.marketplace.MarketplaceServiceImpl;
 import util.MessageBundle;
 import data.*;
 import communication.keyboard.KeyboardCreator;
@@ -178,6 +181,13 @@ public class AppConfig {
         commandMap.put("/set_defence",  getSetDefenceCommand());
         commandMap.put("/subscribe_battle", getBattleSubscribeCommand());
         commandMap.put("/unsubscribe_battle", getBattleUnsubscribeCommand());
+        commandMap.put("/buy",  getBuyCommand());
+        commandMap.put("/buy_card", getBuyCardCommand());
+        commandMap.put("/list",  getListCommand());
+        commandMap.put("/list_card", getListCardCommand());
+        commandMap.put("/cancel", getCancelCommand());
+        commandMap.put("/cancel_card", getCancelCardCommand());
+        commandMap.put("/marketplace", getMarketplaceCommand());
         Map<String, Command> adminCommands = new HashMap<>();
         adminCommands.put("/add_tokens", getAddTokensCommand());
         adminCommands.put("/notify_all", getNotifyAllCommand());
@@ -185,6 +195,60 @@ public class AppConfig {
         adminCommands.put("/all_users", getUsersStatsCommand());
         adminCommands.put("/admin", getAdminCommand());
         return new CommandFactoryImpl(commandMap, adminCommands);
+    }
+
+    @Bean
+    @Scope("singleton")
+    public MarketplaceDAO marketplaceDAO(){
+        return new PSQLMarketplaceDAO();
+    }
+
+    @Bean
+    @Scope("singleton")
+    public MarketplaceService marketplaceService(){
+        return new MarketplaceServiceImpl();
+    }
+
+    @Bean
+    @Scope("singleton")
+    public BuyCommand getBuyCommand(){
+        return new BuyCommand();
+    }
+
+    @Bean
+    @Scope("singleton")
+    public BuyCardCommand getBuyCardCommand(){
+        return new BuyCardCommand();
+    }
+
+    @Bean
+    @Scope("singleton")
+    public CancelCommand getCancelCommand(){
+        return new CancelCommand();
+    }
+
+    @Bean
+    @Scope("singleton")
+    public CancelCardCommand getCancelCardCommand(){
+        return new CancelCardCommand();
+    }
+
+    @Bean
+    @Scope("singleton")
+    public MarketplaceMenuCommand getMarketplaceCommand(){
+        return new MarketplaceMenuCommand();
+    }
+
+    @Bean
+    @Scope("singleton")
+    public ListCommand getListCommand(){
+        return new ListCommand();
+    }
+
+    @Bean
+    @Scope("singleton")
+    public ListCardCommand getListCardCommand(){
+        return new ListCardCommand();
     }
 
     @Bean

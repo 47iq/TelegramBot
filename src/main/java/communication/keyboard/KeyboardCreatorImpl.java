@@ -5,6 +5,7 @@ import data.UserService;
 import game.battle.AttackType;
 import game.battle.DefenceType;
 import game.dungeon.CaveService;
+import game.marketplace.MarketplaceService;
 import game.service.BattleService;
 import game.service.EventType;
 import game.service.NotificationPublisher;
@@ -27,6 +28,8 @@ public class KeyboardCreatorImpl implements KeyboardCreator {
     BattleService battleService;
     @Autowired
     NotificationPublisher notificationPublisher;
+    @Autowired
+    MarketplaceService marketplaceService;
 
     private final int BUTTONS_IN_ROW = 2;
     private final int MAX_ROWS = 5;
@@ -59,8 +62,19 @@ public class KeyboardCreatorImpl implements KeyboardCreator {
             case BATTLE_ATTACK -> getAttackKeyboard();
             case BATTLE_DEFENCE -> getDefenceKeyboard();
             case SEARCH_LEAF -> getSearchLeafKeyboard();
+            case MARKETPLACE -> getMarketplaceKeyboard(user);
             default -> null;
         };
+    }
+
+    private InlineKeyboardMarkup getMarketplaceKeyboard(User user) {
+        Map<String, String> menu = new HashMap<>();
+        if(marketplaceService.isPresent(user))
+            menu.put("/cancel", MessageBundle.getMessage("info_marketplace.cancel"));
+        menu.put("/list", MessageBundle.getMessage("info_marketplace.list"));
+        menu.put("/help", MessageBundle.getMessage("back"));
+        menu.put("/buy", MessageBundle.getMessage("info_marketplace.buy"));
+        return getKeyboard(menu);
     }
 
     private InlineKeyboardMarkup getSearchLeafKeyboard() {
@@ -247,6 +261,7 @@ public class KeyboardCreatorImpl implements KeyboardCreator {
         menu.put("/buy_box", MessageBundle.getMessage("info_buybox"));
         menu.put("/buy_item", MessageBundle.getMessage("info_buyitem"));
         menu.put("/free_tokens", MessageBundle.getMessage("info_freetokens"));
+        menu.put("/marketplace", MessageBundle.getMessage("/marketplace"));
         menu.put("/help", MessageBundle.getMessage("back"));
         menu.put("/shop_info", MessageBundle.getMessage("/info"));
         return getKeyboard(menu);

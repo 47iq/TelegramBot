@@ -83,4 +83,15 @@ public class CardServiceImpl implements CardService {
         }
         return res;
     }
+
+    @Override
+    public Card getById(long id) {
+        return cardDAO.getEntityById(id);
+    }
+
+    @Override
+    public void changeOwner(Card card, User user) {
+        card.setOwner(user.getUID());
+        cardDAO.update(card);
+    }
 }

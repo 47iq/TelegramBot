@@ -7,22 +7,20 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.service.ServiceRegistry;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistry;
 import util.MessageBundle;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.locks.ReentrantLock;
-import java.util.stream.Collectors;
 
-public class PSQLUserDAO implements UserDAO{
+public class PSQLMarketplaceDAO implements MarketplaceDAO{
 
     private Session session = null;
 
-    private static final Logger LOGGER = LogManager.getLogger(PSQLUserDAO.class);
+    private static final Logger LOGGER = LogManager.getLogger(PSQLMarketplaceDAO.class);
 
-    public PSQLUserDAO() {
+    public PSQLMarketplaceDAO() {
         connect();
     }
 
@@ -32,7 +30,7 @@ public class PSQLUserDAO implements UserDAO{
         try {
             try {
                 Configuration cfg =  new Configuration().configure(MessageBundle.getSetting("HIBERNATE_CONFIG")).
-                        addResource("user.hbm.xml");
+                        addResource("marketplace.hbm.xml");
                 serviceRegistry = new StandardServiceRegistryBuilder().
                         applySettings(cfg.getProperties()).build();
                 sessionFactory = cfg.buildSessionFactory(serviceRegistry);
@@ -43,45 +41,45 @@ public class PSQLUserDAO implements UserDAO{
             }
             session = sessionFactory.openSession();
             getAll();
-            LOGGER.info("Создание сессии для таблицы users");
+            LOGGER.info("Creating session for marketplace table");
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
 
     @Override
-    public List<User> getAll() {
+    public List<Merchandise> getAll() {
         try {
             Transaction transaction = session.beginTransaction();
-            List<User> users = session.createQuery("select p from "+ User.class.getSimpleName() + " p").list();
+            List<Merchandise> merchandises = session.createQuery("select p from "+ Merchandise.class.getSimpleName() + " p").list();
             transaction.commit();
-            return users;
+            return merchandises;
         } catch (Exception e) {
             e.printStackTrace();
-            LOGGER.error("ERROR while getting users: " + Arrays.toString(e.getStackTrace()));
+            LOGGER.error("ERROR while getting merchandises: " + Arrays.toString(e.getStackTrace()));
             return null;
         }
     }
 
     @Override
-    public User getEntityById(String UID) {
-        return getAll().stream().filter(x -> x.getUID().equals(UID)).findAny().orElse(null);
+    public Merchandise getEntityById(long UID) {
+        return getAll().stream().filter(x -> x.getCardUID() == UID).findAny().orElse(null);
     }
 
     @Override
-    public User update(User user) {
+    public Merchandise update(Merchandise merchandise) {
         Transaction transaction = session.beginTransaction();
-        session.update(user);
+        session.update(merchandise);
         transaction.commit();
-        return user;
+        return merchandise;
     }
 
     @Override
-    public boolean delete(String UID) {
+    public boolean delete(long UID) {
         try {
             Transaction transaction = session.beginTransaction();
-            User user = (User) session.load(User.class, UID);
-            session.delete(user);
+            Merchandise merchandise = session.load(Merchandise.class, UID);
+            session.delete(merchandise);
             transaction.commit();
             return true;
         } catch (Exception e) {
@@ -90,14 +88,14 @@ public class PSQLUserDAO implements UserDAO{
     }
 
     @Override
-    public boolean create(User user) {
+    public boolean create(Merchandise merchandise) {
         try {
             Transaction tx = session.beginTransaction();
-            session.save(user);
+            session.save(merchandise);
             tx.commit();
             return true;
         } catch (Exception e) {
-            LOGGER.warn(Arrays.toString(e.getStackTrace()) +  " while adding a user.");
+            LOGGER.warn(Arrays.toString(e.getStackTrace()) +  " while adding a merchandise.");
             return false;
         }
     }

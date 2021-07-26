@@ -51,4 +51,8 @@ public class CommandDTO {
     public String getArg() {
         return arg;
     }
+
+    public void setArg(String arg) {
+        this.arg = arg;
+    }
 }

@@ -1,6 +1,7 @@
 package data;
 
 import game.entity.Card;
+import game.marketplace.Merchandise;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;

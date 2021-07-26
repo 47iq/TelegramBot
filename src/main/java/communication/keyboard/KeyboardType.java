@@ -20,5 +20,6 @@ public enum KeyboardType {
     ADMIN,
     BATTLE_ATTACK,
     BATTLE_DEFENCE,
-    SEARCH_LEAF
+    SEARCH_LEAF,
+    MARKETPLACE;
 }

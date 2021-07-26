@@ -6,6 +6,7 @@ import game.dungeon.Enemy;
 import game.entity.Card;
 import data.User;
 import game.entity.CardName;
+import game.marketplace.Merchandise;
 
 import java.util.List;
 
@@ -61,6 +62,8 @@ public interface MessageFormatter {
      */
 
     String getPriceMessage(Card x);
+
+    String getPriceMessage(long x);
 
     String getShortMessage(Card x);
 
@@ -435,4 +438,10 @@ public interface MessageFormatter {
     String getBattleQueueTimeoutMessage();
 
     String getBattleWaitingMessage();
+
+    String getMarketplaceTimeoutMessage();
+
+    String getMarketplaceSoldMessage(Card card);
+
+    String getMarketplaceCardsMessage(List<Merchandise> merchandises);
 }

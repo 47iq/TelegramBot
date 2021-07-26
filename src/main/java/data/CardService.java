@@ -84,4 +84,8 @@ public interface CardService {
      */
 
     boolean addXpLeveledUp(Card card, long xp);
+
+    Card getById(long id);
+
+    void changeOwner(Card card, User user);
 }

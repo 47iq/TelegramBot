@@ -8,6 +8,7 @@ import game.dungeon.Enemy;
 import game.entity.Card;
 import game.entity.CardName;
 import game.entity.CardType;
+import game.marketplace.Merchandise;
 import game.service.AchievementService;
 import game.service.PriceCalculator;
 import data.User;
@@ -18,6 +19,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 @Component
@@ -37,7 +39,7 @@ public class MessageFormatterImpl implements MessageFormatter {
         String s = MessageBundle.getMessage(card.getType().name()) + " " + MessageBundle.getMessage(card.getName().name())
                 + MessageBundle.getMessage("info_uid") + card.getUID() + ") " + card.getLevel() +
                 " " + MessageBundle.getMessage("info_level") + "\n" + MessageBundle.getMessage("info_health")
-                + String.format("%.2f", card.getHealth()) + MessageBundle.getMessage("info_attack") + String.format("%.2f", card.getAttack()) +
+                + String.format("%.2f", card.getHealth()) + "/"+ String.format("%.2f", card.getMaxHealth()) + MessageBundle.getMessage("info_attack") + String.format("%.2f", card.getAttack()) +
                 MessageBundle.getMessage("info_defence") + String.format("%.2f", card.getDefence()) + " ";
         if(card.getLevel() < 20)
             s += MessageBundle.getMessage("info_nextxp2") + " " + card.getNextLevelXp() + MessageBundle.getMessage("info_xp2");
@@ -520,5 +522,40 @@ public class MessageFormatterImpl implements MessageFormatter {
     @Override
     public String getBattleWaitingMessage() {
         return MessageBundle.getMessage("battle_waiting");
+    }
+
+    @Override
+    public String getPriceMessage(long x) {
+        return x + MessageBundle.getMessage("info_price2");
+    }
+
+    @Override
+    public String getMarketplaceTimeoutMessage() {
+        return MessageBundle.getMessage("info_marketplace.timeout");
+    }
+
+    @Override
+    public String getMarketplaceSoldMessage(Card card) {
+        return MessageBundle.getMessage("info_marketplace.sold");
+    }
+
+    @Override
+    public String getMarketplaceCardsMessage(List<Merchandise> merchandises) {
+        StringBuilder builder = new StringBuilder();
+        AtomicInteger cnt = new AtomicInteger(1);
+        merchandises.forEach(x -> {
+            builder.append(cnt.get()).append(") @")
+                    .append(cardService.getById(x.getCardUID()).getOwner())
+                    .append("\n")
+                    .append(getCardMessage(cardService.getById(x.getCardUID())))
+                    .append("\n")
+                    .append(MessageBundle.getMessage("info_marketplace.priceis"))
+                    .append("  ")
+                    .append(x.getCost())
+                    .append(MessageBundle.getMessage("info_price2"))
+                    .append("\n\n");
+            cnt.getAndIncrement();
+        });
+        return builder.toString();
     }
 }

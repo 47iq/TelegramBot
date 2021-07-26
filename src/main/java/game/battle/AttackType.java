@@ -4,7 +4,7 @@ public enum AttackType {
     HEAD {
         @Override
         public double getBaseChance() {
-            return 0.35;
+            return 0.25;
         }
 
         @Override
