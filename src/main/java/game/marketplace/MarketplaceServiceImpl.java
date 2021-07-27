@@ -64,7 +64,7 @@ public class MarketplaceServiceImpl implements MarketplaceService {
         AnswerDTO answerDTO = new AnswerDTO(true, messageFormatter.getMarketplaceTimeoutMessage(),
                 KeyboardType.NONE, null, null, null, true);
         notificationService.notify(userService.getUserData(new User(cardService.getById(merchandise.getCardUID()).getOwner(), 0)), answerDTO);
-        goods.remove(merchandise);
+        cancel(merchandise.getCardUID());
     }
 
     @Override
@@ -74,7 +74,9 @@ public class MarketplaceServiceImpl implements MarketplaceService {
 
     @Override
     public void cancel(long id) {
+        Merchandise merchandise = marketplaceDAO.getEntityById(id);
         marketplaceDAO.delete(id);
+        goods.remove(merchandise);
     }
 
     @Override

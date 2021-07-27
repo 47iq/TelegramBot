@@ -191,8 +191,8 @@ data/MarketplaceDAO.java
  data.MarketplaceDAO
 command/shop/OpenProBoxCommand.java
  command.shop.OpenProBoxCommand
-game/marketplace/MarketplaceServiceImpl.java
- game.marketplace.MarketplaceServiceImpl
+game/service/AchievementServiceImpl.java
+ game.service.AchievementServiceImpl
 command/Command.java
  command.Command
 game/battle/TurnOptions.java
@@ -323,5 +323,5 @@ game/service/BattleServiceImpl.java
  game.service.BattleServiceImpl$1
 AppConfig.java
  AppConfig
-game/service/AchievementServiceImpl.java
- game.service.AchievementServiceImpl
+game/marketplace/MarketplaceServiceImpl.java
+ game.marketplace.MarketplaceServiceImpl
