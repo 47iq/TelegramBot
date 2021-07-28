@@ -2,7 +2,6 @@ package communication.connection;
 
 import command.CommandFactory;
 import util.MessageBundle;
-import data.PSQLUserDAO;
 import data.UserService;
 import data.User;
 import org.apache.logging.log4j.LogManager;
@@ -104,7 +103,7 @@ public class TelegramBot extends TelegramLongPollingBot {
         User cachedUser = userService.getUserData(user);
         if (cachedUser != null)
             user = cachedUser;
-        CommandDTO commandDTO = new CommandDTO(user, messageText, arg, this);
+        CommandDTO commandDTO = new CommandDTO(user, messageText, arg);
         AnswerDTO answerDTO = commandFactory.execute(commandDTO);
         LOGGER.info("Answer to " + username + " has been prepared." +
                 "\". Keyboard: " + answerDTO.getKeyboard() + ".");

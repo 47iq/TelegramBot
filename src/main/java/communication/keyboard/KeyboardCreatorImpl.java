@@ -9,6 +9,7 @@ import game.marketplace.MarketplaceService;
 import game.service.BattleService;
 import game.service.EventType;
 import game.service.NotificationPublisher;
+import game.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
@@ -30,6 +31,8 @@ public class KeyboardCreatorImpl implements KeyboardCreator {
     NotificationPublisher notificationPublisher;
     @Autowired
     MarketplaceService marketplaceService;
+    @Autowired
+    TaskService taskService;
 
     private final int BUTTONS_IN_ROW = 2;
     private final int MAX_ROWS = 5;
@@ -54,7 +57,7 @@ public class KeyboardCreatorImpl implements KeyboardCreator {
             case STATS -> getStatsKeyBoard();
             case DUNGEON -> getDungeonKeyboard();
             case DUNGEON_LEAF -> getDungeonLeafKeyboard(user);
-            case DUNGEON_MENU -> getDungeonMenuKeyboard();
+            case DUNGEON_MENU -> getDungeonMenuKeyboard(user);
             case START_SHOP -> getStartShopKeyboard();
             case BUY_BOX -> getBuyBoxKeyboard();
             case BUY_ITEM -> getBuyItemKeyboard();
@@ -137,12 +140,15 @@ public class KeyboardCreatorImpl implements KeyboardCreator {
      *
      * @return a keyboard for a dungeon menu
      * @see command.main_menu.DungeonMenuCommand
+     * @param user
      */
 
-    private InlineKeyboardMarkup getDungeonMenuKeyboard() {
+    private InlineKeyboardMarkup getDungeonMenuKeyboard(User user) {
         Map<String, String> menu = new HashMap<>();
         menu.put("/help", MessageBundle.getMessage("back"));
         menu.put("/dungeon_enter", MessageBundle.getMessage("dungeon_enter"));
+        if(!taskService.getAll(user).isEmpty())
+            menu.put("/tasks", MessageBundle.getMessage("info_tasks"));
         menu.put("/dungeon_info", MessageBundle.getMessage("/info"));
         return getKeyboard(menu);
     }

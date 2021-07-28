@@ -6,6 +6,7 @@ import game.dungeon.Enemy;
 import game.entity.Card;
 import data.User;
 import game.entity.CardName;
+import game.entity.Task;
 import game.marketplace.Merchandise;
 
 import java.util.List;
@@ -444,4 +445,10 @@ public interface MessageFormatter {
     String getMarketplaceSoldMessage(Card card);
 
     String getMarketplaceCardsMessage(List<Merchandise> merchandises);
+
+    String getTaskCompleteMessage(Task task);
+
+    String getTaskStartMessage(Task task);
+
+    String getAllTasksMessage(List<Task> all);
 }

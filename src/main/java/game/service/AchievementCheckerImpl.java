@@ -71,5 +71,5 @@ public class AchievementCheckerImpl implements AchievementChecker {
 
     private Achievement getUserAchievements(User user) {
         return achievementDAO.getEntityById(user.getUID());
-    };
+    }
 }

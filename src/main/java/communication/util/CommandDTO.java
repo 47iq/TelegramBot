@@ -1,8 +1,6 @@
 package communication.util;
 
 import data.User;
-import org.springframework.stereotype.Component;
-import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 
 /**
  * Command Data Transfer Object class
@@ -20,7 +18,7 @@ public class CommandDTO {
      * @param messageText command
      */
 
-    public CommandDTO(User user, String messageText, TelegramLongPollingBot bot) {
+    public CommandDTO(User user, String messageText) {
         this.user = user;
         this.messageText = messageText;
     }
@@ -30,11 +28,10 @@ public class CommandDTO {
      *
      * @param user        user that sent a request
      * @param messageText command
-     * @param bot         bot(needed for async operations)
      * @param arg         argument of a command
      */
 
-    public CommandDTO(User user, String messageText, String arg, TelegramLongPollingBot bot) {
+    public CommandDTO(User user, String messageText, String arg) {
         this.user = user;
         this.messageText = messageText;
         this.arg = arg;

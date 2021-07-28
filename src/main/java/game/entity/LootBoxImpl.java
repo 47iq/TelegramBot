@@ -17,6 +17,10 @@ public class LootBoxImpl implements LootBox {
     @Qualifier("elite_card_random")
     WeightedRandomizer<CardName> eliteLootBoxRandom;
 
+    @Autowired
+    @Qualifier("task_card_random")
+    WeightedRandomizer<CardName> taskBoxRandom;
+
     @Override
     public Card open(LootBoxType type, User user) {
         double rnd = Math.random() * 100;
@@ -54,7 +58,14 @@ public class LootBoxImpl implements LootBox {
             case SUPER_RARE -> {
                 return new Card(superBoxRandName(), CardType.LEGENDARY, user);
             }
+            case TASK -> {
+                return new Card(taskBoxCave(), CardType.LEGENDARY, user);
+            }
         }
+    }
+
+    private CardName taskBoxCave() {
+        return taskBoxRandom.getRandom();
     }
 
     private CardName superBoxRandName() {

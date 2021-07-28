@@ -4,8 +4,10 @@ import command.service_command.OpenSuperRareBoxCommand;
 import communication.keyboard.KeyboardType;
 import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
+import game.entity.TaskType;
 import game.service.AchievementService;
 import game.service.OccupationService;
+import game.service.TaskService;
 import util.MessageBundle;
 import util.MessageFormatter;
 import data.*;
@@ -44,6 +46,8 @@ public class CaveServiceImpl implements CaveService {
     private AchievementService achievementService;
     @Autowired
     OccupationService occupationService;
+    @Autowired
+    TaskService taskService;
 
     private static final Logger LOGGER = LogManager.getLogger(CaveServiceImpl.class);
 
@@ -78,7 +82,11 @@ public class CaveServiceImpl implements CaveService {
             cave = new ArmorCave();
         LOGGER.info(commandDTO.getUser().getUID() + " has entered cave: " + cave.getClass());
         achievementService.addCave(user);
-        return cave.enterThisCave(commandDTO, cardMap.get(commandDTO.getUser()), battleService, messageFormatter, cardService, userService, command, enemyWeightedRandomizer);
+        taskService.addProgress(user, TaskType.CAVE, 1);
+        AnswerDTO answerDTO = cave.enterThisCave(commandDTO, cardMap.get(commandDTO.getUser()), battleService, messageFormatter, cardService, userService, command, enemyWeightedRandomizer, taskService);
+        if(answerDTO != null)
+            return answerDTO;
+        return (new BattleCave()).enterThisCave(commandDTO, cardMap.get(commandDTO.getUser()), battleService, messageFormatter, cardService, userService, command, enemyWeightedRandomizer, taskService);
     }
 
     /**

@@ -8,6 +8,7 @@ import game.dungeon.Enemy;
 import game.entity.Card;
 import game.entity.CardName;
 import game.entity.CardType;
+import game.entity.Task;
 import game.marketplace.Merchandise;
 import game.service.AchievementService;
 import game.service.PriceCalculator;
@@ -556,6 +557,37 @@ public class MessageFormatterImpl implements MessageFormatter {
                     .append("\n\n");
             cnt.getAndIncrement();
         });
+        return builder.toString();
+    }
+
+    @Override
+    public String getTaskCompleteMessage(Task task) {
+        String result = MessageBundle.getMessage("task.completed") + "\n\n";
+        result += MessageBundle.getMessage("reward." + task.getRewardType().name().toLowerCase()) + " " + task.getReward();
+        return result;
+    }
+
+    @Override
+    public String getTaskStartMessage(Task task) {
+        String result = MessageBundle.getMessage("task.begin") + "\n\n";
+        result += MessageBundle.getMessage("task." +task.getTaskType().name().toLowerCase()) + " " + task.getProgress() + "/" + task.getNeeded() + "\n\n";
+        result += MessageBundle.getMessage("reward." + task.getRewardType().name().toLowerCase()) + " " + task.getReward();
+        return result;
+    }
+
+    @Override
+    public String getAllTasksMessage(List<Task> all) {
+        StringBuilder builder = new StringBuilder();
+        all.forEach(task -> builder.append(MessageBundle.getMessage("task." + task.getTaskType().name().toLowerCase()))
+                .append(" ")
+                .append(task.getProgress())
+                .append("/")
+                .append(task.getNeeded())
+                .append("\n")
+                .append(MessageBundle.getMessage("reward." + task.getRewardType().name().toLowerCase()))
+                .append(" ")
+                .append(task.getReward())
+                .append("\n\n"));
         return builder.toString();
     }
 }

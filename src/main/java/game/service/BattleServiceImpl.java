@@ -8,6 +8,7 @@ import game.battle.AttackType;
 import game.battle.BattleState;
 import game.battle.BattleXpCalculator;
 import game.battle.DefenceType;
+import game.entity.TaskType;
 import util.MessageBundle;
 import util.MessageFormatter;
 import data.CardService;
@@ -38,6 +39,8 @@ public class BattleServiceImpl implements BattleService {
     AchievementService achievementService;
     @Autowired
     NotificationPublisher notificationPublisher;
+    @Autowired
+    TaskService taskService;
 
     final static Map<User, Card> battleQueue = new HashMap<>();
 
@@ -209,6 +212,10 @@ public class BattleServiceImpl implements BattleService {
             secondUser.addBattle();
             achievementService.addBattle(firstUser);
             achievementService.addBattle(secondUser);
+            taskService.addProgress(firstUser, TaskType.BATTLE, 1);
+            taskService.addProgress(secondUser, TaskType.BATTLE, 1);
+            taskService.addProgress(firstUser, TaskType.PVP_BATTLE, 1);
+            taskService.addProgress(secondUser, TaskType.PVP_BATTLE, 1);
             if (firstCard.getHealth() > 0) {
                 notifyAndSaveResults(firstUser, firstCard, secondUser, secondCard);
             } else {
@@ -431,6 +438,7 @@ public class BattleServiceImpl implements BattleService {
         }
         User user = commandDTO.getUser();
         achievementService.addBattle(user);
+        taskService.addProgress(user, TaskType.BATTLE, 1);
         if (card.getHealth() > 0) {
             userService.higherBalance(user, enemy.getAward());
             return new AnswerDTO(true, battleHistory + "\n" +

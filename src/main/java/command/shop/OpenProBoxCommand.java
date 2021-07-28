@@ -21,7 +21,7 @@ import util.MessageBundle;
 @Component
 public class OpenProBoxCommand implements Command {
     @Autowired
-    OpenBoxCommand openBoxCommand;
+    OpenBoxCommand  openBoxCommand;
     @Autowired
     UserService userService;
 

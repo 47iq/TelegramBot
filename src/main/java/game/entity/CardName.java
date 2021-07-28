@@ -5,7 +5,6 @@ package game.entity;
  */
 
 public enum CardName {
-    //DUNGEON_ENEMY,
     KLIMENKOV {
         @Override
         public double gerMultiplier() {
@@ -64,6 +63,18 @@ public enum CardName {
         @Override
         public double gerMultiplier() {
             return 1.34;
+        }
+    },
+    TASK_1 {
+        @Override
+        public double gerMultiplier() {
+            return 1.50;
+        }
+    },
+    TASK_2 {
+        @Override
+        public double gerMultiplier() {
+            return 1.50;
         }
     };
 

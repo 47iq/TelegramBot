@@ -8,5 +8,6 @@ public enum LootBoxType {
     BASIC,
     ADVANCED,
     PRO,
-    SUPER_RARE
+    SUPER_RARE,
+    TASK;
 }

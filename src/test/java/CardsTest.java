@@ -1,22 +1,17 @@
 import game.entity.CardName;
 import game.entity.CardType;
 import game.entity.ImageIdentifier;
-import game.service.BattleService;
 import game.service.ImageParser;
-import game.service.ImageParserImpl;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.stereotype.Component;
 import util.MessageBundle;
 
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.ResourceBundle;
 
 public class CardsTest extends Assert {
     ImageParser imageParser;

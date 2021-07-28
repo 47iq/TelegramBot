@@ -3,6 +3,7 @@ package game.dungeon;
 import command.service_command.OpenSuperRareBoxCommand;
 import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
+import game.service.TaskService;
 import util.MessageFormatter;
 import data.CardService;
 import data.UserService;
@@ -21,7 +22,7 @@ public class BattleCave implements Cave {
 
     @Override
     public AnswerDTO enterThisCave(CommandDTO commandDTO, Card card, BattleService battleService,
-                                   MessageFormatter messageFormatter, CardService cardService, UserService userService, OpenSuperRareBoxCommand command, WeightedRandomizer<EnemyType> enemyWeightedRandomizer) {
+                                   MessageFormatter messageFormatter, CardService cardService, UserService userService, OpenSuperRareBoxCommand command, WeightedRandomizer<EnemyType> enemyWeightedRandomizer, TaskService taskService) {
         Enemy enemy = new Enemy(enemyWeightedRandomizer.getRandom());
         return battleService.battleEnemy(commandDTO, enemy, card);
     }

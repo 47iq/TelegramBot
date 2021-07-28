@@ -1,20 +1,13 @@
 import data.User;
 import data.UserService;
 import data.UserServiceImpl;
-import game.entity.Card;
-import game.entity.CardName;
 import game.service.AchievementService;
 import game.service.AchievementServiceImpl;
-import game.service.BattleService;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-
-import java.util.HashSet;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 public class AchievementTest extends Assert {
     UserService userService;

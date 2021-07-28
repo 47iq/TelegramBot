@@ -6,7 +6,6 @@ import communication.keyboard.KeyboardType;
 import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
 import data.CardService;
-import data.User;
 import data.UserService;
 import game.entity.Card;
 import game.marketplace.MarketplaceService;
@@ -17,9 +16,6 @@ import game.service.PriceCalculator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import util.MessageBundle;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @Component
 public class ListCardCommand implements Command, MultiStepCommand {

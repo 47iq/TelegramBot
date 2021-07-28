@@ -57,15 +57,17 @@ public class AppConfig {
     @Qualifier("cave_random")
     public WeightedRandomizer<Class<? extends Cave>> caveWeightedRandomizer(){
         Map<Class<? extends Cave>, Double> weights  =  new HashMap<>();
+        //todo
         weights.put(RobberyCave.class, 10.0);
         weights.put(HealCave.class, 10.0);
         weights.put(LootCave.class, 10.0);
         weights.put(TrapCave.class, 10.0);
         weights.put(BattleCave.class, 60.0);
-        weights.put(ArmorCave.class, 1.0);
+        weights.put(ArmorCave.class, 0.5);
         weights.put(WeaponCave.class, 1.0);
         weights.put(LevelUpCave.class, 0.5);
         weights.put(LootBoxCave.class, 0.25);
+        weights.put(TaskCave.class, 300.0);
         return new WeightedRandomizerImpl<>(weights);
     }
 
@@ -117,6 +119,59 @@ public class AppConfig {
         return new WeightedRandomizerImpl<>(weights);
     }
 
+    @Bean
+    @Scope("singleton")
+    public WeightedRandomizer<Integer> taskLevelWeightedRandomizer() {
+        Map<Integer, Double> weights = new HashMap<>();
+        weights.put(1, 25.0);
+        weights.put(2, 20.0);
+        weights.put(3, 15.0);
+        weights.put(4, 10.0);
+        weights.put(5, 5.0);
+        return new WeightedRandomizerImpl<>(weights);
+    }
+
+    @Bean
+    @Scope("singleton")
+    public WeightedRandomizer<TaskType> taskTypeWeightedRandomizer() {
+        Map<TaskType, Double> weights = new HashMap<>();
+        weights.put(TaskType.CAVE, 2.0);
+        weights.put(TaskType.BATTLE, 2.0);
+        weights.put(TaskType.PVP_BATTLE, 1.0);
+        return new WeightedRandomizerImpl<>(weights);
+    }
+
+    @Bean
+    @Scope("singleton")
+    public WeightedRandomizer<RewardType> rewardTypeWeightedRandomizer() {
+        Map<RewardType, Double> weights = new HashMap<>();
+        weights.put(RewardType.HEAL, 10.0);
+        weights.put(RewardType.MONEY, 10.0);
+        weights.put(RewardType.LOOT_BOX, 1.0);
+        return new WeightedRandomizerImpl<>(weights);
+    }
+
+    @Bean
+    @Scope("singleton")
+    @Qualifier("task_card_random")
+    public WeightedRandomizer<CardName> taskCardWeightedRandomizer() {
+        Map<CardName, Double> weights = new HashMap<>();
+        weights.put(CardName.TASK_1, 1.0);
+        weights.put(CardName.TASK_2, 1.0);
+        return new WeightedRandomizerImpl<>(weights);
+    }
+
+    @Bean
+    @Scope("singleton")
+    public TaskDAO taskDAO() {
+        return new PSQLTaskDAO();
+    }
+
+    @Bean
+    @Scope("singleton")
+    public TaskService taskService() {
+        return new TaskServiceImpl();
+    }
 
     @Bean
     @Scope("singleton")
@@ -188,6 +243,7 @@ public class AppConfig {
         commandMap.put("/cancel", getCancelCommand());
         commandMap.put("/cancel_card", getCancelCardCommand());
         commandMap.put("/marketplace", getMarketplaceCommand());
+        commandMap.put("/tasks", getTasksCommand());
         Map<String, Command> adminCommands = new HashMap<>();
         adminCommands.put("/add_tokens", getAddTokensCommand());
         adminCommands.put("/notify_all", getNotifyAllCommand());
@@ -195,6 +251,18 @@ public class AppConfig {
         adminCommands.put("/all_users", getUsersStatsCommand());
         adminCommands.put("/admin", getAdminCommand());
         return new CommandFactoryImpl(commandMap, adminCommands);
+    }
+
+    @Bean
+    @Scope("singleton")
+    public MyTasksCommand getTasksCommand(){
+        return new MyTasksCommand();
+    }
+
+    @Bean
+    @Scope("singleton")
+    public OpenTaskBoxCommand openTaskBoxCommand(){
+        return new OpenTaskBoxCommand();
     }
 
     @Bean
@@ -617,6 +685,8 @@ public class AppConfig {
         pathMap.put(new ImageIdentifier(CardName.BILLIE_HARRINGTON, CardType.LEGENDARY), MessageBundle.getSetting("BILLIE_HARRINGTON_LEGENDARY"));
         pathMap.put(new ImageIdentifier(CardName.SVYATOSLAV, CardType.LEGENDARY), MessageBundle.getSetting("SVYATOSLAV_LEGENDARY"));
         pathMap.put(new ImageIdentifier(CardName.STANKEVICH, CardType.LEGENDARY), MessageBundle.getSetting("STANKEVICH_LEGENDARY"));
+        pathMap.put(new ImageIdentifier(CardName.TASK_1, CardType.LEGENDARY), MessageBundle.getSetting("TASK_1"));
+        pathMap.put(new ImageIdentifier(CardName.TASK_2, CardType.LEGENDARY), MessageBundle.getSetting("TASK_2"));
         return new ImageParserImpl(pathMap);
     }
 
@@ -718,7 +788,7 @@ public class AppConfig {
 
     @Bean
     @Scope("singleton")
-    public BattleService battleService() {
+    public BattleServiceImpl battleService() {
         return new BattleServiceImpl();
     }
 

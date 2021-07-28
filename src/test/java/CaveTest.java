@@ -6,11 +6,9 @@ import data.CardService;
 import data.User;
 import data.UserService;
 import game.dungeon.CaveService;
-import game.dungeon.CaveServiceImpl;
 import game.entity.Card;
 import game.entity.CardName;
 import game.entity.CardType;
-import game.service.BattleService;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -18,7 +16,6 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-import java.util.HashSet;
 import java.util.ResourceBundle;
 
 public class CaveTest extends Assert {
@@ -47,8 +44,8 @@ public class CaveTest extends Assert {
         card.setMaxHealth(100000000);
         card.setHealth(100000000);
         assertTrue(cardDAO.create(card));
-        commandDTOfirst = new CommandDTO(user, "/dungeon_enter", null);
-        commandDTO = new CommandDTO(user, "/dungeon_next", null);
+        commandDTOfirst = new CommandDTO(user, "/dungeon_enter");
+        commandDTO = new CommandDTO(user, "/dungeon_next");
         money = user.getTokens();
         userService.higherBalance(user, 100000);
     }
