@@ -1,6 +1,6 @@
 package game.battle;
 
-import data.User;
+import game.entity.User;
 
 public class BattleState {
     private TurnOptions attackerOptions;

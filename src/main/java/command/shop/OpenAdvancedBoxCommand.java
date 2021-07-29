@@ -2,8 +2,9 @@ package command.shop;
 
 import command.Command;
 import command.service_command.OpenBoxCommand;
-import data.User;
-import data.UserService;
+import game.entity.User;
+import game.service.UserBalanceService;
+import game.service.UserService;
 import game.entity.LootBoxType;
 import communication.keyboard.KeyboardType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,16 +25,17 @@ public class OpenAdvancedBoxCommand implements Command {
     OpenBoxCommand openBoxCommand;
     @Autowired
     UserService userService;
-
+    @Autowired
+    UserBalanceService userBalanceService;
 
     @Override
     public AnswerDTO execute(CommandDTO commandDTO) {
         User user = commandDTO.getUser();
         long price = Long.parseLong(MessageBundle.getSetting("ADVANCED_COST"));
-        if(userService.getBalance(commandDTO.getUser()) < price)
+        if(userBalanceService.getBalance(commandDTO.getUser()) < price)
             return new AnswerDTO(true, MessageBundle.getMessage("err_nomoney"), KeyboardType.SHOP, null, null, user, true);
         else {
-            userService.lowerBalance(commandDTO.getUser(), price);
+            userBalanceService.lowerBalance(commandDTO.getUser(), price);
             return openBoxCommand.execute(commandDTO, LootBoxType.ADVANCED);
         }
     }

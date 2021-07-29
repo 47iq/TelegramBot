@@ -1,7 +1,7 @@
 package game.service;
 
 import communication.util.AnswerDTO;
-import data.User;
+import game.entity.User;
 
 public interface NotificationPublisher {
     void subscribe(EventType eventType, User user);

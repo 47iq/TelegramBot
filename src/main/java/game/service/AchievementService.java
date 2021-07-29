@@ -1,13 +1,13 @@
 package game.service;
 
-import data.Achievement;
-import data.User;
+import game.entity.Achievement;
+import game.entity.AchievementType;
+import game.entity.User;
 
 public interface AchievementService {
-    void addCave(User user);
-    void addBattle(User user);
-    void addBoxCave(User user);
-    void addCardsNumber(User user);
+    void addProgress(User user, AchievementType achievementType, long value);
+    void addProgress(User user, AchievementType achievementType);
+    long getProgress(User user, AchievementType achievementType);
     Achievement getUsersAchievements(User user);
     boolean create(User user);
 }

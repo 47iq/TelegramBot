@@ -1,7 +1,5 @@
 package game.battle;
 
-import data.User;
-
 public class TurnOptions {
     private AttackType attackType;
     private DefenceType defenceType;

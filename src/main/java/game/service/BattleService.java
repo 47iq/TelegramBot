@@ -2,7 +2,7 @@ package game.service;
 
 import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
-import data.User;
+import game.entity.User;
 import game.battle.AttackType;
 import game.battle.DefenceType;
 import game.dungeon.Enemy;

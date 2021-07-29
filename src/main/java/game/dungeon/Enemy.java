@@ -1,6 +1,5 @@
 package game.dungeon;
 
-import data.CardServiceImpl;
 import game.entity.Card;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

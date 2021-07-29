@@ -8,12 +8,11 @@ import game.battle.AttackType;
 import game.battle.BattleState;
 import game.battle.BattleXpCalculator;
 import game.battle.DefenceType;
+import game.entity.AchievementType;
 import game.entity.TaskType;
 import util.MessageBundle;
 import util.MessageFormatter;
-import data.CardService;
-import data.User;
-import data.UserService;
+import game.entity.User;
 import game.dungeon.Enemy;
 import game.entity.Card;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +40,8 @@ public class BattleServiceImpl implements BattleService {
     NotificationPublisher notificationPublisher;
     @Autowired
     TaskService taskService;
+    @Autowired
+    UserBalanceService userBalanceService;
 
     final static Map<User, Card> battleQueue = new HashMap<>();
 
@@ -180,8 +181,8 @@ public class BattleServiceImpl implements BattleService {
         completeFastBattle(battleHistory, firstCard, secondCard);
         firstUser.addBattle();
         secondUser.addBattle();
-        achievementService.addBattle(firstUser);
-        achievementService.addBattle(secondUser);
+        achievementService.addProgress(firstUser, AchievementType.BATTLES);
+        achievementService.addProgress(secondUser, AchievementType.BATTLES);
         if (firstCard.getHealth() > 0) {
             battleHistory.append(messageFormatter.getWinLossMessage(firstUser, secondUser));
             AnswerDTO answerDTO = new AnswerDTO(true, battleHistory.toString(), KeyboardType.LEAF, null, null, firstUser, true);
@@ -210,8 +211,8 @@ public class BattleServiceImpl implements BattleService {
             }
             firstUser.addBattle();
             secondUser.addBattle();
-            achievementService.addBattle(firstUser);
-            achievementService.addBattle(secondUser);
+            achievementService.addProgress(firstUser, AchievementType.BATTLES);
+            achievementService.addProgress(secondUser, AchievementType.BATTLES);
             taskService.addProgress(firstUser, TaskType.BATTLE, 1);
             taskService.addProgress(secondUser, TaskType.BATTLE, 1);
             taskService.addProgress(firstUser, TaskType.PVP_BATTLE, 1);
@@ -265,10 +266,11 @@ public class BattleServiceImpl implements BattleService {
         notificationService.notify(secondUser, answerDTO);
         notificationService.notify(firstUser, answerDTO.append(calcLevelUp(firstCard, secondCard)));
         firstUser.addWin();
-        userService.higherBalance(firstUser, Long.parseLong(MessageBundle.getSetting("WIN_BONUS")));
-        userService.higherBalance(secondUser, Long.parseLong(MessageBundle.getSetting("LOSS_BONUS")));
+        userBalanceService.higherBalance(firstUser, Long.parseLong(MessageBundle.getSetting("WIN_BONUS")));
+        userBalanceService.higherBalance(secondUser, Long.parseLong(MessageBundle.getSetting("LOSS_BONUS")));
         userService.save(firstUser);
         userService.save(secondUser);
+        achievementService.addProgress(firstUser, AchievementType.PVP_WINS);
     }
 
     private void completeOnlineBattle(User firstUser, Card firstCard, User secondUser, Card secondCard, BattleState battleState) throws InterruptedException {
@@ -437,10 +439,10 @@ public class BattleServiceImpl implements BattleService {
             cardService.save(card);
         }
         User user = commandDTO.getUser();
-        achievementService.addBattle(user);
+        achievementService.addProgress(user, AchievementType.BATTLES);
         taskService.addProgress(user, TaskType.BATTLE, 1);
         if (card.getHealth() > 0) {
-            userService.higherBalance(user, enemy.getAward());
+            userBalanceService.higherBalance(user, enemy.getAward());
             return new AnswerDTO(true, battleHistory + "\n" +
                     messageFormatter.getEnemyBattleWinMessage(card, enemy),
                     KeyboardType.DUNGEON, null, null, user, true)

@@ -1,7 +1,7 @@
 package command.admin;
 
 import command.Command;
-import data.UserService;
+import game.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import communication.util.AnswerDTO;
@@ -20,7 +20,7 @@ public class AddTokensCommand implements Command {
 
     @Override
     public AnswerDTO execute(CommandDTO commandDTO) {
-        userService.higherBalance(commandDTO.getArg(), 10000);
+        userService.addTokens(commandDTO.getArg(), 10000);
         return null;
     }
 }

@@ -3,7 +3,8 @@ package command.service_command;
 import command.Command;
 import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
-import data.UserService;
+import game.entity.AchievementType;
+import game.service.UserService;
 import game.entity.LootBoxType;
 import game.service.AchievementService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,6 @@ public class OpenSuperRareBoxCommand implements Command {
 
     @Override
     public AnswerDTO execute(CommandDTO commandDTO) {
-        achievementService.addBoxCave(commandDTO.getUser());
         return openBoxCommand.execute(commandDTO, LootBoxType.SUPER_RARE);
     }
 }

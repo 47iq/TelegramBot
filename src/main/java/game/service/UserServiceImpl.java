@@ -1,6 +1,7 @@
-package data;
+package game.service;
 
-import game.service.EventType;
+import game.entity.User;
+import data.UserDAO;
 import util.MessageBundle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -21,7 +22,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void lowerBalance(User user, long price) {
+    public void spendTokens(User user, long price) {
         User oldUser = userDAO.getEntityById(user.getUID());
         oldUser.setTokens(Math.max(oldUser.getTokens() - price,  0));
         userDAO.update(oldUser);
@@ -56,7 +57,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void higherBalance(User user, long price) {
+    public void addTokens(User user, long price) {
         User oldUser = userDAO.getEntityById(user.getUID());
         oldUser.setTokens(oldUser.getTokens() + price);
         userDAO.update(oldUser);
@@ -78,7 +79,7 @@ public class UserServiceImpl implements UserService{
         LocalDateTime now = LocalDateTime.now(ZoneId.systemDefault());
         LocalDateTime old = oldUser.getLastTokensRedeemed();
         if(old.plusHours(24).compareTo(now) < 0) {
-            higherBalance(user, Long.parseLong(MessageBundle.getSetting("DAILY_BONUS")));
+            addTokens(user, Long.parseLong(MessageBundle.getSetting("DAILY_BONUS")));
             oldUser.setLastTokensRedeemed(LocalDateTime.now(ZoneId.systemDefault()));
             userDAO.update(user);
             return true;
@@ -93,7 +94,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void higherBalance(String user, long price) {
+    public void addTokens(String user, long price) {
         User oldUser = userDAO.getEntityById(user);
         oldUser.setTokens(oldUser.getTokens() + price);
         userDAO.update(oldUser);

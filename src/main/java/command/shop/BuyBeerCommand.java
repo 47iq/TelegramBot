@@ -5,7 +5,7 @@ import communication.keyboard.KeyboardType;
 import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
 import util.MessageBundle;
-import data.User;
+import game.entity.User;
 
 /**
  * Command, which displays beer info for user.

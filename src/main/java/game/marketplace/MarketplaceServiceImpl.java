@@ -3,10 +3,11 @@ package game.marketplace;
 import communication.keyboard.KeyboardType;
 import communication.notification.NotificationService;
 import communication.util.AnswerDTO;
-import data.CardService;
+import game.service.CardService;
 import data.MarketplaceDAO;
-import data.User;
-import data.UserService;
+import game.entity.User;
+import game.service.UserBalanceService;
+import game.service.UserService;
 import game.entity.Card;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -33,6 +34,8 @@ public class MarketplaceServiceImpl implements MarketplaceService {
     CardService cardService;
     @Autowired
     UserService userService;
+    @Autowired
+    UserBalanceService userBalanceService;
 
     private static final ReentrantLock LOCK = new ReentrantLock();
 
@@ -112,8 +115,8 @@ public class MarketplaceServiceImpl implements MarketplaceService {
         Merchandise merchandise = getById(uid);
         long cost = merchandise.getCost();
         User owner = userService.getUserData(new User(cardService.getById(uid).getOwner(), 0));
-        userService.lowerBalance(user, cost);
-        userService.higherBalance(owner, cost);
+        userBalanceService.lowerBalance(user, cost);
+        userBalanceService.higherBalance(owner, cost);
         cardService.changeOwner(cardService.getById(merchandise.getCardUID()), user);
         notifyCardSold(owner, uid);
         LOCK.lock();

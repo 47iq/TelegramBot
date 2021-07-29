@@ -2,7 +2,7 @@ package command.service_command;
 
 import command.Command;
 import communication.keyboard.KeyboardType;
-import data.UserService;
+import game.service.UserService;
 import game.service.AchievementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

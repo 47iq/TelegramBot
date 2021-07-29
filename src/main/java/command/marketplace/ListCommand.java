@@ -4,7 +4,7 @@ import command.Command;
 import communication.keyboard.KeyboardType;
 import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
-import data.CardService;
+import game.service.CardService;
 import game.entity.Card;
 import game.marketplace.MarketplaceService;
 import game.service.BattleService;

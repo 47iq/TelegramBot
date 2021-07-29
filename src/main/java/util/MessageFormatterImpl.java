@@ -1,18 +1,13 @@
 package util;
 
-import data.Achievement;
-import data.CardService;
-import data.UserService;
+import game.entity.*;
+import game.service.CardService;
+import game.service.UserService;
 import game.battle.AttackType;
 import game.dungeon.Enemy;
-import game.entity.Card;
-import game.entity.CardName;
-import game.entity.CardType;
-import game.entity.Task;
 import game.marketplace.Merchandise;
 import game.service.AchievementService;
 import game.service.PriceCalculator;
-import data.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -385,17 +380,17 @@ public class MessageFormatterImpl implements MessageFormatter {
 
     @Override
     public String getCaveAchievementMessage(User user) {
-        return MessageBundle.getMessage("achievement_cave") +  " "  + achievementService.getUsersAchievements(user).getCavesNumber();
+        return MessageBundle.getMessage("achievement_caves") +  " "  + achievementService.getUsersAchievements(user).getCavesNumber();
     }
 
     @Override
     public String getBoxCaveAchievementMessage(User user) {
-        return MessageBundle.getMessage("achievement_box") +  " "  + achievementService.getUsersAchievements(user).getBoxCavesNumber();
+        return MessageBundle.getMessage("achievement_loot_boxes") +  " "  + achievementService.getUsersAchievements(user).getBoxCavesNumber();
     }
 
     @Override
     public String getBattleAchievementMessage(User user) {
-        return MessageBundle.getMessage("achievement_battle") +  " "  + achievementService.getUsersAchievements(user).getBattlesNumber();
+        return MessageBundle.getMessage("achievement_battles") +  " "  + achievementService.getUsersAchievements(user).getBattlesNumber();
     }
 
     @Override
@@ -404,44 +399,20 @@ public class MessageFormatterImpl implements MessageFormatter {
     }
 
     @Override
-    public String getUserAchievementsMessage(Achievement usersAchievements) {
-        Set<String> completed = new HashSet<>();
-        Set<String> inProgress = new HashSet<>();
-        String beginning = MessageBundle.getMessage("cards_achievement");
-        long cardsAchievement = Long.parseLong(MessageBundle.getSetting("CARDS_NUM_ACHIEVEMENT"));
-        String ending = MessageBundle.getMessage("cards_achievement_ending");
-        if(usersAchievements.getTotalCards() >= cardsAchievement)
-            completed.add(beginning);
-        else
-            inProgress.add(beginning + " " + usersAchievements.getTotalCards() + "/" + cardsAchievement + " " + ending);
-        beginning = MessageBundle.getMessage("cave_achievement");
-        long cavesAchievement = Long.parseLong(MessageBundle.getSetting("CAVES_NUM_ACHIEVEMENT"));
-        ending = MessageBundle.getMessage("cave_achievement_ending");
-        if(usersAchievements.getCavesNumber() >= cavesAchievement)
-            completed.add(beginning);
-        else
-            inProgress.add(beginning + " " + usersAchievements.getCavesNumber() + "/" + cavesAchievement + " " + ending);
-
-        beginning = MessageBundle.getMessage("battle_achievement");
-        long battleAchievement = Long.parseLong(MessageBundle.getSetting("BATTLES_NUM_ACHIEVEMENT"));
-        ending = MessageBundle.getMessage("battle_achievement_ending");
-        if(usersAchievements.getBattlesNumber() >= battleAchievement)
-            completed.add(beginning);
-        else
-            inProgress.add(beginning + " " + usersAchievements.getBattlesNumber() + "/" + battleAchievement + " " + ending);
-
-        beginning = MessageBundle.getMessage("box_achievement");
-        long boxAchievement = Long.parseLong(MessageBundle.getSetting("BOXCAVES_NUM_ACHIEVEMENT"));
-        ending = MessageBundle.getMessage("box_achievement_ending");
-        if(usersAchievements.getBoxCavesNumber() >= boxAchievement)
-            completed.add(beginning);
-        else
-            inProgress.add(beginning + " " + usersAchievements.getBoxCavesNumber() + "/" + boxAchievement + " " + ending);
-        StringBuilder result = new StringBuilder();
-        completed.forEach(x -> result.append(x).append(" ").append(MessageBundle.getMessage("completed")).append("\n"));
-        result.append("\n");
-        inProgress.forEach(x -> result.append(x).append("\n"));
-        return result.toString();
+    public String getUserAchievementsMessage(User user) {
+        StringBuilder completed = new StringBuilder();
+        StringBuilder active = new StringBuilder();
+        Arrays.stream(AchievementType.values()).forEach(achievementType -> {
+            long progress = achievementService.getProgress(user, achievementType);
+            long needed = Long.parseLong(MessageBundle.getSetting( achievementType.name() + "_ACHIEVEMENT"));
+            String beginning = MessageBundle.getMessage(achievementType.name().toLowerCase() + "_achievement");
+            String ending = MessageBundle.getMessage(achievementType.name().toLowerCase() + "_achievement_ending");
+            if(progress >= needed)
+                completed.append(beginning).append(" ").append(MessageBundle.getMessage("completed")).append("\n\n");
+            else
+                active.append(beginning).append(" ").append(progress).append("/").append(needed).append(" ").append(ending).append("\n\n");
+        });
+        return completed.append(active).toString();
     }
 
     @Override
@@ -589,5 +560,35 @@ public class MessageFormatterImpl implements MessageFormatter {
                 .append(task.getReward())
                 .append("\n\n"));
         return builder.toString();
+    }
+
+    @Override
+    public String getAchievementMessage(User user, AchievementType achievementType) {
+        return switch (achievementType) {
+            case BATTLES -> getBattleAchievementMessage(user);
+            case BOX_CAVES -> getBoxCaveAchievementMessage(user);
+            case CAVES -> getCaveAchievementMessage(user);
+            case CARDS -> getCardsAchievementMessage(user);
+            case MONEY_SPENT -> getMoneySpentAchievementMessage(user);
+            case TASKS -> getTasksAchievementMessage(user);
+            case CARD_LEVEL -> getCardLevelAchievement(user);
+            case PVP_WINS -> getPvpWinsAchievement(user);
+        };
+    }
+
+    private String getPvpWinsAchievement(User user) {
+        return MessageBundle.getMessage("achievement_pvp_wins") +  " "  + achievementService.getUsersAchievements(user).getPvpWins();
+    }
+
+    private String getCardLevelAchievement(User user) {
+        return MessageBundle.getMessage("achievement_card_level") +  " "  + achievementService.getUsersAchievements(user).getCardLeveledUp();
+    }
+
+    private String getTasksAchievementMessage(User user) {
+        return MessageBundle.getMessage("achievement_tasks") +  " "  + achievementService.getUsersAchievements(user).getTasksDone();
+    }
+
+    private String getMoneySpentAchievementMessage(User user) {
+        return MessageBundle.getMessage("achievement_money_spent") +  " "  + achievementService.getUsersAchievements(user).getMoneySpent();
     }
 }

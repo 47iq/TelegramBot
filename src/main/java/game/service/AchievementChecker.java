@@ -1,10 +1,8 @@
 package game.service;
 
-import data.User;
+import game.entity.AchievementType;
+import game.entity.User;
 
 public interface AchievementChecker {
-    boolean addCaveAndCheck(User user);
-    boolean addBattleAndCheck(User user);
-    boolean addBoxCaveAndCheck(User user);
-    boolean addTotalCardsAndCheck(User user);
+    boolean addAndCheck(User user, AchievementType achievementType, long value);
 }

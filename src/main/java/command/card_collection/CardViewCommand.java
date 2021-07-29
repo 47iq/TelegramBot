@@ -2,7 +2,7 @@ package command.card_collection;
 
 import command.Command;
 import util.MessageFormatter;
-import data.CardService;
+import game.service.CardService;
 import game.entity.Card;
 import communication.keyboard.KeyboardType;
 import org.springframework.beans.factory.annotation.Autowired;

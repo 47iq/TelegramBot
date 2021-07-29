@@ -1,8 +1,8 @@
 package command.main_menu;
 
 import command.Command;
-import data.CardService;
-import data.User;
+import game.service.CardService;
+import game.entity.User;
 import game.entity.Card;
 import communication.keyboard.KeyboardType;
 import org.springframework.beans.factory.annotation.Autowired;

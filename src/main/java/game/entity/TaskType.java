@@ -18,6 +18,12 @@ public enum TaskType {
         public Long getValueNeeded(int level) {
             return level * 30L;
         }
+    },
+    MONEY_EARNED {
+        @Override
+        public Long getValueNeeded(int level) {
+            return level * 10000L;
+        }
     };
 
     public Long getValueNeeded(int level) {

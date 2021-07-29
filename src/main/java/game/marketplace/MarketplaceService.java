@@ -1,7 +1,6 @@
 package game.marketplace;
 
-import data.User;
-import game.entity.Card;
+import game.entity.User;
 
 import java.util.List;
 

@@ -2,8 +2,7 @@ package game.service;
 
 import communication.notification.NotificationService;
 import communication.util.AnswerDTO;
-import data.User;
-import data.UserService;
+import game.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

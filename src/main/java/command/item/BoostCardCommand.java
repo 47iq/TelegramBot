@@ -1,13 +1,13 @@
 package command.item;
 
 import command.Command;
-import data.CardService;
-import data.UserService;
+import game.service.CardService;
+import game.service.UserService;
 import game.entity.Card;
 import game.service.BattleService;
 import game.service.ImageParser;
 import communication.keyboard.KeyboardType;
-import data.User;
+import game.entity.User;
 import game.entity.ImageIdentifier;
 import game.service.OccupationService;
 import org.springframework.beans.factory.annotation.Autowired;

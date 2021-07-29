@@ -1,8 +1,8 @@
 package command.shop;
 
 import command.Command;
-import data.User;
-import data.UserService;
+import game.entity.User;
+import game.service.UserService;
 import communication.keyboard.KeyboardType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

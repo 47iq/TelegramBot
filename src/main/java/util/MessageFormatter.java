@@ -1,12 +1,8 @@
 package util;
 
-import data.Achievement;
+import game.entity.*;
 import game.battle.AttackType;
 import game.dungeon.Enemy;
-import game.entity.Card;
-import data.User;
-import game.entity.CardName;
-import game.entity.Task;
 import game.marketplace.Merchandise;
 
 import java.util.List;
@@ -412,7 +408,7 @@ public interface MessageFormatter {
 
     String getCardsAchievementMessage(User user);
 
-    String getUserAchievementsMessage(Achievement usersAchievements);
+    String getUserAchievementsMessage(User user);
 
     String getLeaveMessage();
 
@@ -451,4 +447,6 @@ public interface MessageFormatter {
     String getTaskStartMessage(Task task);
 
     String getAllTasksMessage(List<Task> all);
+
+    String getAchievementMessage(User user, AchievementType achievementType);
 }

@@ -2,8 +2,8 @@ package communication.connection;
 
 import command.CommandFactory;
 import util.MessageBundle;
-import data.UserService;
-import data.User;
+import game.service.UserService;
+import game.entity.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;

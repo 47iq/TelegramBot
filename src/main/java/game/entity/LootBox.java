@@ -1,7 +1,5 @@
 package game.entity;
 
-import data.User;
-
 /**
  * Interface of a loot box
  */

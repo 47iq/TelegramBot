@@ -1,7 +1,6 @@
 package game.service;
 
-import data.User;
-import data.UserService;
+import game.entity.User;
 import game.dungeon.CaveService;
 import game.entity.Card;
 import game.marketplace.MarketplaceService;

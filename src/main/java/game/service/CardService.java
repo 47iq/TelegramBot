@@ -1,5 +1,7 @@
-package data;
+package game.service;
 
+import data.CardDAO;
+import game.entity.User;
 import game.entity.Card;
 
 import java.util.List;

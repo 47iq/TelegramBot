@@ -1,7 +1,6 @@
 package game.entity;
 
 import util.MessageBundle;
-import data.User;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Nullable;

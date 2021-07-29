@@ -3,9 +3,10 @@ package game.service;
 import communication.keyboard.KeyboardType;
 import communication.notification.NotificationService;
 import communication.util.AnswerDTO;
-import data.Achievement;
+import game.entity.Achievement;
 import data.AchievementDAO;
-import data.User;
+import game.entity.AchievementType;
+import game.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import util.MessageFormatter;
@@ -23,27 +24,30 @@ public class AchievementServiceImpl implements AchievementService{
     AchievementDAO achievementDAO;
 
     @Override
-    public void addCave(User user) {
-        if(achievementsEnabled() && achievementChecker.addCaveAndCheck(user))
-            notificationService.notify(user, getAnswer(messageFormatter.getCaveAchievementMessage(user), user));
+    public void addProgress(User user, AchievementType achievementType, long value) {
+        if(achievementsEnabled() && achievementChecker.addAndCheck(user, achievementType, value))
+            notificationService.notify(user, getAnswer(messageFormatter.getAchievementMessage(user, achievementType), user));
     }
 
     @Override
-    public void addBattle(User user) {
-        if(achievementsEnabled() && achievementChecker.addBattleAndCheck(user))
-            notificationService.notify(user, getAnswer(messageFormatter.getBattleAchievementMessage(user), user));
+    public void addProgress(User user, AchievementType achievementType) {
+        if(achievementsEnabled() && achievementChecker.addAndCheck(user, achievementType, 1))
+            notificationService.notify(user, getAnswer(messageFormatter.getAchievementMessage(user, achievementType), user));
     }
 
     @Override
-    public void addBoxCave(User user) {
-        if(achievementsEnabled() && achievementChecker.addBoxCaveAndCheck(user))
-            notificationService.notify(user, getAnswer(messageFormatter.getBoxCaveAchievementMessage(user), user));
-    }
-
-    @Override
-    public void addCardsNumber(User user) {
-        if(achievementsEnabled() && achievementChecker.addTotalCardsAndCheck(user))
-            notificationService.notify(user, getAnswer(messageFormatter.getCardsAchievementMessage(user), user));
+    public long getProgress(User user, AchievementType achievementType) {
+        Achievement achievement = getUsersAchievements(user);
+        return switch (achievementType) {
+            case CARDS -> achievement.getTotalCards();
+            case MONEY_SPENT -> achievement.getMoneySpent();
+            case BOX_CAVES -> achievement.getBoxCavesNumber();
+            case CAVES -> achievement.getCavesNumber();
+            case BATTLES -> achievement.getBattlesNumber();
+            case CARD_LEVEL -> achievement.getCardLeveledUp();
+            case PVP_WINS -> achievement.getPvpWins();
+            case TASKS -> achievement.getTasksDone();
+        };
     }
 
     @Override
@@ -54,7 +58,6 @@ public class AchievementServiceImpl implements AchievementService{
     private boolean achievementsEnabled() {
         //todo
         return true;
-        //return Boolean.getBoolean(MessageBundle.getSetting("ACHIEVEMENTS_ENABLED"));
     }
 
     private AnswerDTO getAnswer(String caveAchievementMessage, User user) {

@@ -1,5 +1,7 @@
 package data;
 
+import game.entity.Achievement;
+
 import java.util.List;
 
 public interface AchievementDAO {

@@ -6,11 +6,7 @@ import communication.notification.NotificationService;
 import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
 import data.TaskDAO;
-import data.User;
-import data.UserService;
-import game.entity.RewardType;
-import game.entity.Task;
-import game.entity.TaskType;
+import game.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import util.MessageFormatter;
@@ -39,6 +35,10 @@ public class TaskServiceImpl implements TaskService {
     MessageFormatter messageFormatter;
     @Autowired
     OpenTaskBoxCommand taskBoxCommand;
+    @Autowired
+    UserBalanceService userBalanceService;
+    @Autowired
+    AchievementService achievementService;
 
     List<Task> tasks;
 
@@ -86,6 +86,7 @@ public class TaskServiceImpl implements TaskService {
         taskDAO.delete(task);
         tasks.remove(task);
         User user = userService.getUserData(new User(task.getUserUID(), 0));
+        achievementService.addProgress(user, AchievementType.TASKS);
         switch (task.getRewardType()) {
             case LOOT_BOX: completeLootBoxTask(task, user);
             case HEAL: completeHealTask(task, user);
@@ -95,7 +96,7 @@ public class TaskServiceImpl implements TaskService {
 
     private void completeMoneyTask(Task task, User user) {
         long reward = task.getReward();
-        userService.higherBalance(user, reward);
+        userBalanceService.higherBalance(user, reward);
         notifyCompleted(task, user);
     }
 

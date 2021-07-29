@@ -1,6 +1,6 @@
-import data.User;
-import data.UserService;
-import data.UserServiceImpl;
+import game.entity.User;
+import game.service.UserService;
+import game.service.UserServiceImpl;
 import game.service.AchievementService;
 import game.service.AchievementServiceImpl;
 import org.junit.Assert;

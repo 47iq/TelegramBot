@@ -2,9 +2,9 @@ import communication.keyboard.KeyboardType;
 import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
 import data.CardDAO;
-import data.CardService;
-import data.User;
-import data.UserService;
+import game.service.CardService;
+import game.entity.User;
+import game.service.UserService;
 import game.dungeon.CaveService;
 import game.entity.Card;
 import game.entity.CardName;
@@ -47,7 +47,7 @@ public class CaveTest extends Assert {
         commandDTOfirst = new CommandDTO(user, "/dungeon_enter");
         commandDTO = new CommandDTO(user, "/dungeon_next");
         money = user.getTokens();
-        userService.higherBalance(user, 100000);
+        userService.addTokens(user, 100000);
     }
 
     @Test
@@ -67,7 +67,7 @@ public class CaveTest extends Assert {
     @After
     public void hook() {
         long balance = userService.getBalance(user);
-        userService.lowerBalance(user, balance - money);
+        userService.spendTokens(user, balance - money);
         cardDAO.delete(card);
     }
 }

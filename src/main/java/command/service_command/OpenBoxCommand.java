@@ -2,12 +2,8 @@ package command.service_command;
 
 import data.CardDAO;
 import communication.keyboard.KeyboardType;
-import data.CardService;
-import data.User;
-import game.entity.Card;
-import game.entity.ImageIdentifier;
-import game.entity.LootBox;
-import game.entity.LootBoxType;
+import game.entity.*;
+import game.service.CardService;
 import game.service.AchievementService;
 import game.service.ImageParser;
 import org.apache.logging.log4j.LogManager;
@@ -54,7 +50,7 @@ public class OpenBoxCommand {
                         MessageBundle.getMessage("info_youget") + "\n" + messageFormatter.getCardMessage(card),
                         KeyboardType.LEAF, imageParser.getImage(new ImageIdentifier(card.getName(), card.getType())), null, commandDTO.getUser(), true);
                 answerDTO.setCardName(card.getName());
-                achievementService.addCardsNumber(user);
+                achievementService.addProgress(user, AchievementType.CARDS);
                 return answerDTO;
             } else {
                 LOGGER.error("Error while opening a lootbox");

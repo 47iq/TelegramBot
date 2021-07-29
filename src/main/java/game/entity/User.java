@@ -1,4 +1,4 @@
-package data;
+package game.entity;
 
 import org.hibernate.annotations.ColumnDefault;
 import util.MessageBundle;

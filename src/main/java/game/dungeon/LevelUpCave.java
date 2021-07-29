@@ -4,14 +4,10 @@ import command.service_command.OpenSuperRareBoxCommand;
 import communication.keyboard.KeyboardType;
 import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
-import game.service.TaskService;
+import game.service.*;
 import util.MessageFormatter;
-import data.CardService;
-import data.User;
-import data.UserService;
+import game.entity.User;
 import game.entity.Card;
-import game.service.WeightedRandomizer;
-import game.service.BattleService;
 
 /**
  * Level up cave class: levels up card if it hasn't reached level 10
@@ -20,7 +16,7 @@ import game.service.BattleService;
 public class LevelUpCave implements Cave{
     @Override
     public AnswerDTO enterThisCave(CommandDTO commandDTO, Card card, BattleService battleService,
-                                   MessageFormatter messageFormatter, CardService cardService, UserService userService, OpenSuperRareBoxCommand command, WeightedRandomizer<EnemyType> enemyWeightedRandomizer, TaskService taskService) {
+                                   MessageFormatter messageFormatter, CardService cardService, UserService userService, OpenSuperRareBoxCommand command, WeightedRandomizer<EnemyType> enemyWeightedRandomizer, TaskService taskService, UserBalanceService userBalanceService) {
         User user = commandDTO.getUser();
         if(card.getLevel() < 10) {
             card.levelUp();

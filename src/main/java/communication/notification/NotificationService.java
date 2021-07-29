@@ -1,7 +1,7 @@
 package communication.notification;
 
 import communication.util.AnswerDTO;
-import data.User;
+import game.entity.User;
 
 /**
  * Interface for sending async answers to users in Telegram messenger

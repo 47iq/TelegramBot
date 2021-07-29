@@ -1,13 +1,11 @@
 package game.entity;
 
-import data.User;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import java.util.Objects;
 
 @Component
 @Entity(name = "tasks")

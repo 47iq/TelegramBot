@@ -1,7 +1,7 @@
 package command.card_collection;
 
 import command.Command;
-import data.CardService;
+import game.service.CardService;
 import game.entity.Card;
 import game.service.ImageParser;
 import communication.keyboard.KeyboardType;

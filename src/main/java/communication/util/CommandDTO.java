@@ -1,6 +1,6 @@
 package communication.util;
 
-import data.User;
+import game.entity.User;
 
 /**
  * Command Data Transfer Object class

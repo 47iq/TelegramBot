@@ -4,7 +4,7 @@ import command.Command;
 import communication.keyboard.KeyboardType;
 import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
-import data.User;
+import game.entity.User;
 import game.service.AchievementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -20,6 +20,6 @@ public class AchievementStatsCommand implements Command {
     @Override
     public AnswerDTO execute(CommandDTO commandDTO) {
         User user = commandDTO.getUser();
-        return new AnswerDTO(true, messageFormatter.getUserAchievementsMessage(achievementService.getUsersAchievements(user)), KeyboardType.LEAF, null, null, user, true);
+        return new AnswerDTO(true, messageFormatter.getUserAchievementsMessage(user), KeyboardType.LEAF, null, null, user, true);
     }
 }

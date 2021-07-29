@@ -1,5 +1,8 @@
-package data;
+package game.service;
 
+import data.CardDAO;
+import game.entity.AchievementType;
+import game.entity.User;
 import util.MessageBundle;
 import game.entity.Card;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +15,10 @@ import java.util.stream.Collectors;
 public class CardServiceImpl implements CardService {
     @Autowired
     CardDAO cardDAO;
+    @Autowired
+    AchievementService achievementService;
+    @Autowired
+    UserService userService;
 
     @Override
     public List<Card> getAllCardsOf(User user) {
@@ -69,12 +76,13 @@ public class CardServiceImpl implements CardService {
         card.setXp(card.getXp() + xp);
         cardDAO.update(card);
         while (true) {
-            //todo
             needXpToLevelUp = card.calcNextLevelXp();
             if (needXpToLevelUp == null)
                 break;
             if (card.getXp() >= needXpToLevelUp && card.getLevel() < Long.parseLong(MessageBundle.getSetting("MAX_LEVEL"))) {
                 card.levelUp();
+                if(card.getLevel() == Long.parseLong(MessageBundle.getSetting("MAX_LEVEL")))
+                    achievementService.addProgress(userService.getUserData(new User(card.getOwner(), 0)), AchievementType.CARD_LEVEL);
                 card.setXp(card.getXp() - needXpToLevelUp);
                 cardDAO.update(card);
                 res = true;

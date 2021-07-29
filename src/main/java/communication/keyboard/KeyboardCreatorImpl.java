@@ -1,7 +1,7 @@
 package communication.keyboard;
 
-import data.User;
-import data.UserService;
+import game.entity.User;
+import game.service.UserService;
 import game.battle.AttackType;
 import game.battle.DefenceType;
 import game.dungeon.CaveService;

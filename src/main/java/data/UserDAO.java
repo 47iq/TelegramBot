@@ -1,5 +1,7 @@
 package data;
 
+import game.entity.User;
+
 import java.util.List;
 
 /**

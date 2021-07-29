@@ -3,13 +3,9 @@ package game.dungeon;
 import command.service_command.OpenSuperRareBoxCommand;
 import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
-import game.service.TaskService;
+import game.service.*;
 import util.MessageFormatter;
-import data.CardService;
-import data.UserService;
 import game.entity.Card;
-import game.service.WeightedRandomizer;
-import game.service.BattleService;
 
 /**
  * An interface of a cave in dungeon: performs some  action on entrance
@@ -28,9 +24,10 @@ public interface Cave {
      * @param command super rare box command
      * @param enemyWeightedRandomizer randomizer for enemies
      * @param taskService
+     * @param userBalanceService
      * @return answer on a request
      */
 
     AnswerDTO enterThisCave(CommandDTO commandDTO, Card card, BattleService battleService,
-                            MessageFormatter messageFormatter, CardService cardService, UserService userService, OpenSuperRareBoxCommand command, WeightedRandomizer<EnemyType> enemyWeightedRandomizer, TaskService taskService);
+                            MessageFormatter messageFormatter, CardService cardService, UserService userService, OpenSuperRareBoxCommand command, WeightedRandomizer<EnemyType> enemyWeightedRandomizer, TaskService taskService, UserBalanceService userBalanceService);
 }

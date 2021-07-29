@@ -4,15 +4,9 @@ import command.service_command.OpenSuperRareBoxCommand;
 import communication.keyboard.KeyboardType;
 import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
-import data.User;
-import game.entity.Task;
-import game.service.TaskService;
+import game.service.*;
 import util.MessageFormatter;
-import data.CardService;
-import data.UserService;
 import game.entity.Card;
-import game.service.WeightedRandomizer;
-import game.service.BattleService;
 import org.springframework.stereotype.Component;
 
 /**
@@ -24,7 +18,7 @@ public class LootBoxCave implements Cave {
 
     @Override
     public AnswerDTO enterThisCave(CommandDTO commandDTO, Card card, BattleService battleService,
-                                   MessageFormatter messageFormatter, CardService cardService, UserService userService, OpenSuperRareBoxCommand command, WeightedRandomizer<EnemyType> enemyWeightedRandomizer, TaskService taskService) {
+                                   MessageFormatter messageFormatter, CardService cardService, UserService userService, OpenSuperRareBoxCommand command, WeightedRandomizer<EnemyType> enemyWeightedRandomizer, TaskService taskService, UserBalanceService userBalanceService) {
         AnswerDTO answerDTO = command.execute(commandDTO);
         answerDTO.setKeyboardType(KeyboardType.DUNGEON);
         return answerDTO.appendToBeginning(messageFormatter.getLootBoxCaveMessage(answerDTO.getCardName()));

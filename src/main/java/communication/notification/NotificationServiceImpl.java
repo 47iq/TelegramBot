@@ -2,9 +2,8 @@ package communication.notification;
 
 import communication.keyboard.KeyboardCreator;
 import communication.util.AnswerDTO;
-import data.PSQLUserDAO;
-import data.User;
-import data.UserService;
+import game.entity.User;
+import game.service.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,6 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.objects.InputFile;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Component

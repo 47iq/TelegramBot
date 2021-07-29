@@ -67,7 +67,7 @@ public class AppConfig {
         weights.put(WeaponCave.class, 1.0);
         weights.put(LevelUpCave.class, 0.5);
         weights.put(LootBoxCave.class, 0.25);
-        weights.put(TaskCave.class, 300.0);
+        weights.put(TaskCave.class, 1.0);
         return new WeightedRandomizerImpl<>(weights);
     }
 
@@ -138,6 +138,7 @@ public class AppConfig {
         weights.put(TaskType.CAVE, 2.0);
         weights.put(TaskType.BATTLE, 2.0);
         weights.put(TaskType.PVP_BATTLE, 1.0);
+        weights.put(TaskType.MONEY_EARNED, 2.0);
         return new WeightedRandomizerImpl<>(weights);
     }
 
@@ -147,7 +148,7 @@ public class AppConfig {
         Map<RewardType, Double> weights = new HashMap<>();
         weights.put(RewardType.HEAL, 10.0);
         weights.put(RewardType.MONEY, 10.0);
-        weights.put(RewardType.LOOT_BOX, 1.0);
+        weights.put(RewardType.LOOT_BOX, 2.0);
         return new WeightedRandomizerImpl<>(weights);
     }
 
@@ -251,6 +252,12 @@ public class AppConfig {
         adminCommands.put("/all_users", getUsersStatsCommand());
         adminCommands.put("/admin", getAdminCommand());
         return new CommandFactoryImpl(commandMap, adminCommands);
+    }
+
+    @Bean
+    @Scope("singleton")
+    public UserBalanceService userBalanceService() {
+        return new UserBalanceServiceImpl();
     }
 
     @Bean

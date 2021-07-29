@@ -2,8 +2,9 @@ package command.shop;
 
 import command.Command;
 import command.service_command.OpenBoxCommand;
-import data.User;
-import data.UserService;
+import game.entity.User;
+import game.service.UserBalanceService;
+import game.service.UserService;
 import communication.keyboard.KeyboardType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -26,15 +27,17 @@ public class BuyBoostCommand implements Command {
     UserService userService;
     @Autowired
     MessageFormatter messageFormatter;
+    @Autowired
+    UserBalanceService userBalanceService;
 
     @Override
     public AnswerDTO execute(CommandDTO commandDTO) {
         User user = commandDTO.getUser();
         long price = Long.parseLong(MessageBundle.getSetting("BOOST_COST"));
-        if(userService.getBalance(commandDTO.getUser()) < price)
+        if(userBalanceService.getBalance(commandDTO.getUser()) < price)
             return new AnswerDTO(true, MessageBundle.getMessage("err_nomoney"), KeyboardType.SHOP, null, null, user, true);
         else {
-            userService.lowerBalance(commandDTO.getUser(), price);
+            userBalanceService.lowerBalance(commandDTO.getUser(), price);
             userService.addBoost(commandDTO.getUser());
             return new AnswerDTO(true, MessageBundle.getMessage("info_success") + "\n" + messageFormatter.getShopInfo(commandDTO.getUser()),
                     KeyboardType.SHOP, null, null, user, true);

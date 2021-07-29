@@ -2,7 +2,7 @@ package game.dungeon;
 
 import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
-import data.User;
+import game.entity.User;
 import game.entity.Card;
 
 /**

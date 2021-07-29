@@ -1,7 +1,7 @@
 package communication.util;
 
 import communication.keyboard.KeyboardType;
-import data.User;
+import game.entity.User;
 import game.entity.CardName;
 import org.jvnet.hk2.annotations.Optional;
 

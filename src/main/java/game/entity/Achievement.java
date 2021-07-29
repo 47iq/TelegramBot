@@ -1,4 +1,4 @@
-package data;
+package game.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,6 +18,14 @@ public class Achievement {
     long boxCavesNumber;
     @Column(name = "total_cards")
     long totalCards;
+    @Column(name = "money_spent")
+    Long moneySpent;
+    @Column(name = "tasks_done")
+    Long tasksDone;
+    @Column(name = "card_level_num")
+    Long cardLeveledUp;
+    @Column(name = "pvp_wins")
+    Long pvpWins;
 
     public Achievement(String owner) {
         this.owner = owner;
@@ -25,10 +33,46 @@ public class Achievement {
         battlesNumber = 0;
         boxCavesNumber = 0;
         totalCards = 0;
+        moneySpent = 0L;
+        tasksDone = 0L;
+        cardLeveledUp = 0L;
+        pvpWins = 0L;
     }
 
     public Achievement() {
 
+    }
+
+    public long getPvpWins() {
+        return pvpWins == null ? 0 : pvpWins ;
+    }
+
+    public void setPvpWins(Long pvpWins) {
+        this.pvpWins = (pvpWins == null ? 0 : pvpWins);
+    }
+
+    public long getCardLeveledUp() {
+        return cardLeveledUp == null ? 0 : cardLeveledUp;
+    }
+
+    public void setCardLeveledUp(Long cardLeveledUp) {
+        this.cardLeveledUp = (cardLeveledUp == null ? 0 : cardLeveledUp);
+    }
+
+    public long getTasksDone() {
+        return tasksDone == null ? 0 : tasksDone;
+    }
+
+    public void setTasksDone(Long tasksDone) {
+        this.tasksDone =  (tasksDone == null ? 0 : tasksDone);
+    }
+
+    public long getMoneySpent() {
+        return moneySpent == null ? 0 : moneySpent;
+    }
+
+    public void setMoneySpent(Long moneySpent) {
+        this.moneySpent = (moneySpent == null ? 0 : moneySpent);
     }
 
     public String getOwner() {

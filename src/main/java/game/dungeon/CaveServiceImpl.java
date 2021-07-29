@@ -4,16 +4,13 @@ import command.service_command.OpenSuperRareBoxCommand;
 import communication.keyboard.KeyboardType;
 import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
+import game.entity.AchievementType;
 import game.entity.TaskType;
-import game.service.AchievementService;
-import game.service.OccupationService;
-import game.service.TaskService;
+import game.entity.User;
+import game.service.*;
 import util.MessageBundle;
 import util.MessageFormatter;
-import data.*;
 import game.entity.Card;
-import game.service.WeightedRandomizer;
-import game.service.BattleService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +45,8 @@ public class CaveServiceImpl implements CaveService {
     OccupationService occupationService;
     @Autowired
     TaskService taskService;
+    @Autowired
+    UserBalanceService userBalanceService;
 
     private static final Logger LOGGER = LogManager.getLogger(CaveServiceImpl.class);
 
@@ -81,12 +80,12 @@ public class CaveServiceImpl implements CaveService {
         if (cave instanceof LevelUpCave && cardMap.get(commandDTO.getUser()).getLevel() >= 10)
             cave = new ArmorCave();
         LOGGER.info(commandDTO.getUser().getUID() + " has entered cave: " + cave.getClass());
-        achievementService.addCave(user);
+        achievementService.addProgress(user, AchievementType.CAVES);
         taskService.addProgress(user, TaskType.CAVE, 1);
-        AnswerDTO answerDTO = cave.enterThisCave(commandDTO, cardMap.get(commandDTO.getUser()), battleService, messageFormatter, cardService, userService, command, enemyWeightedRandomizer, taskService);
+        AnswerDTO answerDTO = cave.enterThisCave(commandDTO, cardMap.get(commandDTO.getUser()), battleService, messageFormatter, cardService, userService, command, enemyWeightedRandomizer, taskService, userBalanceService);
         if(answerDTO != null)
             return answerDTO;
-        return (new BattleCave()).enterThisCave(commandDTO, cardMap.get(commandDTO.getUser()), battleService, messageFormatter, cardService, userService, command, enemyWeightedRandomizer, taskService);
+        return (new BattleCave()).enterThisCave(commandDTO, cardMap.get(commandDTO.getUser()), battleService, messageFormatter, cardService, userService, command, enemyWeightedRandomizer, taskService, userBalanceService);
     }
 
     /**

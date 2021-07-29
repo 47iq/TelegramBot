@@ -3,7 +3,7 @@ package command.tutorial;
 import command.Command;
 import command.service_command.RegisterCommand;
 import communication.keyboard.KeyboardType;
-import data.UserService;
+import game.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import communication.util.AnswerDTO;

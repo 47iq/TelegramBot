@@ -1,7 +1,7 @@
 package command.item;
 
 import command.Command;
-import data.CardService;
+import game.service.CardService;
 import game.entity.Card;
 import communication.keyboard.KeyboardType;
 import game.service.BattleService;

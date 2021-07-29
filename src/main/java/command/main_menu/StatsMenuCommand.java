@@ -4,7 +4,7 @@ import command.Command;
 import communication.keyboard.KeyboardType;
 import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
-import data.User;
+import game.entity.User;
 
 /**
  * Command, which displays a stats menu.

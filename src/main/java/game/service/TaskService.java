@@ -1,9 +1,6 @@
 package game.service;
 
-import communication.util.AnswerDTO;
-import communication.util.CommandDTO;
-import data.User;
-import game.entity.RewardType;
+import game.entity.User;
 import game.entity.Task;
 import game.entity.TaskType;
 

@@ -1,6 +1,7 @@
-package data;
+package game.service;
 
-import game.service.EventType;
+import game.entity.User;
+import data.UserDAO;
 
 import java.util.List;
 
@@ -28,7 +29,7 @@ public interface UserService {
      * @param price amount of money taken from user
      */
 
-    void lowerBalance(User user, long price);
+    void spendTokens(User user, long price);
 
     /**
      * Method that adds a boost item to user
@@ -69,7 +70,7 @@ public interface UserService {
      * @param price amount of money gained by user
      */
 
-    void higherBalance(User user, long price);
+    void addTokens(User user, long price);
 
     /**
      * Method that highers user's balance by a number by user's  UID
@@ -78,7 +79,7 @@ public interface UserService {
      * @param price amount of money gained by user
      */
 
-    void higherBalance(String user, long price);
+    void addTokens(String user, long price);
 
     /**
      * Method that returns  heal items number for a user
