@@ -64,19 +64,27 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public List<Task> getAll(User user) {
-        return taskDAO.getAll();
+        return taskDAO.getAll().stream().filter(x -> x.getUserUID().equals(user.getUID())).collect(Collectors.toList());
     }
 
     private List<Task> find(User user, TaskType taskType) {
-        return tasks.stream().filter(x -> x.getUserUID().equals(user.getUID()) && x.getTaskType().equals(taskType)).collect(Collectors.toList());
+        return getAll(user)
+                .stream()
+                .filter(x -> x.getTaskType().equals(taskType))
+                .collect(Collectors.toList());
     }
 
     @Override
     public void addProgress(User user, TaskType taskType, long value) {
-        find(user, taskType).forEach(task -> {
+        List<Task> toDelete = new ArrayList<>();
+        List<Task> tasks = find(user, taskType);
+        tasks.forEach(task -> {
             if(task == null)
                 return;
             task.setProgress(task.getProgress() + value);
+            toDelete.add(task);
+        });
+        toDelete.forEach(task -> {
             if(task.getProgress() >= task.getNeeded())
                 completeTask(task);
         });
@@ -88,15 +96,15 @@ public class TaskServiceImpl implements TaskService {
         User user = userService.getUserData(new User(task.getUserUID(), 0));
         achievementService.addProgress(user, AchievementType.TASKS);
         switch (task.getRewardType()) {
-            case LOOT_BOX: completeLootBoxTask(task, user);
-            case HEAL: completeHealTask(task, user);
-            case MONEY: completeMoneyTask(task, user);
+            case LOOT_BOX -> completeLootBoxTask(task, user);
+            case HEAL -> completeHealTask(task, user);
+            case MONEY -> completeMoneyTask(task, user);
         }
     }
 
     private void completeMoneyTask(Task task, User user) {
         long reward = task.getReward();
-        userBalanceService.higherBalance(user, reward);
+        userService.addTokens(user, reward);
         notifyCompleted(task, user);
     }
 

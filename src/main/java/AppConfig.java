@@ -57,7 +57,6 @@ public class AppConfig {
     @Qualifier("cave_random")
     public WeightedRandomizer<Class<? extends Cave>> caveWeightedRandomizer(){
         Map<Class<? extends Cave>, Double> weights  =  new HashMap<>();
-        //todo
         weights.put(RobberyCave.class, 10.0);
         weights.put(HealCave.class, 10.0);
         weights.put(LootCave.class, 10.0);
@@ -66,7 +65,7 @@ public class AppConfig {
         weights.put(ArmorCave.class, 0.5);
         weights.put(WeaponCave.class, 1.0);
         weights.put(LevelUpCave.class, 0.5);
-        weights.put(LootBoxCave.class, 0.25);
+        weights.put(LootBoxCave.class, 0.2);
         weights.put(TaskCave.class, 1.0);
         return new WeightedRandomizerImpl<>(weights);
     }
