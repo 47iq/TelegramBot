@@ -2,6 +2,7 @@ package game.service;
 
 import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
+import game.battle.PVEBattleResult;
 import game.entity.User;
 import game.battle.AttackType;
 import game.battle.DefenceType;
@@ -67,4 +68,6 @@ public interface BattleService {
     boolean isBattling(Card card, User user);
 
     boolean isInSearch(User user);
+
+    PVEBattleResult battleQuestEnemy(User user, Enemy enemy, Card card);
 }

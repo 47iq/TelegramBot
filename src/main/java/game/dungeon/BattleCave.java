@@ -22,4 +22,12 @@ public class BattleCave implements Cave {
         Enemy enemy = new Enemy(enemyWeightedRandomizer.getRandom());
         return battleService.battleEnemy(commandDTO, enemy, card);
     }
+
+    public AnswerDTO battleEnemy(CommandDTO commandDTO, Card card, BattleService battleService,
+                                   MessageFormatter messageFormatter, CardService cardService,
+                                 UserService userService, OpenSuperRareBoxCommand command,
+                                 WeightedRandomizer<EnemyType> enemyWeightedRandomizer,
+                                 TaskService taskService, UserBalanceService userBalanceService, Enemy enemy) {
+        return battleService.battleEnemy(commandDTO, enemy, card);
+    }
 }

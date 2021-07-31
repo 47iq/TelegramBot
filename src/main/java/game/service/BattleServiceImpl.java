@@ -4,10 +4,7 @@ import communication.keyboard.KeyboardType;
 import communication.notification.NotificationService;
 import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
-import game.battle.AttackType;
-import game.battle.BattleState;
-import game.battle.BattleXpCalculator;
-import game.battle.DefenceType;
+import game.battle.*;
 import game.entity.AchievementType;
 import game.entity.TaskType;
 import util.MessageBundle;
@@ -43,7 +40,7 @@ public class BattleServiceImpl implements BattleService {
     @Autowired
     UserBalanceService userBalanceService;
 
-    final static Map<User, Card> battleQueue = new HashMap<>();
+    final static Map<User, Card> oneCardBattleQueue = new HashMap<>();
 
     final static Map<User, Card> battlingCards = new HashMap<>();
 
@@ -79,7 +76,7 @@ public class BattleServiceImpl implements BattleService {
                         AnswerDTO message = new AnswerDTO(true, messageFormatter.getBattleQueueTimeoutMessage(), KeyboardType.NONE, null, null, null, true);
                         notificationService.notify(x, message);
                         queueTimes.remove(x);
-                        battleQueue.remove(x);
+                        oneCardBattleQueue.remove(x);
                     });
                     Thread.sleep(30000);
                 } catch (InterruptedException e) {
@@ -90,13 +87,13 @@ public class BattleServiceImpl implements BattleService {
         new Thread(() -> {
             while (true) {
                 try {
-                    synchronized (battleQueue) {
-                        battleQueue.wait();
+                    synchronized (oneCardBattleQueue) {
+                        oneCardBattleQueue.wait();
                     }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                if (battleQueue.size() >= 2)
+                if (oneCardBattleQueue.size() >= 2)
                     prepareBattle();
                 else
                     notificationPublisher.notify(EventType.BATTLE_ENEMY,
@@ -149,18 +146,20 @@ public class BattleServiceImpl implements BattleService {
 
     private synchronized void prepareBattle() {
         new Thread(() -> {
-            Set<User> users = battleQueue.keySet();
-            User firstUser = users.stream().max((x, y) -> (int) (Math.random() * 10 - 5)).orElse(null);
-            Card firstCard = battleQueue.get(firstUser);
-            users.remove(firstUser);
-            User secondUser = users.stream().max((x, y) -> (int) (Math.random() * 10 - 5)).orElse(null);
-            Card secondCard = battleQueue.get(secondUser);
-            battleQueue.remove(firstUser);
-            battleQueue.remove(secondUser);
-            queueTimes.remove(firstUser);
-            queueTimes.remove(secondUser);
-            //startBattle(firstUser, firstCard, secondUser, secondCard);
-            startOnlineBattle(firstUser, firstCard, secondUser, secondCard);
+            if(oneCardBattleQueue.size() >= 2) {
+                Set<User> users = oneCardBattleQueue.keySet();
+                User firstUser = users.stream().max((x, y) -> (int) (Math.random() * 10 - 5)).orElse(null);
+                Card firstCard = oneCardBattleQueue.get(firstUser);
+                users.remove(firstUser);
+                User secondUser = users.stream().max((x, y) -> (int) (Math.random() * 10 - 5)).orElse(null);
+                Card secondCard = oneCardBattleQueue.get(secondUser);
+                oneCardBattleQueue.remove(firstUser);
+                oneCardBattleQueue.remove(secondUser);
+                queueTimes.remove(firstUser);
+                queueTimes.remove(secondUser);
+                //startBattle(firstUser, firstCard, secondUser, secondCard);
+                startOnlineBattle(firstUser, firstCard, secondUser, secondCard);
+            }
         }).start();
     }
 
@@ -453,39 +452,67 @@ public class BattleServiceImpl implements BattleService {
     }
 
     @Override
+    public PVEBattleResult battleQuestEnemy(User user, Enemy enemy, Card card) {
+        StringBuilder battleHistory = new StringBuilder();
+        battleHistory.append(enemy.getEnemyType().getBattleMessage()).append("\n").append("\n");
+        battleHistory.append(messageFormatter.getEnemyBattleStartMessage(enemy, card)).append("\n");
+        if (enemy.getEnemyCard().getHealth() > 0) {
+            int random = (int) (Math.random() * 2);
+            if (card.getHealth() < enemy.getEnemyCard().getHealth() || card.getAttack() < enemy.getEnemyCard().getAttack())
+                random = 0;
+            if (random == 0)
+                completeFastBattle(battleHistory, card, enemy.getEnemyCard());
+            else
+                completeFastBattle(battleHistory, enemy.getEnemyCard(), card);
+            cardService.save(card);
+        }
+        achievementService.addProgress(user, AchievementType.BATTLES);
+        taskService.addProgress(user, TaskType.BATTLE, 1);
+        if (card.getHealth() > 0) {
+            userBalanceService.higherBalance(user, enemy.getAward());
+            return new PVEBattleResult(true, new AnswerDTO(true, battleHistory + "\n" +
+                    messageFormatter.getEnemyBattleWinMessage(card, enemy),
+                    KeyboardType.QUEST, null, null, user, true).append(calcLevelUp(card, enemy.getEnemyCard())));
+        } else
+            return new PVEBattleResult(false, new AnswerDTO(true, battleHistory + "\n" +
+                    messageFormatter.getEnemyBattleLoseMessage(card, enemy), KeyboardType.QUEST_LEAF, null, null, user, true));
+
+    }
+
+    @Override
     public boolean isBattling(User user) {
-        synchronized (battleQueue) {
-            return battleQueue.containsKey(user) || battlingCards.containsKey(user);
+        synchronized (oneCardBattleQueue) {
+            return oneCardBattleQueue.containsKey(user) || battlingCards.containsKey(user);
         }
     }
 
     @Override
     public void startSearch(User user, Card card) {
-        synchronized (battleQueue) {
-            battleQueue.put(user, card);
+        synchronized (oneCardBattleQueue) {
+            oneCardBattleQueue.put(user, card);
             queueTimes.put(user, LocalDateTime.now());
-            battleQueue.notify();
+            oneCardBattleQueue.notify();
         }
     }
 
     @Override
     public void leaveSearch(User user) {
-        synchronized (battleQueue) {
-            battleQueue.remove(user);
+        synchronized (oneCardBattleQueue) {
+            oneCardBattleQueue.remove(user);
         }
     }
 
     @Override
     public Card getBattlingCard(User user) {
-        if(battleQueue.containsKey(user))
-            return battleQueue.get(user);
+        if(oneCardBattleQueue.containsKey(user))
+            return oneCardBattleQueue.get(user);
         else
             return battlingCards.get(user);
     }
 
     @Override
     public boolean isInSearch(User user) {
-        return battleQueue.containsKey(user);
+        return oneCardBattleQueue.containsKey(user);
     }
 
     @Override

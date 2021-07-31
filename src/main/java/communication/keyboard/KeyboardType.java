@@ -21,5 +21,9 @@ public enum KeyboardType {
     BATTLE_ATTACK,
     BATTLE_DEFENCE,
     SEARCH_LEAF,
-    MARKETPLACE;
+    MARKETPLACE,
+    QUEST_SHOP,
+    QUEST,
+    QUEST_MENU,
+    QUEST_LEAF
 }
