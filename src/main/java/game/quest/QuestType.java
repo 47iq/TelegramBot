@@ -1,5 +1,5 @@
 package game.quest;
 
 public enum QuestType {
-    QUEST_1
+    FIRST_QUEST
 }

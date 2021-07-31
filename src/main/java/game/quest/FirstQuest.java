@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import util.MessageBundle;
 import util.MessageFormatter;
 
+import javax.annotation.Resource;
 import java.util.Map;
 import java.util.NavigableSet;
 
@@ -25,13 +26,13 @@ public class FirstQuest implements Quest {
     @Autowired
     MessageFormatter messageFormatter;
 
-    @Autowired
+    @Resource(name="first_actions")
     private Map<Long, QuestStepAction> questStageActionMap;
 
-    @Autowired
+    @Resource(name="first_enemies")
     private Map<Long, EnemyType> questEnemyTypeMap;
 
-    @Autowired
+    @Resource(name="first_stages")
     private NavigableSet<Long> stages;
 
     private final long MAX_STEP = Long.parseLong(MessageBundle.getSetting("FIRST_QUEST_MAX_STEP"));
@@ -41,6 +42,8 @@ public class FirstQuest implements Quest {
         long step = questState.getStage();
         if(questState.getIsRunning())
             step = questState.getStep();
+        else
+            questState.setIsRunning(true);
         return switch (questStageActionMap.get(step)) {
             case BATTLE -> battle(questState, card, user, step);
             case SHOP -> shop(questState, card, user, step);
@@ -49,45 +52,52 @@ public class FirstQuest implements Quest {
     }
 
     private AnswerDTO message(QuestState questState, Card card, User user, long step) {
-        AnswerDTO answerDTO = new AnswerDTO(true, messageFormatter.getQuestMessage(QuestType.QUEST_1, step),
+        AnswerDTO answerDTO = new AnswerDTO(true, messageFormatter.getQuestMessage(QuestType.FIRST_QUEST, step),
                 KeyboardType.QUEST, null, null, user, true);
+        prepareToSend(questState, step, answerDTO);
         step++;
-        return prepareToSend(questState, step, answerDTO);
+        questState.setStep(step);
+        return answerDTO;
     }
 
     private AnswerDTO shop(QuestState questState, Card card, User user, long step) {
-        AnswerDTO answerDTO = new AnswerDTO(true, messageFormatter.getQuestShopMessage(QuestType.QUEST_1, step),
+        AnswerDTO answerDTO = new AnswerDTO(true, messageFormatter.getQuestShopMessage(QuestType.FIRST_QUEST, step),
                 KeyboardType.QUEST_SHOP, null, null, user, true);
+        prepareToSend(questState, step, answerDTO);
         step++;
-        return prepareToSend(questState, step, answerDTO);
+        questState.setStep(step);
+        return answerDTO;
     }
 
     private AnswerDTO battle(QuestState questState, Card card, User user, long step) {
         Enemy enemy = new Enemy(questEnemyTypeMap.get(step));
         PVEBattleResult result = battleService.battleQuestEnemy(user, enemy, card);
         AnswerDTO answerDTO = result.getResultMessage();
+        prepareToSend(questState, step, answerDTO);
         if(result.isHasWon()) {
             step++;
+            questState.setStep(step);
         } else {
             questState.setIsRunning(false);
+            questState.setDeaths(Math.min(Long.MAX_VALUE, questState.getDeaths() + 1));
         }
-        return prepareToSend(questState, step, answerDTO);
+        return answerDTO;
     }
 
-    private AnswerDTO prepareToSend(QuestState questState, long step, AnswerDTO answerDTO) {
+    private void prepareToSend(QuestState questState, long step, AnswerDTO answerDTO) {
         if(!answerDTO.getKeyboard().equals(KeyboardType.QUEST_LEAF)) {
             Long stage = stages.ceiling(step);
             if (stage != null && stage == step)
                 questState.setStage(step);
             if (step == MAX_STEP) {
-                answerDTO.setKeyboardType(KeyboardType.QUEST_LEAF);
-                return answerDTO;
+                answerDTO.setKeyboardType(KeyboardType.QUEST_FINISH);
+                answerDTO.append(messageFormatter.getQuestFinishMessage(questState));
+                return;
             }
             switch (questStageActionMap.get(step)) {
                 case SHOP -> answerDTO.setKeyboardType(KeyboardType.QUEST_SHOP);
                 case BATTLE, MESSAGE -> answerDTO.setKeyboardType(KeyboardType.QUEST);
             }
         }
-        return answerDTO;
     }
 }

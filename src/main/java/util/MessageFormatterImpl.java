@@ -1,6 +1,8 @@
 package util;
 
 import game.entity.*;
+import game.quest.QuestState;
+import game.quest.QuestType;
 import game.service.CardService;
 import game.service.UserService;
 import game.battle.AttackType;
@@ -590,5 +592,24 @@ public class MessageFormatterImpl implements MessageFormatter {
 
     private String getMoneySpentAchievementMessage(User user) {
         return MessageBundle.getMessage("achievement_money_spent") +  " "  + achievementService.getUsersAchievements(user).getMoneySpent();
+    }
+
+    @Override
+    public String getQuestShopMessage(QuestType questType, long step) {
+        return MessageBundle.getMessage("quest_shop");
+    }
+
+    @Override
+    public String getQuestMessage(QuestType quest, long step) {
+        return MessageBundle.getMessage(quest.name().toLowerCase() + "." + step);
+    }
+
+    @Override
+    public String getQuestFinishMessage(QuestState state) {
+        long lost = state.getDeaths();
+        if(MessageBundle.getMessageMode().equals(MessageMode.SCH9))
+            return "ICT: "  + Math.max(100 - Math.random() * 10 * lost, 40) + ",  MAT:  "  +  Math.max(100 - Math.random() * 10 * lost, 27)  + ",  PYC:  "  +  Math.max(100 - Math.random() * 10 * lost, 24);
+        else
+            return "";
     }
 }

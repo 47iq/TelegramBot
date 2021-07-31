@@ -1,6 +1,7 @@
 package communication.keyboard;
 
 import game.entity.User;
+import game.quest.QuestService;
 import game.service.UserService;
 import game.battle.AttackType;
 import game.battle.DefenceType;
@@ -33,6 +34,8 @@ public class KeyboardCreatorImpl implements KeyboardCreator {
     MarketplaceService marketplaceService;
     @Autowired
     TaskService taskService;
+    @Autowired
+    QuestService questService;
 
     private final int BUTTONS_IN_ROW = 2;
     private final int MAX_ROWS = 5;
@@ -66,8 +69,39 @@ public class KeyboardCreatorImpl implements KeyboardCreator {
             case BATTLE_DEFENCE -> getDefenceKeyboard();
             case SEARCH_LEAF -> getSearchLeafKeyboard();
             case MARKETPLACE -> getMarketplaceKeyboard(user);
+            case QUEST_MENU, QUEST_LEAF, QUEST_FINISH -> getQuestMenuKeyboard(user);
+            case QUEST -> getQuestKeyboard(user);
+            case QUEST_SHOP -> getQuestShopMenu(user);
             default -> null;
         };
+    }
+
+    private InlineKeyboardMarkup getQuestShopMenu(User user) {
+        Map<String, String> menu = new HashMap<>();
+        if(userService.getHealCount(user) == 0)
+            menu.put("/buy_use_heal", MessageBundle.getMessage("info_quest.buyandheal"));
+        else
+            menu.put("/quest_instant_heal", MessageBundle.getMessage("info_quest.useheal"));
+        menu.put("/change", MessageBundle.getMessage("info_quest.change"));
+        menu.put("/quest_resume", MessageBundle.getMessage("info_quest.resume"));
+        menu.put("/quest_menu", MessageBundle.getMessage("info_quest.menu.back"));
+        return getKeyboard(menu);
+    }
+
+    private InlineKeyboardMarkup getQuestKeyboard(User user) {
+        Map<String, String> menu = new HashMap<>();
+        menu.put("/quest_resume", MessageBundle.getMessage("info_quest.resume"));
+        menu.put("/quest_menu", MessageBundle.getMessage("info_quest.menu.back"));
+        return getKeyboard(menu);
+    }
+
+    private InlineKeyboardMarkup getQuestMenuKeyboard(User user) {
+        Map<String, String> menu = new HashMap<>();
+        if(questService.isInQuest(user))
+            menu.put("/quest_resume", MessageBundle.getMessage("info_quest.resume"));
+        else
+            menu.put("/start_first", MessageBundle.getMessage("info_quest.start"));
+        return getKeyboard(menu);
     }
 
     private InlineKeyboardMarkup getMarketplaceKeyboard(User user) {
@@ -367,6 +401,7 @@ public class KeyboardCreatorImpl implements KeyboardCreator {
         buttonTexts.add("/use_item");
         buttonTexts.add("/battle_menu");
         buttonTexts.add("/dungeon_menu");
+        buttonTexts.add("/quest_menu");
         buttonTexts.add("/info");
         if(user.getUID().equals(MessageBundle.getSetting("ADMIN_UID")))
             buttonTexts.add("/admin");

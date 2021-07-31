@@ -11,5 +11,11 @@ public interface QuestService {
 
     AnswerDTO pauseQuest(User user);
 
+    void setCard(User user, Card card);
+
+    Card getCard(User user);
+
     boolean isInQuest(User user);
+
+    QuestState getUserQuestState(User user);
 }

@@ -4,6 +4,7 @@ import game.entity.*;
 import game.battle.AttackType;
 import game.dungeon.Enemy;
 import game.marketplace.Merchandise;
+import game.quest.QuestState;
 import game.quest.QuestType;
 
 import java.util.List;
@@ -454,4 +455,6 @@ public interface MessageFormatter {
     String getQuestShopMessage(QuestType questType, long step);
 
     String getQuestMessage(QuestType quest1, long step);
+
+    String getQuestFinishMessage(QuestState type);
 }

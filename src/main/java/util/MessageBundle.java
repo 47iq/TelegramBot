@@ -44,4 +44,12 @@ public class MessageBundle {
     public static void setMessageMode(MessageMode messageMode) {
         MessageBundle.messageMode = messageMode;
     }
+
+    public static AppMode getAppMode() {
+        return appMode;
+    }
+
+    public static MessageMode getMessageMode() {
+        return messageMode;
+    }
 }

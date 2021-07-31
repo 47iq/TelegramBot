@@ -1,20 +1,36 @@
 package game.quest;
 
+import java.util.Objects;
+
 public class QuestState {
     private long UID;
-    private long stage;
+    private Long stage;
     private String userUID;
     private long cardUID;
     private QuestType type;
     private boolean isRunning;
-    private long step;
+    private Long step;
+    private long deaths;
 
     public QuestState(String userUID, long cardUID, QuestType type) {
         this.userUID = userUID;
         this.cardUID = cardUID;
         this.type = type;
-        stage = 0;
-        step = 0;
+        isRunning = true;
+        stage = 1L;
+        step = 1L;
+        deaths = 0;
+    }
+
+    public QuestState() {
+    }
+
+    public long getDeaths() {
+        return deaths;
+    }
+
+    public void setDeaths(long deaths) {
+        this.deaths = deaths;
     }
 
     public long getCardUID() {
@@ -71,5 +87,18 @@ public class QuestState {
 
     public void setStep(long step) {
         this.step = step;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        QuestState that = (QuestState) o;
+        return UID == that.UID;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(UID);
     }
 }

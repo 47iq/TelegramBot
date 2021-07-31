@@ -4,6 +4,7 @@ import command.battle.*;
 import command.dungeon.*;
 import command.item.*;
 import command.marketplace.*;
+import command.quest.*;
 import command.stats.AchievementStatsCommand;
 import command.stats.AppStatsCommand;
 import command.card_collection.CardViewCommand;
@@ -24,6 +25,7 @@ import game.battle.BattleXpCalculator;
 import game.battle.BattleXpCalculatorImpl;
 import game.marketplace.MarketplaceService;
 import game.marketplace.MarketplaceServiceImpl;
+import game.quest.*;
 import util.MessageBundle;
 import data.*;
 import communication.keyboard.KeyboardCreator;
@@ -39,6 +41,7 @@ import util.MessageFormatter;
 import util.MessageFormatterImpl;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 
+import javax.annotation.Resource;
 import java.util.*;
 
 /**
@@ -51,6 +54,76 @@ import java.util.*;
 public class AppConfig {
 
     Map<String, Command> commandMap = new HashMap<>();
+
+    @Bean
+    @Scope("singleton")
+    Quest firstQuest() {
+        return new FirstQuest();
+    }
+
+    @Bean
+    @Scope("singleton")
+    QuestDAO questDAO() {
+        return new PQSLQuestDAO();
+    }
+
+    @Bean
+    @Scope("singleton")
+    QuestService questService() {
+        return new QuestServiceImpl();
+    }
+
+    @Bean(name="first_actions")
+    @Scope("singleton")
+    public Map<Long, QuestStepAction> questStageActionMap() {
+        Map<Long, QuestStepAction> map = new HashMap<>();
+        map.put(1L, QuestStepAction.MESSAGE);
+        map.put(2L, QuestStepAction.SHOP);
+        map.put(3L, QuestStepAction.BATTLE);
+        map.put(4L, QuestStepAction.BATTLE);
+        map.put(5L, QuestStepAction.MESSAGE);
+        map.put(6L, QuestStepAction.SHOP);
+        map.put(7L, QuestStepAction.BATTLE);
+        map.put(8L, QuestStepAction.BATTLE);
+        map.put(9L, QuestStepAction.MESSAGE);
+        map.put(10L, QuestStepAction.SHOP);
+        map.put(11L, QuestStepAction.BATTLE);
+        map.put(12L, QuestStepAction.BATTLE);
+        map.put(13L, QuestStepAction.MESSAGE);
+        map.put(14L, QuestStepAction.SHOP);
+        map.put(15L, QuestStepAction.BATTLE);
+        map.put(16L, QuestStepAction.BATTLE);
+        map.put(17L, QuestStepAction.BATTLE);
+        map.put(18L, QuestStepAction.MESSAGE);
+        return map;
+    }
+
+    @Bean(name="first_enemies")
+    @Scope("singleton")
+    Map<Long, EnemyType> questEnemyTypeMap() {
+        Map<Long, EnemyType> map = new HashMap<>();
+        map.put(3L, EnemyType.FIRST_QUEST_1);
+        map.put(4L, EnemyType.FIRST_QUEST_2);
+        map.put(7L, EnemyType.FIRST_QUEST_3);
+        map.put(8L, EnemyType.FIRST_QUEST_4);
+        map.put(11L, EnemyType.FIRST_QUEST_5);
+        map.put(12L, EnemyType.FIRST_QUEST_6);
+        map.put(15L, EnemyType.FIRST_QUEST_7);
+        map.put(16L, EnemyType.FIRST_QUEST_8);
+        map.put(17L, EnemyType.FIRST_QUEST_9);
+        return map;
+    }
+
+    @Bean(name="first_stages")
+    @Scope("singleton")
+    NavigableSet<Long> stages() {
+        NavigableSet<Long> stages = new TreeSet<>();
+        stages.add(1L);
+        stages.add(5L);
+        stages.add(9L);
+        stages.add(13L);
+        return stages;
+    }
 
     @Bean
     @Scope("singleton")
@@ -244,6 +317,14 @@ public class AppConfig {
         commandMap.put("/cancel_card", getCancelCardCommand());
         commandMap.put("/marketplace", getMarketplaceCommand());
         commandMap.put("/tasks", getTasksCommand());
+        commandMap.put("/quest_resume", getContinueCommand());
+        commandMap.put("/change", getChangeCommand());
+        commandMap.put("/start_first", getStartFirstCommand());
+        commandMap.put("/start_first_card", getStartFirstCardCommand());
+        commandMap.put("/change_card", getChangeCardCommand());
+        commandMap.put("/buy_use_heal", getBuyUseHealCommand());
+        commandMap.put("/quest_menu", getQuestMenuCommand());
+        commandMap.put("/quest_instant_heal", getQuestInstantHealCommand());
         Map<String, Command> adminCommands = new HashMap<>();
         adminCommands.put("/add_tokens", getAddTokensCommand());
         adminCommands.put("/notify_all", getNotifyAllCommand());
@@ -251,6 +332,54 @@ public class AppConfig {
         adminCommands.put("/all_users", getUsersStatsCommand());
         adminCommands.put("/admin", getAdminCommand());
         return new CommandFactoryImpl(commandMap, adminCommands);
+    }
+
+    @Bean
+    @Scope("singleton")
+    public QuestInstantHealCommand getQuestInstantHealCommand() {
+        return new QuestInstantHealCommand();
+    }
+
+    @Bean
+    @Scope("singleton")
+    public QuestMenuCommand getQuestMenuCommand() {
+        return new QuestMenuCommand();
+    }
+
+    @Bean
+    @Scope("singleton")
+    public ContinueQuestCommand getContinueCommand() {
+        return new ContinueQuestCommand();
+    }
+
+    @Bean
+    @Scope("singleton")
+    public ChangeCommand getChangeCommand() {
+        return new ChangeCommand ();
+    }
+
+    @Bean
+    @Scope("singleton")
+    public StartFirstQuestCommand getStartFirstCommand() {
+        return new StartFirstQuestCommand();
+    }
+
+    @Bean
+    @Scope("singleton")
+    public StartFirstQuestCardCommand getStartFirstCardCommand() {
+        return new StartFirstQuestCardCommand();
+    }
+
+    @Bean
+    @Scope("singleton")
+    public ChangeCardCommand getChangeCardCommand() {
+        return new ChangeCardCommand();
+    }
+
+    @Bean
+    @Scope("singleton")
+    public BuyAndUseHealCommand getBuyUseHealCommand() {
+        return new BuyAndUseHealCommand();
     }
 
     @Bean
@@ -538,7 +667,7 @@ public class AppConfig {
 
     @Bean
     @Scope("singleton")
-    public Command getHealCardCommand() {
+    public HealCardCommand getHealCardCommand() {
         return new HealCardCommand();
     }
 
@@ -562,7 +691,7 @@ public class AppConfig {
 
     @Bean
     @Scope("singleton")
-    public Command getUseHealCommand() {
+    public UseHealCommand getUseHealCommand() {
         return new UseHealCommand();
     }
 
@@ -605,7 +734,7 @@ public class AppConfig {
 
     @Bean
     @Scope("singleton")
-    public Command getBuyHealCommand() {
+    public BuyHealCommand getBuyHealCommand() {
         return new BuyHealCommand();
     }
 

@@ -232,6 +232,159 @@ public enum EnemyType {
         public long getAward() {
             return 330;
         }
+    }
+    ,
+    FIRST_QUEST_1 {
+        @Override
+        public Card getStats() {
+            return new Card(null, 3, 1, 1);
+        }
+
+        @Override
+        public String getBattleMessage() {
+            return MessageBundle.getMessage("FIRST_QUEST_1_enemy");
+        }
+
+        @Override
+        public long getAward() {
+            return 1;
+        }
+    }
+    ,
+    FIRST_QUEST_2 {
+        @Override
+        public Card getStats() {
+            return new Card(null, 4, 4, 6);
+        }
+
+        @Override
+        public String getBattleMessage() {
+            return MessageBundle.getMessage("FIRST_QUEST_2_enemy");
+        }
+
+        @Override
+        public long getAward() {
+            return 50;
+        }
+    }
+    ,
+    FIRST_QUEST_3 {
+        @Override
+        public Card getStats() {
+            return new Card(null, 8, 6, 9);
+        }
+
+        @Override
+        public String getBattleMessage() {
+            return MessageBundle.getMessage("FIRST_QUEST_3_enemy");
+        }
+
+        @Override
+        public long getAward() {
+            return 100;
+        }
+    }
+    ,
+    FIRST_QUEST_4 {
+        @Override
+        public Card getStats() {
+            return new Card(null, 10, 9, 11);
+        }
+
+        @Override
+        public String getBattleMessage() {
+            return MessageBundle.getMessage("FIRST_QUEST_4_enemy");
+        }
+
+        @Override
+        public long getAward() {
+            return 100;
+        }
+    }
+    ,
+    FIRST_QUEST_5 {
+        @Override
+        public Card getStats() {
+            return new Card(null, 12, 12, 12);
+        }
+
+        @Override
+        public String getBattleMessage() {
+            return MessageBundle.getMessage("FIRST_QUEST_5_enemy");
+        }
+
+        @Override
+        public long getAward() {
+            return 200;
+        }
+    }
+    ,
+    FIRST_QUEST_6 {
+        @Override
+        public Card getStats() {
+            return new Card(null, 14, 15, 19);
+        }
+
+        @Override
+        public String getBattleMessage() {
+            return MessageBundle.getMessage("FIRST_QUEST_6_enemy");
+        }
+
+        @Override
+        public long getAward() {
+            return 300;
+        }
+    }
+    ,
+    FIRST_QUEST_7 {
+        @Override
+        public Card getStats() {
+            return new Card(null, 16, 17, 22);
+        }
+
+        @Override
+        public String getBattleMessage() {
+            return MessageBundle.getMessage("FIRST_QUEST_7_enemy");
+        }
+
+        @Override
+        public long getAward() {
+            return 1000;
+        }
+    }
+    ,
+    FIRST_QUEST_8 {
+        @Override
+        public Card getStats() {
+            return new Card(null, 18, 19, 21);
+        }
+
+        @Override
+        public String getBattleMessage() {
+            return MessageBundle.getMessage("FIRST_QUEST_8_enemy");
+        }
+
+        @Override
+        public long getAward() {
+            return 2000;
+        }
+    }
+    ,
+    FIRST_QUEST_9 {
+        @Override
+        public Card getStats() {
+            return new Card(null, 23, 21, 29);
+        }
+
+        @Override
+        public String getBattleMessage() {
+            return MessageBundle.getMessage("FIRST_QUEST_9_enemy");
+        }
+
+        @Override
+        public long getAward() {
+            return 3000;
+        }
     };
 
     public Card getStats() {
