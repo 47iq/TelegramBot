@@ -41,7 +41,6 @@ import util.MessageFormatter;
 import util.MessageFormatterImpl;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 
-import javax.annotation.Resource;
 import java.util.*;
 
 /**
@@ -325,6 +324,7 @@ public class AppConfig {
         commandMap.put("/buy_use_heal", getBuyUseHealCommand());
         commandMap.put("/quest_menu", getQuestMenuCommand());
         commandMap.put("/quest_instant_heal", getQuestInstantHealCommand());
+        commandMap.put("/pve_menu", getPVEMenuCommand());
         Map<String, Command> adminCommands = new HashMap<>();
         adminCommands.put("/add_tokens", getAddTokensCommand());
         adminCommands.put("/notify_all", getNotifyAllCommand());
@@ -332,6 +332,12 @@ public class AppConfig {
         adminCommands.put("/all_users", getUsersStatsCommand());
         adminCommands.put("/admin", getAdminCommand());
         return new CommandFactoryImpl(commandMap, adminCommands);
+    }
+
+    @Bean
+    @Scope("singleton")
+    public PVEMenuCommand getPVEMenuCommand() {
+        return new PVEMenuCommand();
     }
 
     @Bean

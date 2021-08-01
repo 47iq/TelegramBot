@@ -1,5 +1,7 @@
 package communication.keyboard;
 
+import command.dungeon.DungeonMenuCommand;
+import game.entity.Card;
 import game.entity.User;
 import game.quest.QuestService;
 import game.service.UserService;
@@ -72,18 +74,30 @@ public class KeyboardCreatorImpl implements KeyboardCreator {
             case QUEST_MENU, QUEST_LEAF, QUEST_FINISH -> getQuestMenuKeyboard(user);
             case QUEST -> getQuestKeyboard(user);
             case QUEST_SHOP -> getQuestShopMenu(user);
+            case PVE_MENU -> getPVEMenu(user);
             default -> null;
         };
     }
 
+    private InlineKeyboardMarkup getPVEMenu(User user) {
+        Map<String, String> menu = new HashMap<>();
+        menu.put("/dungeon_menu", MessageBundle.getMessage("/dungeon_menu"));
+        menu.put("/quest_menu", MessageBundle.getMessage("/quest_menu"));
+        return getKeyboard(menu);
+    }
+
     private InlineKeyboardMarkup getQuestShopMenu(User user) {
         Map<String, String> menu = new HashMap<>();
-        if(userService.getHealCount(user) == 0)
-            menu.put("/buy_use_heal", MessageBundle.getMessage("info_quest.buyandheal"));
-        else
-            menu.put("/quest_instant_heal", MessageBundle.getMessage("info_quest.useheal"));
+        Card card = questService.getCard(user);
+        if(card.getHealth() != card.getMaxHealth()) {
+            if (userService.getHealCount(user) == 0)
+                menu.put("/buy_use_heal", MessageBundle.getMessage("info_quest.buyandheal"));
+            else
+                menu.put("/quest_instant_heal", MessageBundle.getMessage("info_quest.useheal"));
+        }
         menu.put("/change", MessageBundle.getMessage("info_quest.change"));
-        menu.put("/quest_resume", MessageBundle.getMessage("info_quest.resume"));
+        if(card.getHealth() > 0)
+            menu.put("/quest_resume", MessageBundle.getMessage("info_quest.resume"));
         menu.put("/quest_menu", MessageBundle.getMessage("info_quest.menu.back"));
         return getKeyboard(menu);
     }
@@ -98,9 +112,10 @@ public class KeyboardCreatorImpl implements KeyboardCreator {
     private InlineKeyboardMarkup getQuestMenuKeyboard(User user) {
         Map<String, String> menu = new HashMap<>();
         if(questService.isInQuest(user))
-            menu.put("/quest_resume", MessageBundle.getMessage("info_quest.resume"));
+            menu.put("/quest_resume", MessageBundle.getMessage("info_quest.frompoint"));
         else
-            menu.put("/start_first", MessageBundle.getMessage("info_quest.start"));
+            menu.put("/start_first", MessageBundle.getMessage("info_first.quest.start"));
+        menu.put("/help", MessageBundle.getMessage("back"));
         return getKeyboard(menu);
     }
 
@@ -173,7 +188,7 @@ public class KeyboardCreatorImpl implements KeyboardCreator {
      * Method that creates a keyboard for a dungeon menu.
      *
      * @return a keyboard for a dungeon menu
-     * @see command.main_menu.DungeonMenuCommand
+     * @see DungeonMenuCommand
      * @param user
      */
 
@@ -400,8 +415,7 @@ public class KeyboardCreatorImpl implements KeyboardCreator {
         buttonTexts.add("/my_cards");
         buttonTexts.add("/use_item");
         buttonTexts.add("/battle_menu");
-        buttonTexts.add("/dungeon_menu");
-        buttonTexts.add("/quest_menu");
+        buttonTexts.add("/pve_menu");
         buttonTexts.add("/info");
         if(user.getUID().equals(MessageBundle.getSetting("ADMIN_UID")))
             buttonTexts.add("/admin");

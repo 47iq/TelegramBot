@@ -26,5 +26,6 @@ public enum KeyboardType {
     QUEST,
     QUEST_MENU,
     QUEST_LEAF,
-    QUEST_FINISH
+    QUEST_FINISH,
+    PVE_MENU
 }

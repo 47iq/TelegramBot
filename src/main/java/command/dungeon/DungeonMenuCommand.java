@@ -1,4 +1,4 @@
-package command.main_menu;
+package command.dungeon;
 
 import command.Command;
 import communication.keyboard.KeyboardType;

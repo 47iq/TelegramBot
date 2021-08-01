@@ -608,7 +608,7 @@ public class MessageFormatterImpl implements MessageFormatter {
     public String getQuestFinishMessage(QuestState state) {
         long lost = state.getDeaths();
         if(MessageBundle.getMessageMode().equals(MessageMode.SCH9))
-            return "ICT: "  + Math.max(100 - Math.random() * 10 * lost, 40) + ",  MAT:  "  +  Math.max(100 - Math.random() * 10 * lost, 27)  + ",  PYC:  "  +  Math.max(100 - Math.random() * 10 * lost, 24);
+            return "ICT: "  + String.format("%.0f", Math.max(100 - Math.random() * 10 * lost, 40)) + ",  MAT:  "  +  String.format("%.0f", Math.max(100 - Math.random() * 10 * lost, 27))  + ",  RUS:  "  +  String.format("%.0f", Math.max(100 - Math.random() * 10 * lost, 24));
         else
             return "";
     }

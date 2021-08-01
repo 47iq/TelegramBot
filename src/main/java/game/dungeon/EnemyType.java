@@ -349,14 +349,14 @@ public enum EnemyType {
 
         @Override
         public long getAward() {
-            return 1000;
+            return 500;
         }
     }
     ,
     FIRST_QUEST_8 {
         @Override
         public Card getStats() {
-            return new Card(null, 18, 19, 21);
+            return new Card(null, 20, 19, 21);
         }
 
         @Override
@@ -366,14 +366,14 @@ public enum EnemyType {
 
         @Override
         public long getAward() {
-            return 2000;
+            return 500;
         }
     }
     ,
     FIRST_QUEST_9 {
         @Override
         public Card getStats() {
-            return new Card(null, 23, 21, 29);
+            return new Card(null, 35, 26, 29);
         }
 
         @Override
@@ -383,7 +383,7 @@ public enum EnemyType {
 
         @Override
         public long getAward() {
-            return 3000;
+            return 1000;
         }
     };
 

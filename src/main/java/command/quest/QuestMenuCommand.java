@@ -1,4 +1,4 @@
-package command.main_menu;
+package command.quest;
 
 import command.Command;
 import communication.keyboard.KeyboardType;
