@@ -54,6 +54,11 @@ public class BattleServiceImpl implements BattleService {
 
     static Map<Thread, BattleState> battleStateMap = new HashMap<>();
 
+    enum BattleMode {
+        DUNGEON,
+        QUEST
+    }
+
     public BattleServiceImpl() {
         monitorQueue();
     }
@@ -475,7 +480,7 @@ public class BattleServiceImpl implements BattleService {
                     KeyboardType.QUEST, null, null, user, true).append(calcLevelUp(card, enemy.getEnemyCard())));
         } else
             return new PVEBattleResult(false, new AnswerDTO(true, battleHistory + "\n" +
-                    messageFormatter.getEnemyBattleLoseMessage(card, enemy), KeyboardType.QUEST_LEAF, null, null, user, true));
+                    messageFormatter.getQuestBattleLoseMessage(card, enemy), KeyboardType.QUEST_LEAF, null, null, user, true));
 
     }
 

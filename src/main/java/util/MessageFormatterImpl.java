@@ -3,13 +3,10 @@ package util;
 import game.entity.*;
 import game.quest.QuestState;
 import game.quest.QuestType;
-import game.service.CardService;
-import game.service.UserService;
+import game.service.*;
 import game.battle.AttackType;
 import game.dungeon.Enemy;
 import game.marketplace.Merchandise;
-import game.service.AchievementService;
-import game.service.PriceCalculator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -280,6 +277,11 @@ public class MessageFormatterImpl implements MessageFormatter {
     public String getEnemyBattleLoseMessage(Card card, Enemy enemy) {
         return MessageBundle.getMessage(enemy.getEnemyType().name() + "_name") + " " + MessageBundle.getMessage("dungeon_win") + " " + MessageBundle.getMessage(card.getName().name()) + "\n\n" + MessageBundle.getMessage(enemy.getEnemyType().name() + "_losehook")
                 + "\n" + MessageBundle.getMessage("dungeon_gohome");
+    }
+
+    @Override
+    public String getQuestBattleLoseMessage(Card card, Enemy enemy) {
+        return MessageBundle.getMessage(enemy.getEnemyType().name() + "_name") + " " + MessageBundle.getMessage("dungeon_win") + " " + MessageBundle.getMessage(card.getName().name()) + "\n\n" + MessageBundle.getMessage(enemy.getEnemyType().name() + "_losehook");
     }
 
     @Override

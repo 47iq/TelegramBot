@@ -91,6 +91,11 @@ public class QuestServiceImpl implements QuestService {
     }
 
     @Override
+    public boolean isInQuest(Card card) {
+        return questStates.stream().anyMatch(x -> x.getCardUID() == (card.getUID()));
+    }
+
+    @Override
     public void setCard(User user, Card card) {
         questStates.stream()
                 .filter(x -> x.getUserUID().equals(user.getUID()))

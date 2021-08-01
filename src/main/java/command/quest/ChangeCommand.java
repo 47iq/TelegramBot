@@ -31,6 +31,7 @@ public class ChangeCommand implements Command {
         Map<String, String> cardReferences = new HashMap<>();
         cardList.stream()
                 .filter(x -> !occupationService.isOccupied(x))
+                .filter(x -> x.getHealth() > 0)
                 .forEach(x -> cardReferences.put("/change_card." + x.getUID(), messageFormatter.getCardViewMessage(x)));
         cardReferences.put("/help", MessageBundle.getMessage("back"));
         return new AnswerDTO(true, MessageBundle.getMessage("ask_whatcard"), KeyboardType.CUSTOM, null, cardReferences, commandDTO.getUser(), true);

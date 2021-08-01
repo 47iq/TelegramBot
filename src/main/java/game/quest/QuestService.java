@@ -17,5 +17,7 @@ public interface QuestService {
 
     boolean isInQuest(User user);
 
+    boolean isInQuest(Card card);
+
     QuestState getUserQuestState(User user);
 }

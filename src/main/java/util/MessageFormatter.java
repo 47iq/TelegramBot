@@ -6,6 +6,7 @@ import game.dungeon.Enemy;
 import game.marketplace.Merchandise;
 import game.quest.QuestState;
 import game.quest.QuestType;
+import game.service.BattleServiceImpl;
 
 import java.util.List;
 
@@ -222,6 +223,7 @@ public interface MessageFormatter {
      *
      * @param card  card
      * @param enemy enemy
+     * @param battleMode
      * @return lose message
      * @see game.service.BattleServiceImpl
      */
@@ -457,4 +459,6 @@ public interface MessageFormatter {
     String getQuestMessage(QuestType quest1, long step);
 
     String getQuestFinishMessage(QuestState type);
+
+    String getQuestBattleLoseMessage(Card card, Enemy enemy);
 }
