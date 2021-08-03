@@ -23,7 +23,7 @@ public class TextSenderServiceImpl implements TextSenderService {
             if (answerDTO.getMessage() != null)
                 sendMessage.setText(answerDTO.getMessage());
             else
-                sendMessage.setText(MessageBundle.getMessage("info_main"));
+                sendMessage.setText(MessageBundle.getMessage("choose.option"));
         } else {
             sendMessage.setText(answerDTO.getMessage());
         }

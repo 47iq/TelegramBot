@@ -19,7 +19,7 @@ public class BattleSetDefenceCommand implements Command {
     public AnswerDTO execute(CommandDTO commandDTO) {
         if (battleService.setDefenceType(commandDTO.getUser(), DefenceType.valueOf(commandDTO.getArg().toUpperCase())))
             if (!battleService.isTurnReady(commandDTO.getUser()))
-                return new AnswerDTO(true, MessageBundle.getMessage("info_waiting"), KeyboardType.NONE, null, null, commandDTO.getUser(), true);
+                return new AnswerDTO(true, MessageBundle.getMessage("pvp_waiting"), KeyboardType.NONE, null, null, commandDTO.getUser(), true);
             else
                 return new AnswerDTO(false);
         else

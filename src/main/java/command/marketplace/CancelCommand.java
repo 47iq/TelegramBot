@@ -36,7 +36,7 @@ public class CancelCommand implements Command {
         cardList.stream()
                 .filter(x -> marketplaceService.isPresent(x.getUID()))
                 .forEach(x -> cardReferences.put("/cancel_card." + x.getUID(), messageFormatter.getCardViewMessage(x)));
-        cardReferences.put("/help", MessageBundle.getMessage("back"));
-        return new AnswerDTO(true, MessageBundle.getMessage("ask_whatcard"), KeyboardType.CUSTOM, null, cardReferences, commandDTO.getUser(), true);
+        cardReferences.put("/help", MessageBundle.getMessage("/back"));
+        return new AnswerDTO(true, MessageBundle.getMessage("ask.what.card"), KeyboardType.CUSTOM, null, cardReferences, commandDTO.getUser(), true);
     }
 }

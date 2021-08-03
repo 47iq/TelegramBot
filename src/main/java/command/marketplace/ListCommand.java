@@ -39,7 +39,7 @@ public class ListCommand implements Command {
         cardList.stream()
                 .filter(x -> !occupationService.isOccupied(x))
                 .forEach(x -> cardReferences.put("/list_card." + x.getUID(), messageFormatter.getCardViewMessage(x)));
-        cardReferences.put("/help", MessageBundle.getMessage("back"));
-        return new AnswerDTO(true, MessageBundle.getMessage("ask_whatcard"), KeyboardType.CUSTOM, null, cardReferences, commandDTO.getUser(), true);
+        cardReferences.put("/help", MessageBundle.getMessage("/back"));
+        return new AnswerDTO(true, MessageBundle.getMessage("ask.what.card"), KeyboardType.CUSTOM, null, cardReferences, commandDTO.getUser(), true);
     }
 }

@@ -51,7 +51,7 @@ public class HealCardCommand implements Command {
                 return new AnswerDTO(false, MessageBundle.getMessage("err_occupied"), KeyboardType.LEAF, null, null, commandDTO.getUser(), true);
             userService.spendHeal(user);
             cardService.heal(card);
-            return new AnswerDTO(true, MessageBundle.getMessage("info_succheal") + "\n"
+            return new AnswerDTO(true, MessageBundle.getMessage("success.heal") + "\n"
                     +  messageFormatter.getCardMessage(card), KeyboardType.LEAF,
                     imageParser.getImage(new ImageIdentifier(card.getName(), card.getType())), null, user, true);
         }

@@ -42,7 +42,7 @@ public class SellCommand implements Command {
         cardList.stream()
                 .filter(x -> !occupationService.isOccupied(x))
                 .forEach(x -> cardReferences.put("/sell_card." + x.getUID(), messageFormatter.getCardViewMessage2(x) + " " + messageFormatter.getPriceMessage(x)));
-        cardReferences.put("/help", MessageBundle.getMessage("back"));
-        return new AnswerDTO(true, MessageBundle.getMessage("ask_whatcard"), KeyboardType.CUSTOM, null, cardReferences, commandDTO.getUser(), true);
+        cardReferences.put("/help", MessageBundle.getMessage("/back"));
+        return new AnswerDTO(true, MessageBundle.getMessage("ask.what.card"), KeyboardType.CUSTOM, null, cardReferences, commandDTO.getUser(), true);
     }
 }

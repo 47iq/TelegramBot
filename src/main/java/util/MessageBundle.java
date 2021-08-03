@@ -23,7 +23,10 @@ public class MessageBundle {
      */
 
     public static String getMessage(String key) {
-        return ResourceBundle.getBundle("messages_" + messageMode.name().toLowerCase()).getString(key);
+        if(!ResourceBundle.getBundle("messages").containsKey(key))
+            return ResourceBundle.getBundle("messages_" + messageMode.name().toLowerCase()).getString(key);
+        else
+            return ResourceBundle.getBundle("messages").getString(key);
     }
 
     /**

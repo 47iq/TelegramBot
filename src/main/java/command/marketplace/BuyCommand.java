@@ -35,10 +35,10 @@ public class BuyCommand implements Command {
         merchandises.stream()
                 .filter(x -> !cardService.getById(x.getCardUID()).getOwner().equals(user.getUID()))
                 .forEach(x -> cardReferences.put("/buy_card." + x.getCardUID(), "(id: " + x.getCardUID() + ") " + messageFormatter.getPriceMessage(x.getCost())));
-        cardReferences.put("/help", MessageBundle.getMessage("back"));
+        cardReferences.put("/help", MessageBundle.getMessage("/back"));
         String message = messageFormatter.getMarketplaceCardsMessage(merchandises);
         if(message.isEmpty())
-            message = MessageBundle.getMessage("info_marketplace.nocards");
-        return new AnswerDTO(true,  message + "\n\n" + (cardReferences.size() > 1 ? MessageBundle.getMessage("ask_whatcard") : MessageBundle.getMessage("info_marketplace.none")), KeyboardType.CUSTOM, null, cardReferences, commandDTO.getUser(), true);
+            message = MessageBundle.getMessage("marketplace_no.cards");
+        return new AnswerDTO(true,  message + "\n\n" + (cardReferences.size() > 1 ? MessageBundle.getMessage("ask.what.card") : MessageBundle.getMessage("marketplace_none")), KeyboardType.CUSTOM, null, cardReferences, commandDTO.getUser(), true);
     }
 }

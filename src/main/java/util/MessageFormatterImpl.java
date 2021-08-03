@@ -32,12 +32,12 @@ public class MessageFormatterImpl implements MessageFormatter {
     @Override
     public String getCardMessage(Card card) {
         String s = MessageBundle.getMessage(card.getType().name()) + " " + MessageBundle.getMessage(card.getName().name())
-                + MessageBundle.getMessage("info_uid") + card.getUID() + ") " + card.getLevel() +
-                " " + MessageBundle.getMessage("info_level") + "\n" + MessageBundle.getMessage("info_health")
-                + String.format("%.2f", card.getHealth()) + "/"+ String.format("%.2f", card.getMaxHealth()) + MessageBundle.getMessage("info_attack") + String.format("%.2f", card.getAttack()) +
-                MessageBundle.getMessage("info_defence") + String.format("%.2f", card.getDefence()) + " ";
+                + MessageBundle.getMessage("card_message_uid") + card.getUID() + ") " + card.getLevel() +
+                " " + MessageBundle.getMessage("card_message_level") + "\n" + MessageBundle.getMessage("card_message_health")
+                + String.format("%.2f", card.getHealth()) + "/"+ String.format("%.2f", card.getMaxHealth()) + MessageBundle.getMessage("card_message_attack") + String.format("%.2f", card.getAttack()) +
+                MessageBundle.getMessage("card_message_defence") + String.format("%.2f", card.getDefence()) + " ";
         if(card.getLevel() < 20)
-            s += MessageBundle.getMessage("info_nextxp2") + " " + card.getNextLevelXp() + MessageBundle.getMessage("info_xp2");
+            s += MessageBundle.getMessage("info_nextxp2") + " " + card.getNextLevelXp() + MessageBundle.getMessage("symbol_xp");
         return  s;
     }
 
@@ -46,9 +46,9 @@ public class MessageFormatterImpl implements MessageFormatter {
         long tokens = userService.getBalance(user);
         long heal = user.getHealCount();
         long boost = user.getBoostCount();
-        return MessageBundle.getMessage("info_tokens") + " " + tokens + ",\n" +
-                MessageBundle.getMessage("info_heal") + " " + heal + ",\n" +
-                MessageBundle.getMessage("info_boost") + " " + boost + "\n";
+        return MessageBundle.getMessage("shop_tokens") + " " + tokens + ",\n" +
+                MessageBundle.getMessage("shop_heal") + " " + heal + ",\n" +
+                MessageBundle.getMessage("shop_boost") + " " + boost + "\n";
     }
 
     @Override
@@ -56,27 +56,27 @@ public class MessageFormatterImpl implements MessageFormatter {
         long tokens = userService.getBalance(user);
         long heal = user.getHealCount();
         long boost = user.getBoostCount();
-        return MessageBundle.getMessage("info_tokens") + " " + tokens + ", " +
-                MessageBundle.getMessage("info_heal") + " " + heal + ", " +
-                MessageBundle.getMessage("info_boost") + " " + boost + "\n\n" +
-                MessageBundle.getMessage("info_startshop") + "\n\n" +
-                MessageBundle.getMessage("info_basic") + " " + MessageBundle.getSetting("BASIC_COST") + MessageBundle.getMessage("info_price2") + "\n";
+        return MessageBundle.getMessage("shop_tokens") + " " + tokens + ", " +
+                MessageBundle.getMessage("shop_heal") + " " + heal + ", " +
+                MessageBundle.getMessage("shop_boost") + " " + boost + "\n\n" +
+                MessageBundle.getMessage("start_shop") + "\n\n" +
+                MessageBundle.getMessage("shop_basic") + " " + MessageBundle.getSetting("BASIC_COST") + MessageBundle.getMessage("symbol_token") + "\n";
     }
 
     @Override
     public String getMainMenuInfo() {
-        return MessageBundle.getMessage("info_menushop") + "\n" +
-                MessageBundle.getMessage("info_menubattle") + "\n" +
+        return MessageBundle.getMessage("help_shop") + "\n" +
+                MessageBundle.getMessage("help_battle") + "\n" +
                 MessageBundle.getMessage("info_dungeon") + "\n" +
-                MessageBundle.getMessage("info_mycollection") + "\n" +
-                MessageBundle.getMessage("info_items") + "\n" +
-                MessageBundle.getMessage("info_stats");
+                MessageBundle.getMessage("help_my.collection") + "\n" +
+                MessageBundle.getMessage("help_items") + "\n" +
+                MessageBundle.getMessage("help_stats");
     }
 
     @Override
     public String getItemInfo() {
-        return MessageBundle.getMessage("info_menuheal") + "\n" +
-                MessageBundle.getMessage("info_menuboost");
+        return MessageBundle.getMessage("help_menuheal") + "\n" +
+                MessageBundle.getMessage("help_menuboost");
     }
 
     @Override
@@ -86,13 +86,13 @@ public class MessageFormatterImpl implements MessageFormatter {
 
     @Override
     public String getShopInfo() {
-        return MessageBundle.getMessage("info_basic2") + "\n" +
-                MessageBundle.getMessage("info_advanced2") + "\n" +
-                MessageBundle.getMessage("info_pro2") + "\n" +
-                MessageBundle.getMessage("info_heal2") + "\n" +
-                MessageBundle.getMessage("info_booster2") + "\n" +
-                MessageBundle.getMessage("info_type") + "\n" +
-                MessageBundle.getMessage("info_name") + "\n";
+        return MessageBundle.getMessage("help_basic2") + "\n" +
+                MessageBundle.getMessage("help_advanced2") + "\n" +
+                MessageBundle.getMessage("help_pro2") + "\n" +
+                MessageBundle.getMessage("help_heal2") + "\n" +
+                MessageBundle.getMessage("help_boost2") + "\n" +
+                MessageBundle.getMessage("help_type") + "\n" +
+                MessageBundle.getMessage("help_name") + "\n";
     }
 
     @Override
@@ -102,44 +102,44 @@ public class MessageFormatterImpl implements MessageFormatter {
         long heal = user.getHealCount();
         long boost = user.getBoostCount();
         long count = cardList.stream().map(Card::getName).distinct().count();
-        String message = MessageBundle.getMessage("info_tokens") + " " + tokens + "\n" +
-                MessageBundle.getMessage("info_heal1") + " " + heal + "\n" +
-                MessageBundle.getMessage("info_boost1") + " " + boost + "\n" +
-                MessageBundle.getMessage("info_cards") + " " + cardList.size() + "\n" +
-                MessageBundle.getMessage("info_basiccnt") + " " + cardList.stream().filter(x -> x.getType().equals(CardType.BASIC)).count() + "\n" +
-                MessageBundle.getMessage("info_rarecnt") + " " + cardList.stream().filter(x -> x.getType().equals(CardType.RARE)).count() + "\n" +
-                MessageBundle.getMessage("info_epiccnt") + " " + cardList.stream().filter(x -> x.getType().equals(CardType.EPIC)).count() + "\n" +
-                MessageBundle.getMessage("info_legcnt") + " " + cardList.stream().filter(x -> x.getType().equals(CardType.LEGENDARY)).count() + "\n" +
-                MessageBundle.getMessage("info_distinct") + " " + count + "/" +  CardName.values().length + "\n" +
-                MessageBundle.getMessage("info_battlestats") + " " + user.getTotalWins() + " " + MessageBundle.getMessage("info_of") + " " + user.getTotalBattles() + "\n";
+        String message = MessageBundle.getMessage("shop_tokens") + " " + tokens + "\n" +
+                MessageBundle.getMessage("shop_heal1") + " " + heal + "\n" +
+                MessageBundle.getMessage("shop_boost1") + " " + boost + "\n" +
+                MessageBundle.getMessage("stats_cards") + " " + cardList.size() + "\n" +
+                MessageBundle.getMessage("stats_basic") + " " + cardList.stream().filter(x -> x.getType().equals(CardType.BASIC)).count() + "\n" +
+                MessageBundle.getMessage("stats_rare") + " " + cardList.stream().filter(x -> x.getType().equals(CardType.RARE)).count() + "\n" +
+                MessageBundle.getMessage("stats_epic") + " " + cardList.stream().filter(x -> x.getType().equals(CardType.EPIC)).count() + "\n" +
+                MessageBundle.getMessage("stats_leg") + " " + cardList.stream().filter(x -> x.getType().equals(CardType.LEGENDARY)).count() + "\n" +
+                MessageBundle.getMessage("stats_distinct") + " " + count + "/" +  CardName.values().length + "\n" +
+                MessageBundle.getMessage("stats_battles") + " " + user.getTotalWins() + " " + MessageBundle.getMessage("stats_wins.of") + " " + user.getTotalBattles() + "\n";
         if (user.getTotalBattles() != 0) {
             double a = user.getTotalWins();
             double b = user.getTotalBattles();
-            message += MessageBundle.getMessage("info_winrate") + " " + String.format("%.1f", a / b * 100) + "%\n";
+            message += MessageBundle.getMessage("stats_win.rate") + " " + String.format("%.1f", a / b * 100) + "%\n";
         }
         return message;
     }
 
     @Override
     public String getLevelMessage(Card card) {
-        return MessageBundle.getMessage("info_boost2") + " " + card.getLevel();
+        return MessageBundle.getMessage("symbol_boost") + " " + card.getLevel();
     }
 
     @Override
     public String getHealthMessage(Card card) {
-        return MessageBundle.getMessage("info_health2") + " " + String.format("%.1f", card.getHealth()) + "/" + String.format("%.1f", card.getMaxHealth());
+        return MessageBundle.getMessage("symbol_health") + " " + String.format("%.1f", card.getHealth()) + "/" + String.format("%.1f", card.getMaxHealth());
     }
 
     @Override
     public String getPriceMessage(Card x) {
-        return priceCalculator.calculatePrice(x) + MessageBundle.getMessage("info_price2");
+        return priceCalculator.calculatePrice(x) + MessageBundle.getMessage("symbol_token");
     }
 
     @Override
     public String getShortMessage(Card x) {
-        return MessageBundle.getMessage("info_health2") + String.format("%.1f", x.getHealth()) + " "
-                + MessageBundle.getMessage("info_attack2") + String.format("%.1f", x.getAttack()) + " "
-                + MessageBundle.getMessage("info_defence2") + String.format("%.1f", x.getDefence()) + " ";
+        return MessageBundle.getMessage("symbol_health") + String.format("%.1f", x.getHealth()) + " "
+                + MessageBundle.getMessage("symbol_attack") + String.format("%.1f", x.getAttack()) + " "
+                + MessageBundle.getMessage("symbol_defence") + String.format("%.1f", x.getDefence()) + " ";
     }
 
     @Override
@@ -154,7 +154,7 @@ public class MessageFormatterImpl implements MessageFormatter {
             message += MessageBundle.getMessage(defendingCard.getName().name() + "_short") + " (id:" + defendingCard.getUID() + ") ";
         else
             message += MessageBundle.getMessage("battle_enemy") + " ";
-        message += MessageBundle.getMessage("battle_nowhas") + " " + MessageBundle.getMessage("info_health2") + String.format("%.1f", health) + "\n";
+        message += MessageBundle.getMessage("battle_nowhas") + " " + MessageBundle.getMessage("symbol_health") + String.format("%.1f", health) + "\n";
         return message;
     }
 
@@ -180,15 +180,15 @@ public class MessageFormatterImpl implements MessageFormatter {
     @Override
     public String getAppStats(List<User> userList, List<Card> cardList) {
         StringBuilder builder = new StringBuilder();
-        builder.append(MessageBundle.getMessage("stats_usercnt")).append(" ").append(userList.size()).append("\n");
+        builder.append(MessageBundle.getMessage("stats_user.cnt")).append(" ").append(userList.size()).append("\n");
         builder.append(MessageBundle.getMessage("stats_last24h")).append(" ").append(userList.stream().filter(x -> x.getLastTokensRedeemed()
                 .plusHours(24).compareTo(LocalDateTime.now(ZoneId.systemDefault())) > 0).count()).append("\n");
-        builder.append(MessageBundle.getMessage("info_cards")).append(" ").append(cardList.size()).append("\n");
-        builder.append(MessageBundle.getMessage("info_basiccnt")).append(" ").append(cardList.stream().filter(x -> x.getType().equals(CardType.BASIC)).count()).append("\n");
-        builder.append(MessageBundle.getMessage("info_rarecnt")).append(" ").append(cardList.stream().filter(x -> x.getType().equals(CardType.RARE)).count()).append("\n");
-        builder.append(MessageBundle.getMessage("info_epiccnt")).append(" ").append(cardList.stream().filter(x -> x.getType().equals(CardType.EPIC)).count()).append("\n");
-        builder.append(MessageBundle.getMessage("info_legcnt")).append(" ").append(cardList.stream().filter(x -> x.getType().equals(CardType.LEGENDARY)).count()).append("\n");
-        builder.append(MessageBundle.getMessage("stats_battlescnt")).append(" ").append((userList.stream().map(User::getTotalBattles).reduce(Integer::sum)).get() / 2).append("\n");
+        builder.append(MessageBundle.getMessage("stats_cards")).append(" ").append(cardList.size()).append("\n");
+        builder.append(MessageBundle.getMessage("stats_basic")).append(" ").append(cardList.stream().filter(x -> x.getType().equals(CardType.BASIC)).count()).append("\n");
+        builder.append(MessageBundle.getMessage("stats_rare")).append(" ").append(cardList.stream().filter(x -> x.getType().equals(CardType.RARE)).count()).append("\n");
+        builder.append(MessageBundle.getMessage("stats_epic")).append(" ").append(cardList.stream().filter(x -> x.getType().equals(CardType.EPIC)).count()).append("\n");
+        builder.append(MessageBundle.getMessage("stats_leg")).append(" ").append(cardList.stream().filter(x -> x.getType().equals(CardType.LEGENDARY)).count()).append("\n");
+        builder.append(MessageBundle.getMessage("stats_battles.cnt")).append(" ").append((userList.stream().map(User::getTotalBattles).reduce(Integer::sum)).get() / 2).append("\n");
         return builder.toString();
     }
 
@@ -204,56 +204,56 @@ public class MessageFormatterImpl implements MessageFormatter {
         for (int i = Math.min(10, top.size()) - 1; i >= 0; i--) {
             top1++;
             topStr.append(String.valueOf(top1)).append(") @").append(top.get(i).getUID()).append(" ")
-                    .append(top.get(i).getTotalWins()).append(" ").append(MessageBundle.getMessage("info_of")).append(" ").append(top.get(i).getTotalBattles()).append("\n");
+                    .append(top.get(i).getTotalWins()).append(" ").append(MessageBundle.getMessage("stats_wins.of")).append(" ").append(top.get(i).getTotalBattles()).append("\n");
         }
         if(topStr.toString().isEmpty())
-            return MessageBundle.getMessage("empty_top");
+            return MessageBundle.getMessage("stats_empty.top");
         return topStr.toString();
     }
 
     @Override
     public String getLootCaveMessage(long type, long tokens) {
-        return MessageBundle.getMessage("dungeon_lootcave_" + type) + " " + tokens + MessageBundle.getMessage("info_price2");
+        return MessageBundle.getMessage("dungeon_lootcave_" + type) + " " + tokens + MessageBundle.getMessage("symbol_token");
     }
 
     @Override
     public String getRobberyCaveMessage(long type, long tokens) {
-        return MessageBundle.getMessage("dungeon_robberycave_" + type) + " " + tokens + MessageBundle.getMessage("info_price2");
+        return MessageBundle.getMessage("dungeon_robberycave_" + type) + " " + tokens + MessageBundle.getMessage("symbol_token");
     }
 
     @Override
     public String getTrapCaveMessage(long type, long lostHealth, Card card) {
-        return MessageBundle.getMessage("dungeon_trapcave_" + type) + " " + MessageBundle.getMessage(card.getName().name()) + " " + MessageBundle.getMessage("info_loses") + " " + lostHealth + MessageBundle.getMessage("info_health2");
+        return MessageBundle.getMessage("dungeon_trapcave_" + type) + " " + MessageBundle.getMessage(card.getName().name()) + " " + MessageBundle.getMessage("info_loses") + " " + lostHealth + MessageBundle.getMessage("symbol_health");
     }
 
     @Override
     public String getTrapCaveDeadMessage(long type, long lostHealth, Card card) {
         return MessageBundle.getMessage("dungeon_trapcave_" + type) + " " + MessageBundle.getMessage(card.getName().name())
-                + " " + MessageBundle.getMessage("info_loses") + " " + lostHealth + MessageBundle.getMessage("info_health2") +
+                + " " + MessageBundle.getMessage("info_loses") + " " + lostHealth + MessageBundle.getMessage("symbol_health") +
                 " " + MessageBundle.getMessage("dungeon_trapdead_" + type);
     }
 
     @Override
     public String getHealCaveMessage(long type, long gainedHealth, Card card) {
         return MessageBundle.getMessage("dungeon_healcave_" + type) + " " + MessageBundle.getMessage(card.getName().name()) +
-                " " + MessageBundle.getMessage("info_heals") + " " + gainedHealth + MessageBundle.getMessage("info_health2");
+                " " + MessageBundle.getMessage("info_heals") + " " + gainedHealth + MessageBundle.getMessage("symbol_health");
     }
 
     @Override
     public String getWeaponCaveMessage(long type, long attackBoost, Card card) {
         return MessageBundle.getMessage("dungeon_weaponcave_" + type) + " " + MessageBundle.getMessage(card.getName().name()) +
-                " " + MessageBundle.getMessage("info_attackboost") + " " + attackBoost + MessageBundle.getMessage("info_attack2");
+                " " + MessageBundle.getMessage("info_attackboost") + " " + attackBoost + MessageBundle.getMessage("symbol_attack");
     }
 
     @Override
     public String getArmorCaveMessage(long type, long armorBoost, Card card) {
         return MessageBundle.getMessage("dungeon_armorcave_" + type) + " " + MessageBundle.getMessage(card.getName().name()) +
-                " " + MessageBundle.getMessage("info_armorboost") + " " + armorBoost + MessageBundle.getMessage("info_defence2");
+                " " + MessageBundle.getMessage("info_armorboost") + " " + armorBoost + MessageBundle.getMessage("symbol_defence");
     }
 
     @Override
     public String getLevelUpCaveMessage(long l, Card card) {
-        return MessageBundle.getMessage("dungeon_levelupcave_0") + MessageBundle.getMessage("info_level2");
+        return MessageBundle.getMessage("dungeon_levelupcave_0") + MessageBundle.getMessage("symbol_level");
 
     }
 
@@ -270,7 +270,7 @@ public class MessageFormatterImpl implements MessageFormatter {
     @Override
     public String getEnemyBattleWinMessage(Card card, Enemy enemy) {
         return MessageBundle.getMessage(card.getName().name()) + " " + MessageBundle.getMessage("dungeon_win") + " " + MessageBundle.getMessage(enemy.getEnemyType().name())
-                + " " + MessageBundle.getMessage("dungeon_getaward") + " " + enemy.getAward() + MessageBundle.getMessage("info_price2") + "\n\n" + MessageBundle.getMessage(enemy.getEnemyType().name() + "_winhook");
+                + " " + MessageBundle.getMessage("dungeon_getaward") + " " + enemy.getAward() + MessageBundle.getMessage("symbol_token") + "\n\n" + MessageBundle.getMessage(enemy.getEnemyType().name() + "_winhook");
     }
 
     @Override
@@ -304,8 +304,8 @@ public class MessageFormatterImpl implements MessageFormatter {
     public String getBattleXpMessage(Card winner, long gainedXp) {
         if (winner.getLevel() < Long.parseLong(MessageBundle.getSetting("MAX_LEVEL")))
             return getCardMessage2(winner) + " " + MessageBundle.getMessage("info_gainsxp")
-                    + " " + gainedXp + MessageBundle.getMessage("info_xp2") + "\n" +
-                    MessageBundle.getMessage("info_nextxp") + " " + winner.getNextLevelXp() + MessageBundle.getMessage("info_xp2");
+                    + " " + gainedXp + MessageBundle.getMessage("symbol_xp") + "\n" +
+                    MessageBundle.getMessage("info_nextxp") + " " + winner.getNextLevelXp() + MessageBundle.getMessage("symbol_xp");
         else
             return "";
     }
@@ -313,8 +313,8 @@ public class MessageFormatterImpl implements MessageFormatter {
     @Override
     public String getLevelUpMessage(Card winner) {
         return getCardMessage2(winner) + " " + MessageBundle.getMessage("info_gainsnewlevel") + " " + winner.getLevel()
-                + MessageBundle.getMessage("info_level2") + "\n" +
-                MessageBundle.getMessage("info_nextxp") + " " + winner.getNextLevelXp() + MessageBundle.getMessage("info_xp2");
+                + MessageBundle.getMessage("symbol_level") + "\n" +
+                MessageBundle.getMessage("info_nextxp") + " " + winner.getNextLevelXp() + MessageBundle.getMessage("symbol_xp");
     }
 
     @Override
@@ -327,7 +327,7 @@ public class MessageFormatterImpl implements MessageFormatter {
 
     @Override
     public String getInstantHealMessage(Card card) {
-        return MessageBundle.getMessage("info_succheal") + " " + MessageBundle.getMessage(card.getName().name()) + ": " + MessageBundle.getMessage("info_health2") +
+        return MessageBundle.getMessage("success.heal") + " " + MessageBundle.getMessage(card.getName().name()) + ": " + MessageBundle.getMessage("symbol_health") +
                 " " + String.format("%.1f", card.getHealth()) + "/" + String.format("%.1f", card.getMaxHealth());
     }
 
@@ -335,23 +335,23 @@ public class MessageFormatterImpl implements MessageFormatter {
     public String getItemMessage(User user) {
         long heal = user.getHealCount();
         long boost = user.getBoostCount();
-        return MessageBundle.getMessage("info_heal").substring(0, 1).toUpperCase(Locale.ROOT) + MessageBundle.getMessage("info_heal").substring(1) + " " + heal + ", " +
-                MessageBundle.getMessage("info_boost") + " " + boost;
+        return MessageBundle.getMessage("shop_heal").substring(0, 1).toUpperCase(Locale.ROOT) + MessageBundle.getMessage("shop_heal").substring(1) + " " + heal + ", " +
+                MessageBundle.getMessage("shop_boost") + " " + boost;
     }
 
     @Override
     public String getBuyLootboxInfo(User user) {
         long tokens = userService.getBalance(user);
-        String message = MessageBundle.getMessage("info_tokens") + " " + tokens + "\n" +
-                MessageBundle.getMessage("info_prices") + "\n";
+        String message = MessageBundle.getMessage("shop_tokens") + " " + tokens + "\n" +
+                MessageBundle.getMessage("shop_prices") + "\n";
         message = addLootBoxInfo(message);
         return message;
     }
 
     private String addLootBoxInfo(String message) {
-        message += MessageBundle.getMessage("info_basic") + " " + MessageBundle.getSetting("BASIC_COST") + MessageBundle.getMessage("info_price2") + "\n";
-        message += MessageBundle.getMessage("info_advanced") + " " + MessageBundle.getSetting("ADVANCED_COST") + MessageBundle.getMessage("info_price2") + "\n";
-        message += MessageBundle.getMessage("info_pro") + " " + MessageBundle.getSetting("PRO_COST") + MessageBundle.getMessage("info_price2") + "\n";
+        message += MessageBundle.getMessage("shop_basic") + " " + MessageBundle.getSetting("BASIC_COST") + MessageBundle.getMessage("symbol_token") + "\n";
+        message += MessageBundle.getMessage("shop_advanced") + " " + MessageBundle.getSetting("ADVANCED_COST") + MessageBundle.getMessage("symbol_token") + "\n";
+        message += MessageBundle.getMessage("shop_pro") + " " + MessageBundle.getSetting("PRO_COST") + MessageBundle.getMessage("symbol_token") + "\n";
         return message;
     }
 
@@ -360,26 +360,26 @@ public class MessageFormatterImpl implements MessageFormatter {
         long tokens = userService.getBalance(user);
         long heal = user.getHealCount();
         long boost = user.getBoostCount();
-        String message = MessageBundle.getMessage("info_tokens") + " " + tokens + ", " +
-                MessageBundle.getMessage("info_heal") + " " + heal + ", " +
-                MessageBundle.getMessage("info_boost") + " " + boost + "\n" +
-                MessageBundle.getMessage("info_prices") + "\n";
-        message += MessageBundle.getMessage("info_heal1") + " " + MessageBundle.getSetting("HEAL_COST") + MessageBundle.getMessage("info_price2") + "\n";
-        message += MessageBundle.getMessage("info_boost1") + " " + MessageBundle.getSetting("BOOST_COST") + MessageBundle.getMessage("info_price2") + "\n";
-        message += MessageBundle.getMessage("info_beer1") + "\n";
+        String message = MessageBundle.getMessage("shop_tokens") + " " + tokens + ", " +
+                MessageBundle.getMessage("shop_heal") + " " + heal + ", " +
+                MessageBundle.getMessage("shop_boost") + " " + boost + "\n" +
+                MessageBundle.getMessage("shop_prices") + "\n";
+        message += MessageBundle.getMessage("shop_heal1") + " " + MessageBundle.getSetting("HEAL_COST") + MessageBundle.getMessage("symbol_token") + "\n";
+        message += MessageBundle.getMessage("shop_boost1") + " " + MessageBundle.getSetting("BOOST_COST") + MessageBundle.getMessage("symbol_token") + "\n";
+        message += MessageBundle.getMessage("shop_beer") + "\n";
         return message;
     }
 
     private String getCardMessage2(Card card) {
-        return MessageBundle.getMessage(card.getName().name()) + ": " + MessageBundle.getMessage("info_health")
-                + String.format("%.2f", card.getHealth()) + MessageBundle.getMessage("info_attack") + String.format("%.2f", card.getAttack()) +
-                MessageBundle.getMessage("info_defence") + String.format("%.2f", card.getDefence());
+        return MessageBundle.getMessage(card.getName().name()) + ": " + MessageBundle.getMessage("card_message_health")
+                + String.format("%.2f", card.getHealth()) + MessageBundle.getMessage("card_message_attack") + String.format("%.2f", card.getAttack()) +
+                MessageBundle.getMessage("card_message_defence") + String.format("%.2f", card.getDefence());
     }
 
     private String getEnemyMessage(Enemy enemy) {
-        return MessageBundle.getMessage(enemy.getEnemyType().name() + "_name") + " " + MessageBundle.getMessage("info_health")
-                + String.format("%.2f", enemy.getEnemyCard().getHealth()) + MessageBundle.getMessage("info_attack") + String.format("%.2f", enemy.getEnemyCard().getAttack()) +
-                MessageBundle.getMessage("info_defence") + String.format("%.2f", enemy.getEnemyCard().getDefence());
+        return MessageBundle.getMessage(enemy.getEnemyType().name() + "_name") + " " + MessageBundle.getMessage("card_message_health")
+                + String.format("%.2f", enemy.getEnemyCard().getHealth()) + MessageBundle.getMessage("card_message_attack") + String.format("%.2f", enemy.getEnemyCard().getAttack()) +
+                MessageBundle.getMessage("card_message_defence") + String.format("%.2f", enemy.getEnemyCard().getDefence());
     }
 
     @Override
@@ -421,12 +421,12 @@ public class MessageFormatterImpl implements MessageFormatter {
 
     @Override
     public String getLeaveMessage() {
-        return MessageBundle.getMessage("info_leave");
+        return MessageBundle.getMessage("pvp_leave");
     }
 
     @Override
     public String getOpponentLeaveMessage() {
-        return MessageBundle.getMessage("info_opponent.leave");
+        return MessageBundle.getMessage("pvp_opponent.leave");
     }
 
     @Override
@@ -441,13 +441,13 @@ public class MessageFormatterImpl implements MessageFormatter {
 
     @Override
     public String getBattleSelfKillMessage(Card attackCard) {
-        return MessageBundle.getMessage(attackCard.getName().name() + "_short") + " (id:" + attackCard.getUID() + ") " + " " + MessageBundle.getMessage("info_self.kill");
+        return MessageBundle.getMessage(attackCard.getName().name() + "_short") + " (id:" + attackCard.getUID() + ") " + " " + MessageBundle.getMessage("pvp_self.kill");
     }
 
     @Override
     public String getBattleHealMessage(Card attackCard, double value) {
         return MessageBundle.getMessage(attackCard.getName().name() + "_short") + " (id:" + attackCard.getUID() + ") " + " " + MessageBundle.getMessage("info_heals")
-                + " " + String.format("%.1f", value) + " " + MessageBundle.getMessage("info_health2") + "\n"
+                + " " + String.format("%.1f", value) + " " + MessageBundle.getMessage("symbol_health") + "\n"
                 + MessageBundle.getMessage(attackCard.getName().name()) + " " + MessageBundle.getMessage("battle_nowhas")
                 + " " + String.format("%.1f", attackCard.getHealth());
     }
@@ -476,7 +476,7 @@ public class MessageFormatterImpl implements MessageFormatter {
             message += MessageBundle.getMessage(defenceCard.getName().name() + "_short") + " (id:" + defenceCard.getUID() + ") ";
         else
             message += MessageBundle.getMessage("battle_enemy") + " ";
-        message += MessageBundle.getMessage("battle_nowhas") + " " + MessageBundle.getMessage("info_health2") + String.format("%.1f", defenceCard.getHealth()) + "\n";
+        message += MessageBundle.getMessage("battle_nowhas") + " " + MessageBundle.getMessage("symbol_health") + String.format("%.1f", defenceCard.getHealth()) + "\n";
         return message;
     }
 
@@ -487,32 +487,32 @@ public class MessageFormatterImpl implements MessageFormatter {
 
     @Override
     public String getBattleNotifyMessage() {
-        return MessageBundle.getMessage("battle_notify");
+        return MessageBundle.getMessage("pvp_notify");
     }
 
     @Override
     public String getBattleQueueTimeoutMessage() {
-        return MessageBundle.getMessage("battle_queue.timeout");
+        return MessageBundle.getMessage("pvp_queue.timeout");
     }
 
     @Override
     public String getBattleWaitingMessage() {
-        return MessageBundle.getMessage("battle_waiting");
+        return MessageBundle.getMessage("pvp_battle.waiting");
     }
 
     @Override
     public String getPriceMessage(long x) {
-        return x + MessageBundle.getMessage("info_price2");
+        return x + MessageBundle.getMessage("symbol_token");
     }
 
     @Override
     public String getMarketplaceTimeoutMessage() {
-        return MessageBundle.getMessage("info_marketplace.timeout");
+        return MessageBundle.getMessage("marketplace_timeout");
     }
 
     @Override
     public String getMarketplaceSoldMessage(Card card) {
-        return MessageBundle.getMessage("info_marketplace.sold") + " " + getCardViewMessage(card);
+        return MessageBundle.getMessage("marketplace_sold") + " " + getCardViewMessage(card);
     }
 
     @Override
@@ -525,10 +525,10 @@ public class MessageFormatterImpl implements MessageFormatter {
                     .append("\n")
                     .append(getCardMessage(cardService.getById(x.getCardUID())))
                     .append("\n")
-                    .append(MessageBundle.getMessage("info_marketplace.priceis"))
+                    .append(MessageBundle.getMessage("marketplace_price"))
                     .append("  ")
                     .append(x.getCost())
-                    .append(MessageBundle.getMessage("info_price2"))
+                    .append(MessageBundle.getMessage("symbol_token"))
                     .append("\n\n");
             cnt.getAndIncrement();
         });

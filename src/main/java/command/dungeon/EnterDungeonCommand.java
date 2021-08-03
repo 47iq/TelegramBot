@@ -41,6 +41,6 @@ public class EnterDungeonCommand implements Command {
         cardList.stream().filter(x  -> x.getHealth() > 0)
                 .filter(x -> !occupationService.isOccupied(x))
                 .forEach(x -> cardReferences.put("/dungeon_enter_card." + x.getUID(), messageFormatter.getCardViewMessage(x)));
-        return new AnswerDTO(true, MessageBundle.getMessage("ask_whatcard"), KeyboardType.CUSTOM, null, cardReferences, commandDTO.getUser(), true);
+        return new AnswerDTO(true, MessageBundle.getMessage("ask.what.card"), KeyboardType.CUSTOM, null, cardReferences, commandDTO.getUser(), true);
     }
 }

@@ -47,7 +47,7 @@ public class OpenBoxCommand {
                 LOGGER.info(commandDTO.getUser().getUID() + " gets: " + card.getType() + " "+card.getName() + ": "
                         + card.getMaxHealth() + ", " + card.getAttack() + ", " + card.getDefence());
                 AnswerDTO answerDTO = new AnswerDTO(true,
-                        MessageBundle.getMessage("info_youget") + "\n" + messageFormatter.getCardMessage(card),
+                        MessageBundle.getMessage("lootbox_youget") + "\n" + messageFormatter.getCardMessage(card),
                         KeyboardType.LEAF, imageParser.getImage(new ImageIdentifier(card.getName(), card.getType())), null, commandDTO.getUser(), true);
                 answerDTO.setCardName(card.getName());
                 achievementService.addProgress(user, AchievementType.CARDS);

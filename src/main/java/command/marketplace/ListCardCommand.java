@@ -43,7 +43,7 @@ public class ListCardCommand implements Command, MultiStepCommand {
                 return new AnswerDTO(false, MessageBundle.getMessage("err_occupied"), KeyboardType.LEAF, null, null, commandDTO.getUser(), true);
             if (card == null)
                 return new AnswerDTO(false, MessageBundle.getMessage("err_nocard"), KeyboardType.LEAF, null, null, commandDTO.getUser(), true);
-            return new AnswerDTO(true, MessageBundle.getMessage("info_enter.price"), KeyboardType.NONE,
+            return new AnswerDTO(true, MessageBundle.getMessage("marketplace_enter.price"), KeyboardType.NONE,
                     null, null, commandDTO.getUser(), true);
         }
         if(strings.length == 2) {
@@ -57,8 +57,8 @@ public class ListCardCommand implements Command, MultiStepCommand {
             if (card == null)
                 return new AnswerDTO(false, MessageBundle.getMessage("err_nocard"), KeyboardType.LEAF, null, null, commandDTO.getUser(), true);
             marketplaceService.list(new Merchandise(id, price));
-                return new AnswerDTO(false, MessageBundle.getMessage("info_marketplace.listed") + " "
-                        + price + MessageBundle.getMessage("info_price2") , KeyboardType.LEAF, null, null, commandDTO.getUser(), true);
+                return new AnswerDTO(false, MessageBundle.getMessage("marketplace_listed") + " "
+                        + price + MessageBundle.getMessage("symbol_token") , KeyboardType.LEAF, null, null, commandDTO.getUser(), true);
         } else {
             return new AnswerDTO(false, MessageBundle.getMessage("err_nocard"), KeyboardType.LEAF, null, null, commandDTO.getUser(), true);
         }

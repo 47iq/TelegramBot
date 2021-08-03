@@ -42,7 +42,7 @@ public class UseBoostCommand implements Command {
                 .filter(x -> x.getLevel() < Long.parseLong(MessageBundle.getSetting("MAX_BOOST_LEVEL")))
                 .filter(x -> !occupationService.isOccupied(x))
                 .forEach(x -> cardReferences.put("/boost_card." + x.getUID(), messageFormatter.getCardViewMessage(x)));
-        cardReferences.put("/help", MessageBundle.getMessage("back"));
-        return new AnswerDTO(true, MessageBundle.getMessage("ask_whatcard"), KeyboardType.CUSTOM, null, cardReferences, commandDTO.getUser(), true);
+        cardReferences.put("/help", MessageBundle.getMessage("/back"));
+        return new AnswerDTO(true, MessageBundle.getMessage("ask.what.card"), KeyboardType.CUSTOM, null, cardReferences, commandDTO.getUser(), true);
     }
 }

@@ -33,7 +33,7 @@ public class ChangeCommand implements Command {
                 .filter(x -> !occupationService.isOccupied(x))
                 .filter(x -> x.getHealth() > 0)
                 .forEach(x -> cardReferences.put("/change_card." + x.getUID(), messageFormatter.getCardViewMessage(x)));
-        cardReferences.put("/help", MessageBundle.getMessage("back"));
-        return new AnswerDTO(true, MessageBundle.getMessage("ask_whatcard"), KeyboardType.CUSTOM, null, cardReferences, commandDTO.getUser(), true);
+        cardReferences.put("/help", MessageBundle.getMessage("/back"));
+        return new AnswerDTO(true, MessageBundle.getMessage("ask.what.card"), KeyboardType.CUSTOM, null, cardReferences, commandDTO.getUser(), true);
     }
 }

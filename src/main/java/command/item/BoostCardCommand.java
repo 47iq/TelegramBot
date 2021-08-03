@@ -53,7 +53,7 @@ public class BoostCardCommand implements Command {
                 return new AnswerDTO(false, MessageBundle.getMessage("err_maxboost"), KeyboardType.CLASSIC, null, null, user, true);
             if(cardService.boost(card))  {
                 userService.spendBoost(user);
-                return new AnswerDTO(true, MessageBundle.getMessage("info_succboost") + "\n"
+                return new AnswerDTO(true, MessageBundle.getMessage("success.boost") + "\n"
                         + messageFormatter.getCardMessage(card), KeyboardType.LEAF,
                         imageParser.getImage(new ImageIdentifier(card.getName(), card.getType())), null, user, true);
             } else {

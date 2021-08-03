@@ -62,7 +62,7 @@ public class QuestServiceImpl implements QuestService {
             return new AnswerDTO(false, MessageBundle.getMessage("err_notinquest"),
                     KeyboardType.LEAF, null, null, user, true);
         if(questState.getStep() > MAX_STEP)
-            return new AnswerDTO(true, MessageBundle.getMessage("first_run_again"),
+            return new AnswerDTO(true, MessageBundle.getMessage("quest_run.first.again"),
                     KeyboardType.QUEST_MENU, null, null, user, true);
         QuestType questType = questState.getType();
         Card card = cardService.getById(questState.getCardUID());

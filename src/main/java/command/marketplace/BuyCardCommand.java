@@ -31,7 +31,7 @@ public class BuyCardCommand implements Command {
         if(marketplaceService.getCost(id) > userService.getBalance(user))
             return new AnswerDTO(false, MessageBundle.getMessage("err_nomoney"), KeyboardType.LEAF, null, null, commandDTO.getUser(), true);
         marketplaceService.buy(id, user);
-        return new AnswerDTO(true, MessageBundle.getMessage("info_bought"), KeyboardType.LEAF,
+        return new AnswerDTO(true, MessageBundle.getMessage("marketplace_bought"), KeyboardType.LEAF,
                 null, null, commandDTO.getUser(), true);
     }
 }

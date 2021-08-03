@@ -44,7 +44,7 @@ public class UseHealCommand implements Command {
                 .filter(x -> !occupationService.isOccupied(x))
                 .forEach(x -> cardReferences.put("/heal_card." + x.getUID(),
                 messageFormatter.getCardViewMessage(x) + " " + messageFormatter.getHealthMessage(x)));
-        cardReferences.put("/help", MessageBundle.getMessage("back"));
-        return new AnswerDTO(true, MessageBundle.getMessage("ask_whatcard"), KeyboardType.CUSTOM, null, cardReferences, commandDTO.getUser(), true);
+        cardReferences.put("/help", MessageBundle.getMessage("/back"));
+        return new AnswerDTO(true, MessageBundle.getMessage("ask.what.card"), KeyboardType.CUSTOM, null, cardReferences, commandDTO.getUser(), true);
     }
 }

@@ -22,6 +22,6 @@ public class BattleInfoCommand implements Command {
 
     @Override
     public AnswerDTO execute(CommandDTO commandDTO) {
-        return new AnswerDTO(true, MessageBundle.getMessage("info_battle2"), KeyboardType.LEAF, null, null, commandDTO.getUser(), true);
+        return new AnswerDTO(true, MessageBundle.getMessage("help_battle2"), KeyboardType.LEAF, null, null, commandDTO.getUser(), true);
     }
 }

@@ -5,8 +5,6 @@ import communication.keyboard.KeyboardType;
 import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
 import game.entity.Card;
-import game.quest.QuestService;
-import game.quest.QuestType;
 import game.service.CardService;
 import game.service.OccupationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +33,7 @@ public class StartFirstQuestCommand implements Command {
                 .filter(x -> !occupationService.isOccupied(x))
                 .filter(x -> x.getHealth() > 0)
                 .forEach(x -> cardReferences.put("/start_first_card." + x.getUID(), messageFormatter.getCardViewMessage(x)));
-        cardReferences.put("/help", MessageBundle.getMessage("back"));
-        return new AnswerDTO(true, MessageBundle.getMessage("ask_whatcard"), KeyboardType.CUSTOM, null, cardReferences, commandDTO.getUser(), true);
+        cardReferences.put("/help", MessageBundle.getMessage("/back"));
+        return new AnswerDTO(true, MessageBundle.getMessage("ask.what.card"), KeyboardType.CUSTOM, null, cardReferences, commandDTO.getUser(), true);
     }
 }
