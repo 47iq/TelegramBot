@@ -454,8 +454,8 @@ public class MessageFormatterImpl implements MessageFormatter {
 
     @Override
     public String getBattleBlockMessage(Card attackCard, Card defenceCard, AttackType attackType) {
-        return MessageBundle.getMessage(attackCard.getName().name() + "_short") + " (id:" + attackCard.getUID() + ") " + " " + MessageBundle.getMessage("info_blocks")
-                + " " + MessageBundle.getMessage(defenceCard.getName().name() + "_short") + " (id:" + attackCard.getUID() + ") ";
+        return MessageBundle.getMessage(defenceCard.getName().name() + "_short") + " (id:" + defenceCard.getUID() + ") " + " " + MessageBundle.getMessage("info_blocks")
+                + " " + MessageBundle.getMessage(attackCard.getName().name() + "_short") + " (id:" + attackCard.getUID() + ") ";
     }
 
     @Override
