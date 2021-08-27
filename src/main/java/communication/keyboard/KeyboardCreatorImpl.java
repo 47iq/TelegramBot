@@ -55,7 +55,7 @@ public class KeyboardCreatorImpl implements KeyboardCreator {
             case CLASSIC -> getClassicKeyboard(user);
             case MENU -> getMenuKeyboard();
             case WELCOME -> getWelcomeKeyboard();
-            case SHOP -> getShopKeyboard();
+            case SHOP -> getShopKeyboard(user);
             case LEAF -> getLeafKeyboard();
             case ITEM -> getItemKeyboard(user);
             case BATTLE -> getBattleKeyboard(user);
@@ -244,7 +244,7 @@ public class KeyboardCreatorImpl implements KeyboardCreator {
         menu.put("/my_stats", MessageBundle.getMessage("stats_my.stats"));
         menu.put("/top_stats", MessageBundle.getMessage("stats_top"));
         menu.put("/app_stats", MessageBundle.getMessage("stats_app"));
-        menu.put("/achievements", MessageBundle.getMessage("/achievments"));
+        menu.put("/achievements", MessageBundle.getMessage("/achievements"));
         menu.put("/help", MessageBundle.getMessage("/back"));
         return getKeyboard(menu);
     }
@@ -309,12 +309,14 @@ public class KeyboardCreatorImpl implements KeyboardCreator {
      *
      * @return a keyboard for an shop menu
      * @see command.main_menu.ShopMenuCommand
+     * @param user
      */
 
-    private InlineKeyboardMarkup getShopKeyboard() {
+    private InlineKeyboardMarkup getShopKeyboard(User user) {
         Map<String, String> menu = new HashMap<>();
         menu.put("/buy_box", MessageBundle.getMessage("info_buybox"));
         menu.put("/buy_item", MessageBundle.getMessage("info_buyitem"));
+        if (userService.canRedeemTokens(user))
         menu.put("/free_tokens", MessageBundle.getMessage("shop_freetokens"));
         menu.put("/marketplace", MessageBundle.getMessage("/marketplace"));
         menu.put("/help", MessageBundle.getMessage("/back"));

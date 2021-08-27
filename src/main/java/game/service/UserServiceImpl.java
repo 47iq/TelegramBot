@@ -134,4 +134,22 @@ public class UserServiceImpl implements UserService{
             }
         }
     }
+
+    @Override
+    public LocalDateTime getLastVisitTime(User user) {
+        return userDAO.getEntityById(user.getUID()).getLastVisited();
+    }
+
+    @Override
+    public void updateVisitTime(User user) {
+        user.setLastVisited(LocalDateTime.now());
+        userDAO.update(user);
+    }
+
+    @Override
+    public boolean canRedeemTokens(User user) {
+        LocalDateTime now = LocalDateTime.now(ZoneId.systemDefault());
+        LocalDateTime old = user.getLastTokensRedeemed();
+        return old.plusHours(24).compareTo(now) < 0;
+    }
 }

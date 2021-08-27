@@ -3,6 +3,7 @@ package game.service;
 import game.entity.User;
 import data.UserDAO;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -141,4 +142,9 @@ public interface UserService {
 
     void unsubscribe(EventType eventType, User user);
 
+    LocalDateTime getLastVisitTime(User user);
+
+    void updateVisitTime(User user);
+
+    boolean canRedeemTokens(User user);
 }

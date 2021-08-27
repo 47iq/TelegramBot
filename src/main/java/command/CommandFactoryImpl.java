@@ -63,7 +63,7 @@ public class CommandFactoryImpl implements CommandFactory {
         if (userService.getUserData(commandDTO.getUser()) == null)
             return startCommand.execute(commandDTO);
         else if (command == null) {
-            if (lastCommands.get(user).command instanceof MultiStepCommand) {
+            if (lastCommands.get(user) != null && (lastCommands.get(user).command instanceof MultiStepCommand)) {
                 command = lastCommands.get(user).command;
                 commandDTO.setArg(lastCommands.get(user).arg + "-" + commandDTO.getMessageText());
                 return command.execute(commandDTO);
@@ -77,6 +77,7 @@ public class CommandFactoryImpl implements CommandFactory {
         if(achievementService.getUsersAchievements(commandDTO.getUser()) == null)
             achievementService.create(commandDTO.getUser());
         lastCommands.put(user, new LastCommand(command, commandDTO.getArg()));
+        userService.updateVisitTime(commandDTO.getUser());
         return command.execute(commandDTO);
     }
 }

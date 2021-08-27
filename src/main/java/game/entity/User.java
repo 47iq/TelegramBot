@@ -29,6 +29,9 @@ public class User {
     @Column(name = "redeem_time")
     private LocalDateTime lastTokensRedeemed;
 
+    @Column(name = "visit_time")
+    private LocalDateTime lastVisited;
+
     @Column(name = "heal")
     private long healCount;
 
@@ -58,6 +61,7 @@ public class User {
         healCount = 1;
         boostCount = 1;
         lastTokensRedeemed = LocalDateTime.now(ZoneId.systemDefault());
+        lastVisited = lastTokensRedeemed;
         totalBattles = 0;
         totalWins = 0;
         isSubscribedToBattle = false;
@@ -153,5 +157,13 @@ public class User {
 
     public void setIsSubscribedToBattle(Boolean subscribedToBattle) {
         isSubscribedToBattle = subscribedToBattle;
+    }
+
+    public LocalDateTime getLastVisited() {
+        return lastVisited;
+    }
+
+    public void setLastVisited(LocalDateTime lastVisited) {
+        this.lastVisited = lastVisited;
     }
 }

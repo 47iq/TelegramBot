@@ -5,8 +5,10 @@ import communication.keyboard.KeyboardType;
 import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import util.MessageFormatter;
 
+@Component
 public class AdminMenuCommand implements Command {
     @Autowired
     MessageFormatter messageFormatter;

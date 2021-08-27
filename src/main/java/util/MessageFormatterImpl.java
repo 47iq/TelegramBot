@@ -180,9 +180,19 @@ public class MessageFormatterImpl implements MessageFormatter {
     @Override
     public String getAppStats(List<User> userList, List<Card> cardList) {
         StringBuilder builder = new StringBuilder();
-        builder.append(MessageBundle.getMessage("stats_user.cnt")).append(" ").append(userList.size()).append("\n");
-        builder.append(MessageBundle.getMessage("stats_last24h")).append(" ").append(userList.stream().filter(x -> x.getLastTokensRedeemed()
-                .plusHours(24).compareTo(LocalDateTime.now(ZoneId.systemDefault())) > 0).count()).append("\n");
+        builder.append(MessageBundle.getMessage("stats_user.cnt"))
+                .append(" ")
+                .append(userList.size())
+                .append("\n")
+                .append(MessageBundle.getMessage("stats_last24h"))
+                .append(" ")
+                .append(userList.stream()
+                .filter(x -> x.getLastVisited() != null)
+                .filter(x -> x.getLastVisited()
+                        .plusHours(24)
+                        .compareTo(LocalDateTime.now(ZoneId.systemDefault())) > 0)
+                        .count())
+                .append("\n");
         builder.append(MessageBundle.getMessage("stats_cards")).append(" ").append(cardList.size()).append("\n");
         builder.append(MessageBundle.getMessage("stats_basic")).append(" ").append(cardList.stream().filter(x -> x.getType().equals(CardType.BASIC)).count()).append("\n");
         builder.append(MessageBundle.getMessage("stats_rare")).append(" ").append(cardList.stream().filter(x -> x.getType().equals(CardType.RARE)).count()).append("\n");
@@ -320,7 +330,7 @@ public class MessageFormatterImpl implements MessageFormatter {
     @Override
     public String getUsersStats(List<User> allUsers) {
         return allUsers.stream()
-                .map(x -> "@" + x.getUID() + " " + x.getLastTokensRedeemed().format(DateTimeFormatter.ISO_DATE))
+                .map(x -> "@" + x.getUID() + " " + (x.getLastVisited() == null ? MessageBundle.getMessage("recently") : x.getLastVisited().format(DateTimeFormatter.ISO_DATE)))
                 .reduce((x, y) -> x + "\n" + y)
                 .orElse("");
     }
