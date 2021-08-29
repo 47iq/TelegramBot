@@ -1,5 +1,6 @@
 package communication.util;
 
+import communication.keyboard.KeyboardType;
 import game.entity.User;
 
 /**
@@ -10,6 +11,7 @@ public class CommandDTO {
     private final User user;
     private final String messageText;
     private String arg;
+    private KeyboardType keyboardType;
 
     /**
      * Light constructor
@@ -37,6 +39,14 @@ public class CommandDTO {
         this.arg = arg;
     }
 
+    public KeyboardType getKeyboardType() {
+        return keyboardType;
+    }
+
+    public void setKeyboardType(KeyboardType keyboardType) {
+        this.keyboardType = keyboardType;
+    }
+
     public User getUser() {
         return user;
     }
@@ -51,5 +61,15 @@ public class CommandDTO {
 
     public void setArg(String arg) {
         this.arg = arg;
+    }
+
+    @Override
+    public String toString() {
+        return "CommandDTO{" +
+                "user=" + user +
+                ", messageText='" + messageText + '\'' +
+                ", arg='" + arg + '\'' +
+                ", keyboardType=" + keyboardType +
+                '}';
     }
 }

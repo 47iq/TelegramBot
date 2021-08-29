@@ -32,11 +32,11 @@ public class MyCardsMenuCommand implements Command {
         User user = commandDTO.getUser();
         List<Card> userCards = cardService.getAllCardsOf(commandDTO.getUser());
         if(userCards.isEmpty())
-            return new AnswerDTO(true, MessageBundle.getMessage("err_nocards"), KeyboardType.CLASSIC, null, null, user, true);
+            return new AnswerDTO(true, MessageBundle.getMessage("err_nocards"), KeyboardType.MENU, null, null, user, true);
         StringBuilder builder = new StringBuilder();
         builder.append(MessageBundle.getMessage("cards_yourcards")).append("\n");
         for(var card : userCards)
             builder.append(messageFormatter.getCardMessage(card)).append("\n");
-        return new AnswerDTO(true, builder.toString(), KeyboardType.MENU, null, null, user, true);
+        return new AnswerDTO(true, builder.toString(), KeyboardType.CARDS, null, null, user, true);
     }
 }

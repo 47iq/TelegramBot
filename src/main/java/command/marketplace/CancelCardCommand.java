@@ -27,7 +27,7 @@ public class CancelCardCommand implements Command {
         long id = Long.parseLong(commandDTO.getArg());
         User user = commandDTO.getUser();
         if(!marketplaceService.isPresent(id))
-            return new AnswerDTO(false, MessageBundle.getMessage("err_nocard"), KeyboardType.CLASSIC, null, null, commandDTO.getUser(), true);
+            return new AnswerDTO(false, MessageBundle.getMessage("err_nocard"), KeyboardType.MENU, null, null, commandDTO.getUser(), true);
         marketplaceService.cancel(id);
         return new AnswerDTO(true, MessageBundle.getMessage("marketplace_cancelled"), KeyboardType.LEAF,
                 null, null, commandDTO.getUser(), true);

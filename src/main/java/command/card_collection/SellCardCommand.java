@@ -37,7 +37,7 @@ public class SellCardCommand implements Command {
         if(occupationService.isOccupied(card))
             return new AnswerDTO(false, MessageBundle.getMessage("err_occupied"), KeyboardType.LEAF, null, null, commandDTO.getUser(), true);
         if(card == null)
-            return new AnswerDTO(false, MessageBundle.getMessage("err_nocard"), KeyboardType.CLASSIC, null, null, commandDTO.getUser(), true);
+            return new AnswerDTO(false, MessageBundle.getMessage("err_nocard"), KeyboardType.MENU, null, null, commandDTO.getUser(), true);
         long price = priceCalculator.calculatePrice(card);
         cardService.delete(card);
         userBalanceService.higherBalance(commandDTO.getUser(), price);

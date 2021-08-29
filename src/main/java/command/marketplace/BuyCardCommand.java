@@ -27,7 +27,7 @@ public class BuyCardCommand implements Command {
         long id = Long.parseLong(commandDTO.getArg());
         User user = commandDTO.getUser();
         if(!marketplaceService.isPresent(id) || cardService.getById(id).getOwner().equals(user.getUID()))
-            return new AnswerDTO(false, MessageBundle.getMessage("err_nocard"), KeyboardType.CLASSIC, null, null, commandDTO.getUser(), true);
+            return new AnswerDTO(false, MessageBundle.getMessage("err_nocard"), KeyboardType.MENU, null, null, commandDTO.getUser(), true);
         if(marketplaceService.getCost(id) > userService.getBalance(user))
             return new AnswerDTO(false, MessageBundle.getMessage("err_nomoney"), KeyboardType.LEAF, null, null, commandDTO.getUser(), true);
         marketplaceService.buy(id, user);

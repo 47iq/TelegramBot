@@ -64,7 +64,7 @@ public class CaveServiceImpl implements CaveService {
     public AnswerDTO leaveCaves(CommandDTO commandDTO) {
         User user = commandDTO.getUser();
         cardMap.remove(commandDTO.getUser());
-        return new AnswerDTO(true, null, KeyboardType.CLASSIC, null, null, user, true);
+        return new AnswerDTO(true, null, KeyboardType.MENU, null, null, user, true);
     }
 
     @Override

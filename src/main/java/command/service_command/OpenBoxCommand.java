@@ -54,11 +54,11 @@ public class OpenBoxCommand {
                 return answerDTO;
             } else {
                 LOGGER.error("Error while opening a lootbox");
-                return new AnswerDTO(false, MessageBundle.getMessage("err_unk"), KeyboardType.CLASSIC, null, null, commandDTO.getUser(), true);
+                return new AnswerDTO(false, MessageBundle.getMessage("err_unk"), KeyboardType.MENU, null, null, commandDTO.getUser(), true);
             }
         } catch (Exception e) {
             LOGGER.error("Error while opening a lootbox " + e.getClass());
-            return new AnswerDTO(false, MessageBundle.getMessage("err_unk"), KeyboardType.CLASSIC, null, null, commandDTO.getUser(), true);
+            return new AnswerDTO(false, MessageBundle.getMessage("err_unk"), KeyboardType.MENU, null, null, commandDTO.getUser(), true);
         }
     }
 }

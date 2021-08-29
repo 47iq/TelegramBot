@@ -34,11 +34,11 @@ public class BuyHealCommand implements Command {
         User user = commandDTO.getUser();
         long price = Long.parseLong(MessageBundle.getSetting("HEAL_COST"));
         if(userBalanceService.getBalance(commandDTO.getUser()) < price)
-            return new AnswerDTO(true, MessageBundle.getMessage("err_nomoney"), KeyboardType.SHOP, null, null, user, true);
+            return new AnswerDTO(true, MessageBundle.getMessage("err_nomoney"), KeyboardType.BUY_ITEM, null, null, user, true);
         else {
             userBalanceService.lowerBalance(commandDTO.getUser(), price);
             userService.addHeal(commandDTO.getUser());
-            return new AnswerDTO(true, MessageBundle.getMessage("info_success") + "\n" + messageFormatter.getShopInfo(commandDTO.getUser()),KeyboardType.SHOP, null, null, user, true);
+            return new AnswerDTO(true, MessageBundle.getMessage("info_success") + "\n" + messageFormatter.getShopInfo(commandDTO.getUser()),KeyboardType.BUY_ITEM, null, null, user, true);
         }
     }
 }

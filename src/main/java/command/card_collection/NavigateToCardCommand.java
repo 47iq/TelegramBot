@@ -32,7 +32,7 @@ public class NavigateToCardCommand implements Command {
         long id = Long.parseLong(commandDTO.getArg());
         Card card = cardService.getMyCardById(id, commandDTO.getUser().getUID());
         if(card == null)
-            return new AnswerDTO(false, MessageBundle.getMessage("err_nocard"), KeyboardType.CLASSIC, null, null, commandDTO.getUser(), true);
+            return new AnswerDTO(false, MessageBundle.getMessage("err_nocard"), KeyboardType.MENU, null, null, commandDTO.getUser(), true);
         return new AnswerDTO(true, messageFormatter.getCardMessage(card), KeyboardType.LEAF,
                 imageParser.getImage(new ImageIdentifier(card.getName(), card.getType())), null, commandDTO.getUser(), true);
     }

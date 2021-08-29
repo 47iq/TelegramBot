@@ -13,6 +13,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,6 +30,9 @@ public class CommandFactoryImpl implements CommandFactory {
     private final Map<String, Command> commandMap;
 
     private final Map<String, Command> adminCommands;
+
+    @Resource
+    private Map<Command, KeyboardType> keyboardTypeMap;
 
     private final Map<User, LastCommand> lastCommands = new HashMap<>();
 
@@ -60,6 +64,9 @@ public class CommandFactoryImpl implements CommandFactory {
     public AnswerDTO execute(CommandDTO commandDTO) {
         Command command = commandMap.get(commandDTO.getMessageText());
         User user = commandDTO.getUser();
+        if (lastCommands.get(user) != null) {
+            commandDTO.setKeyboardType(keyboardTypeMap.get(lastCommands.get(user).command));
+        }
         if (userService.getUserData(commandDTO.getUser()) == null)
             return startCommand.execute(commandDTO);
         else if (command == null) {
@@ -67,11 +74,11 @@ public class CommandFactoryImpl implements CommandFactory {
                 command = lastCommands.get(user).command;
                 commandDTO.setArg(lastCommands.get(user).arg + "-" + commandDTO.getMessageText());
                 return command.execute(commandDTO);
-            } else if (commandDTO.getUser().getUID().equals(MessageBundle.getSetting("ADMIN_UID")) && adminCommands.containsKey(commandDTO.getMessageText()))
+            } else if (commandDTO.getUser().getUID().equals(MessageBundle.getSetting("ADMIN_UID")) && adminCommands.containsKey(commandDTO.getMessageText())) {
                 return adminCommands.get(commandDTO.getMessageText()).execute(commandDTO);
-            else {
+            } else {
                 LOGGER.info("Unknown command got from " + commandDTO.getUser().getUID() + ": "+ commandDTO.getMessageText() + " " + commandDTO.getArg());
-                return new AnswerDTO(false, MessageBundle.getMessage("err_unk_command"), KeyboardType.CLASSIC, null, null, commandDTO.getUser(), true);
+                return new AnswerDTO(false, MessageBundle.getMessage("err_unk_command"), KeyboardType.MENU, null, null, commandDTO.getUser(), true);
             }
         }
         if(achievementService.getUsersAchievements(commandDTO.getUser()) == null)

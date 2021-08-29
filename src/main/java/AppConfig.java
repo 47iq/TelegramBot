@@ -19,6 +19,7 @@ import command.shop.*;
 import command.tutorial.StartCommand;
 import command.tutorial.StartShopCommand;
 import communication.connection.*;
+import communication.keyboard.KeyboardType;
 import communication.notification.NotificationService;
 import communication.notification.NotificationServiceImpl;
 import game.battle.BattleXpCalculator;
@@ -258,10 +259,85 @@ public class AppConfig {
     }
 
     @Bean
+    @Scope
+    @Qualifier("enemy_random")
+    public Map<Command, KeyboardType> keyboardTypeMap() {
+        Map<Command, KeyboardType> keyboardTypeMap = new HashMap<>();
+        keyboardTypeMap.put(getRegisterCommand(), KeyboardType.MENU);
+        keyboardTypeMap.put(getHelpCommand(), KeyboardType.MENU);
+        keyboardTypeMap.put(getBackCommand(), KeyboardType.MENU);
+        keyboardTypeMap.put(getStartCommand(), KeyboardType.MENU);
+        keyboardTypeMap.put(getOpenBasicCommand(), KeyboardType.BUY_BOX);
+        keyboardTypeMap.put(getOpenAdvancedCommand(), KeyboardType.BUY_BOX);
+        keyboardTypeMap.put(getOpenProCommand(), KeyboardType.BUY_BOX);
+        keyboardTypeMap.put(getMyCardsCommand(), KeyboardType.MENU);
+        keyboardTypeMap.put(getViewCommand(), KeyboardType.MENU);
+        keyboardTypeMap.put(getNavigateToCardCommand(), KeyboardType.MENU);
+        keyboardTypeMap.put(getShopCommand(), KeyboardType.CARDS);
+        keyboardTypeMap.put(getBuyBoostCommand(), KeyboardType.BUY_ITEM);
+        keyboardTypeMap.put(getStatsCommand(), KeyboardType.MENU);
+        keyboardTypeMap.put(getBuyHealCommand(), KeyboardType.BUY_ITEM);
+        keyboardTypeMap.put(getFreeTokensCommand(), KeyboardType.SHOP);
+        keyboardTypeMap.put(getUseItemCommand(), KeyboardType.MENU);
+        keyboardTypeMap.put(getUseHealCommand(), KeyboardType.ITEM);
+        keyboardTypeMap.put(getUseBoostCommand(), KeyboardType.ITEM);
+        keyboardTypeMap.put(getHealCardCommand(), KeyboardType.ITEM);
+        keyboardTypeMap.put(getBoostCardCommand(), KeyboardType.ITEM);
+        keyboardTypeMap.put(getBuyBeerCommand(), KeyboardType.SHOP);
+        keyboardTypeMap.put(getSellCommand(), KeyboardType.CARDS);
+        keyboardTypeMap.put(getStartSearchCommand(), KeyboardType.BATTLE);
+        keyboardTypeMap.put(getPrepareSearchCommand(), KeyboardType.BATTLE);
+        keyboardTypeMap.put(getSellCardCommand(), KeyboardType.MENU);
+        keyboardTypeMap.put(getLeaveSearchCommand(), KeyboardType.BATTLE);
+        keyboardTypeMap.put(getBattleMenuCommand(), KeyboardType.BATTLE);
+        keyboardTypeMap.put(getAppStatsCommand(), KeyboardType.STATS);
+        keyboardTypeMap.put(getGlobalStatsCommand(), KeyboardType.STATS);
+        keyboardTypeMap.put(getMyStatsCommand(), KeyboardType.STATS);
+        keyboardTypeMap.put(getDungeonMenuCommand(), KeyboardType.DUNGEON_MENU);
+        keyboardTypeMap.put(getDungeonLeaveCommand(), KeyboardType.DUNGEON_MENU);
+        keyboardTypeMap.put(getDungeonEnterCommand(), KeyboardType.DUNGEON_MENU);
+        keyboardTypeMap.put(getDungeonEnterCardCommand(), KeyboardType.DUNGEON_MENU);
+        keyboardTypeMap.put(getDungeonNextCommand(), KeyboardType.DUNGEON_MENU);
+        keyboardTypeMap.put(getInfoCommand(), KeyboardType.MENU);
+        keyboardTypeMap.put(getItemInfoCommand(), KeyboardType.ITEM);
+        keyboardTypeMap.put(getDungeonInfoCommand(), KeyboardType.DUNGEON_MENU);
+        keyboardTypeMap.put(getShopInfoCommand(), KeyboardType.SHOP);
+        keyboardTypeMap.put(getBattleInfoCommand(), KeyboardType.BATTLE);
+        keyboardTypeMap.put(getStartShopCommand(), KeyboardType.MENU);
+        keyboardTypeMap.put(getInstantHealCommand(), KeyboardType.QUEST);
+        keyboardTypeMap.put(getBuyItemCommand(), KeyboardType.SHOP);
+        keyboardTypeMap.put(getBuyBoxCommand(), KeyboardType.SHOP);
+        keyboardTypeMap.put(getAchievementsCommand(), KeyboardType.STATS);
+        keyboardTypeMap.put(getSetAttackCommand(), KeyboardType.BATTLE);
+        keyboardTypeMap.put(getSetDefenceCommand(), KeyboardType.BATTLE);
+        keyboardTypeMap.put(getBattleSubscribeCommand(), KeyboardType.BATTLE);
+        keyboardTypeMap.put(getBattleUnsubscribeCommand(), KeyboardType.BATTLE);
+        keyboardTypeMap.put(getBuyCommand(), KeyboardType.MARKETPLACE);
+        keyboardTypeMap.put(getBuyCardCommand(), KeyboardType.MARKETPLACE);
+        keyboardTypeMap.put(getListCommand(), KeyboardType.MARKETPLACE);
+        keyboardTypeMap.put(getListCardCommand(), KeyboardType.MARKETPLACE);
+        keyboardTypeMap.put(getCancelCommand(), KeyboardType.MARKETPLACE);
+        keyboardTypeMap.put(getCancelCardCommand(), KeyboardType.MARKETPLACE);
+        keyboardTypeMap.put(getMarketplaceCommand(), KeyboardType.SHOP);
+        keyboardTypeMap.put(getTasksCommand(), KeyboardType.DUNGEON_MENU);
+        keyboardTypeMap.put(getContinueCommand(), KeyboardType.QUEST_MENU);
+        keyboardTypeMap.put(getChangeCommand(), KeyboardType.QUEST_MENU);
+        keyboardTypeMap.put(getStartFirstCommand(), KeyboardType.QUEST_MENU);
+        keyboardTypeMap.put(getStartFirstCardCommand(), KeyboardType.QUEST_MENU);
+        keyboardTypeMap.put(getChangeCardCommand(), KeyboardType.QUEST_SHOP);
+        keyboardTypeMap.put(getBuyUseHealCommand(), KeyboardType.QUEST_SHOP);
+        keyboardTypeMap.put(getQuestMenuCommand(), KeyboardType.MENU);
+        keyboardTypeMap.put(getQuestInstantHealCommand(), KeyboardType.QUEST_SHOP);
+        keyboardTypeMap.put(getPVEMenuCommand(), KeyboardType.MENU);
+        return keyboardTypeMap;
+    }
+
+    @Bean
     @Scope("singleton")
     public CommandFactory getCommandFactory(){
         commandMap.put("/register", getRegisterCommand());
         commandMap.put("/help", getHelpCommand());
+        commandMap.put("/back", getBackCommand());
         commandMap.put("/start", getStartCommand());
         commandMap.put("/open_basic", getOpenBasicCommand());
         commandMap.put("/open_advanced", getOpenAdvancedCommand());
@@ -332,6 +408,12 @@ public class AppConfig {
         adminCommands.put("/all_users", getUsersStatsCommand());
         adminCommands.put("/admin", getAdminCommand());
         return new CommandFactoryImpl(commandMap, adminCommands);
+    }
+
+    @Bean
+    @Scope("singleton")
+    public BackCommand getBackCommand() {
+        return new BackCommand();
     }
 
     @Bean

@@ -1,10 +1,10 @@
 package communication.keyboard;
 
 public enum KeyboardType {
-    CLASSIC,
+    MENU,
     NONE,
     CUSTOM,
-    MENU,
+    CARDS,
     WELCOME,
     SHOP,
     LEAF,

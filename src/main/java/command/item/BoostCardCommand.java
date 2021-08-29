@@ -43,14 +43,14 @@ public class BoostCardCommand implements Command {
         User user = commandDTO.getUser();
         Card card = cardService.getMyCardById(id, user.getUID());
         if (card == null)
-            return new AnswerDTO(false, MessageBundle.getMessage("err_nocard"), KeyboardType.CLASSIC, null, null, user, true);
+            return new AnswerDTO(false, MessageBundle.getMessage("err_nocard"), KeyboardType.MENU, null, null, user, true);
         else {
             if(occupationService.isOccupied(card))
                 return new AnswerDTO(false, MessageBundle.getMessage("err_occupied"), KeyboardType.LEAF, null, null, commandDTO.getUser(), true);
             if (userService.getBoostCount(user) < 1)
-                return new AnswerDTO(false, MessageBundle.getMessage("err_noboost"), KeyboardType.CLASSIC, null, null, user, true);
+                return new AnswerDTO(false, MessageBundle.getMessage("err_noboost"), KeyboardType.MENU, null, null, user, true);
             if (card.getLevel() >= Long.parseLong(MessageBundle.getSetting("MAX_BOOST_LEVEL")))
-                return new AnswerDTO(false, MessageBundle.getMessage("err_maxboost"), KeyboardType.CLASSIC, null, null, user, true);
+                return new AnswerDTO(false, MessageBundle.getMessage("err_maxboost"), KeyboardType.MENU, null, null, user, true);
             if(cardService.boost(card))  {
                 userService.spendBoost(user);
                 return new AnswerDTO(true, MessageBundle.getMessage("success.boost") + "\n"

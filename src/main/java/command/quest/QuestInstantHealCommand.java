@@ -1,13 +1,10 @@
 package command.quest;
 
 import command.Command;
-import command.item.HealCardCommand;
-import command.shop.BuyHealCommand;
 import communication.keyboard.KeyboardType;
 import communication.util.AnswerDTO;
 import communication.util.CommandDTO;
 import game.entity.Card;
-import game.entity.ImageIdentifier;
 import game.entity.User;
 import game.quest.QuestService;
 import game.quest.QuestState;
@@ -38,7 +35,7 @@ public class QuestInstantHealCommand implements Command {
                     KeyboardType.LEAF, null, null, user, true);
         commandDTO.setArg(String.valueOf(card.getUID()));
         if (userService.getHealCount(user) < 1)
-            return new AnswerDTO(false, MessageBundle.getMessage("err_noheal"), KeyboardType.CLASSIC, null, null, user, true);
+            return new AnswerDTO(false, MessageBundle.getMessage("err_noheal"), KeyboardType.MENU, null, null, user, true);
         userService.spendHeal(user);
         cardService.heal(card);
         QuestState questState = questService.getUserQuestState(user);
