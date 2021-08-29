@@ -1,6 +1,9 @@
 package communication.connection;
 
 import command.CommandFactory;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiValidationException;
 import util.MessageBundle;
 import game.service.UserService;
 import game.entity.User;
@@ -121,11 +124,13 @@ public class TelegramBot extends TelegramLongPollingBot {
     private void sendResponse(AnswerDTO answerDTO, long chatId, String username) {
         if (answerDTO.getImage() == null) {
             SendMessage sendMessage = textSenderService.getMessage(answerDTO);
-            if(sendMessage == null)
+            if (sendMessage == null)
                 return;
             sendMessage.setChatId(String.valueOf(chatId));
             try {
                 this.execute(sendMessage);
+            } catch (TelegramApiException e) {
+                 notifyAboutApiError(sendMessage, username);
             } catch (Exception e) {
                 LOGGER.error("Error while sending response to " + username + ": " + e.getClass());
                 e.printStackTrace();
@@ -135,10 +140,25 @@ public class TelegramBot extends TelegramLongPollingBot {
             sendPhoto.setChatId(String.valueOf(chatId));
             try {
                 this.execute(sendPhoto);
+            } catch (TelegramApiException e) {
+                SendMessage sendMessage = new SendMessage();
+                sendMessage.setChatId(String.valueOf(chatId));
+                notifyAboutApiError(sendMessage, username);
             } catch (Exception e) {
                 LOGGER.error("Error while sending response to " + username + ": " + e.getClass());
                 e.printStackTrace();
             }
+        }
+    }
+
+    private void notifyAboutApiError(SendMessage sendMessage, String username) {
+        LOGGER.error("API error while sending response to " + username + ": ");
+        try {
+            sendMessage.setText(MessageBundle.getMessage("err_api"));
+            this.execute(sendMessage);
+        } catch (Exception ex) {
+            LOGGER.error("Error while sending API error response to " + username + ": ");
+            ex.printStackTrace();
         }
     }
 }

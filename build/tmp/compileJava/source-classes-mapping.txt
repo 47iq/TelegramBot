@@ -400,8 +400,9 @@ command/tutorial/StartCommand.java
  command.tutorial.StartCommand
 communication/connection/ImageSenderServiceImpl.java
  communication.connection.ImageSenderServiceImpl
-communication/connection/TelegramBot.java
- communication.connection.TelegramBot
+communication/keyboard/KeyboardCreatorImpl.java
+ communication.keyboard.KeyboardCreatorImpl
+ communication.keyboard.KeyboardCreatorImpl$1
 game/service/AchievementChecker.java
  game.service.AchievementChecker
 command/quest/BuyAndUseHealCommand.java
@@ -411,9 +412,8 @@ command/CommandFactoryImpl.java
  command.CommandFactoryImpl$LastCommand
 command/shop/BuyHealCommand.java
  command.shop.BuyHealCommand
-communication/keyboard/KeyboardCreatorImpl.java
- communication.keyboard.KeyboardCreatorImpl
- communication.keyboard.KeyboardCreatorImpl$1
+communication/connection/TelegramBot.java
+ communication.connection.TelegramBot
 Main.java
  Main
 AppConfig.java
