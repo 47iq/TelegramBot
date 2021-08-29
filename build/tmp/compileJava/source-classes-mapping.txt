@@ -406,15 +406,15 @@ game/service/AchievementChecker.java
  game.service.AchievementChecker
 command/quest/BuyAndUseHealCommand.java
  command.quest.BuyAndUseHealCommand
-Main.java
- Main
-command/shop/BuyHealCommand.java
- command.shop.BuyHealCommand
-AppConfig.java
- AppConfig
-communication/keyboard/KeyboardCreatorImpl.java
- communication.keyboard.KeyboardCreatorImpl
- communication.keyboard.KeyboardCreatorImpl$1
 command/CommandFactoryImpl.java
  command.CommandFactoryImpl
  command.CommandFactoryImpl$LastCommand
+command/shop/BuyHealCommand.java
+ command.shop.BuyHealCommand
+communication/keyboard/KeyboardCreatorImpl.java
+ communication.keyboard.KeyboardCreatorImpl
+ communication.keyboard.KeyboardCreatorImpl$1
+Main.java
+ Main
+AppConfig.java
+ AppConfig
